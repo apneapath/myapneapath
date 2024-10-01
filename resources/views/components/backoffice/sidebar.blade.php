@@ -24,7 +24,7 @@
 
      <!-- Nav Item - Patient -->
      <li class="nav-item">
-        <a href="{{ url('/patient-list') }}" class="nav-link">
+        <a href="{{ url('/patients-list') }}" class="nav-link">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Patient</span></a>
     </li>

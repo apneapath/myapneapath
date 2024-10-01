@@ -1,4 +1,4 @@
-@extends('backoffice.super-admin-dashboard')
+@extends('layouts.backoffice.super-admin-dashboard')
 
 @section('content')
     <div class="container-fluid">

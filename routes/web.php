@@ -11,10 +11,11 @@ Route::get('/backoffice', function () {
     return view('backoffice.dashboard');
 });
 
-//layout
-Route::get('/layouts', function () {
-    return view('layouts.sample');
+//super-admin
+Route::get('/patients-list', function () {
+    return view('backoffice.patients.patients-list');
 });
+
 
 
 //Temporary commented
