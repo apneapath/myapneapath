@@ -8,7 +8,12 @@ Route::get('/', function () {
 
 //super-admin
 Route::get('/backoffice', function () {
-    return view('backoffice.super-admin-dashboard');
+    return view('backoffice.dashboard');
+});
+
+//layout
+Route::get('/layouts', function () {
+    return view('layouts.sample');
 });
 
 
