@@ -11,12 +11,50 @@ Route::get('/backoffice', function () {
     return view('backoffice.dashboard');
 });
 
-//super-admin
+//patients-list
 Route::get('/patients-list', function () {
     return view('backoffice.patients.patients-list');
 });
 
+//doctors-list
+Route::get('/doctors-list', function () {
+    return view('backoffice.doctors.doctors-list');
+});
 
+//specialties-list
+Route::get('/specialties-list', function () {
+    return view('backoffice.specialties.specialties-list');
+});
+
+//facilities-list
+Route::get('/facilities-list', function () {
+    return view('backoffice.facilities.facilities-list');
+});
+
+//referrals-list
+Route::get('/referrals-list', function () {
+    return view('backoffice.referrals.referrals-list');
+});
+
+//referral-types-list
+Route::get('/referral-types-list', function () {
+    return view('backoffice.referrals.referral-types-list');
+});
+
+///medical-records-list
+Route::get('/medical-records-list', function () {
+    return view('backoffice.records.medical-records-list');
+});
+
+//attachments-list
+Route::get('/attachments-list', function () {
+    return view('backoffice.records.attachments-list');
+});
+
+//appointments-list
+Route::get('/appointments-list', function () {
+    return view('backoffice.appointments.appointments-list');
+});
 
 //Temporary commented
 Route::middleware([

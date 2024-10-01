@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container-fluid">
-<h1>Patients List</h1>
-<p>This will display all patients.</p>
+<h1>Referral Types List</h1>
+<p>This will display all referral types.</p>
 </div>
 @endsection

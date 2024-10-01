@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Backoffice Admin</title>
+    <title>Admin Dashboard</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -86,11 +86,11 @@
     <script src="{{ asset('js/backoffice/sb-admin-2.min.js') }}"></script>
 
     <!-- Page level plugins -->
-    {{-- <script src="{{ asset('vendor/chart.js/Chart.min.js') }}"></script> --}}
+    <script src="{{ asset('vendor/chart.js/Chart.min.js') }}"></script>
 
     <!-- Page level custom scripts -->
-    {{-- <script src="{{ asset('js/backoffice/demo/chart-area-demo.js') }}"></script>
-    <script src="{{ asset('js/backoffice/demo/chart-pie-demo.js') }}"></script> --}}
+    <script src="{{ asset('js/backoffice/demo/chart-area-demo.js') }}"></script>
+    <script src="{{ asset('js/backoffice/demo/chart-pie-demo.js') }}"></script>
 
 </body>
 
