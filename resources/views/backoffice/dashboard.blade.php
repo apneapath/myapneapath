@@ -1,7 +1,7 @@
-@extends('backoffice.super-admin.super-admin-dashboard')
+{{-- @extends('backoffice.super-admin.super-admin-dashboard')
 
 @section('content')
-    {{-- <div class="container-fluid">
+    <div class="container-fluid">
 
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -328,11 +328,19 @@
             </div>
         </div>
 
-    </div> --}}
+    </div>
 
    
     <h1>Test Content</h1>
     <p>This should be visible.</p>
 
 
+@endsection --}}
+
+
+@extends('backoffice.super-admin.super-admin-dashboard')
+
+@section('content')
+    <h1>Your Dashboard Content</h1>
+    <p>This is where your main content goes.</p>
 @endsection

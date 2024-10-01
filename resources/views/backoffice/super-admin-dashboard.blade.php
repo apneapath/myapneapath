@@ -21,38 +21,26 @@
     <link href="{{ asset('css/backoffice/sb-admin-2.min.css') }}" rel="stylesheet">
 
 </head>
-
+ 
 <body id="page-top">
 
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-        @include('backoffice.components.sidebar')
-
-      
-
+        {{-- @include('backoffice.components.sidebar') --}}
+        @include('components.backoffice.sidebar')
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
-
+          
             <!-- Main Content -->
             <div id="content">
-
-                @include('backoffice.components.topbar')
-
-                <!-- Begin Page Content -->
-                @yield('content')
-                <!-- /.container-fluid -->
-
+                @include('components.backoffice.topbar')
+                @yield('content') <!-- Main content will be injected here -->
             </div>
             <!-- End of Main Content -->
-
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
-                    </div>
-                </div>
+            <footer>
+                @include('components.backoffice.footer')
             </footer>
             <!-- End of Footer -->
 

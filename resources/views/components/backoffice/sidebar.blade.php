@@ -22,6 +22,17 @@
     <!-- Divider -->
     <hr class="sidebar-divider">
 
+     <!-- Nav Item - Patient -->
+     <li class="nav-item">
+        <a href="{{ url('/patient-list') }}" class="nav-link">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Patient</span></a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+
     <!-- Heading -->
     <div class="sidebar-heading">
         Interface

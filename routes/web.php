@@ -7,8 +7,8 @@ Route::get('/', function () {
 });
 
 //super-admin
-Route::get('/backoffice/super-admin', function () {
-    return view('backoffice/super-admin/super-admin-dashboard');
+Route::get('/backoffice', function () {
+    return view('backoffice.super-admin-dashboard');
 });
 
 
