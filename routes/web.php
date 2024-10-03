@@ -68,6 +68,15 @@ Route::middleware([
 });
 
 
+Route::get('/users-list', function () {
+    return view('backoffice.admin.users-list');
+});
+
+//users-list
+Route::get('/roles-list', function () {
+    return view('backoffice.admin.roles-list');
+});
+
 
 // Route::middleware('auth')->group(function () {
 //     Route::get('/dashboard/patient', function () {

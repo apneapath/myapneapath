@@ -20,6 +20,28 @@
         </a>
     </li>
 
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">Administrator</div>
+
+    <!-- Nav Item - Referral Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree"
+            aria-expanded="true" aria-controls="collapseThree">
+            <i class="fa-solid fa-gear"></i>
+            <span>Admin Setting</span>
+        </a>
+        <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item {{ request()->is('users-list') ? 'active' : '' }}"
+                    href="{{ url('/users-list') }}">User</a>
+                <a class="collapse-item {{ request()->is('roles-list') ? 'active' : '' }}"
+                    href="{{ url('/roles-list') }}">Roles</a>
+            </div>
+        </div>
+    </li>
+
     <!-- Divider -->
     <hr class="sidebar-divider">
 
@@ -47,22 +69,22 @@
 
     <!-- Nav Item - Specialties -->
     <li class="nav-item {{ request()->is('specialties-list') ? 'active' : '' }}">
-       <a href="{{ url('/specialties-list') }}" class="nav-link">
+        <a href="{{ url('/specialties-list') }}" class="nav-link">
             <i class="fa-solid fa-bookmark"></i>
             <span>Specialties</span>
         </a>
-   </li>
+    </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider">
 
     <!-- Nav Item - Facilities -->
     <li class="nav-item {{ request()->is('facilities-list') ? 'active' : '' }}">
-       <a href="{{ url('/facilities-list') }}" class="nav-link">
+        <a href="{{ url('/facilities-list') }}" class="nav-link">
             <i class="fa-solid fa-house-medical"></i>
             <span>Facilities</span>
         </a>
-   </li>
+    </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider">
@@ -79,8 +101,10 @@
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item {{ request()->is('referrals-list') ? 'active' : '' }}" href="{{ url('/referrals-list') }}">Referrals</a>
-                <a class="collapse-item {{ request()->is('referral-types-list') ? 'active' : '' }}" href="{{ url('/referral-types-list') }}">Referral Types</a>
+                <a class="collapse-item {{ request()->is('referrals-list') ? 'active' : '' }}"
+                    href="{{ url('/referrals-list') }}">Referrals</a>
+                <a class="collapse-item {{ request()->is('referral-types-list') ? 'active' : '' }}"
+                    href="{{ url('/referral-types-list') }}">Referral Types</a>
             </div>
         </div>
     </li>
@@ -92,11 +116,12 @@
             <i class="fa-solid fa-folder-plus"></i>
             <span>Records</span>
         </a>
-        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-            data-parent="#accordionSidebar">
+        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item {{ request()->is('medical-records-list') ? 'active' : '' }}" href="{{ url('/medical-records-list') }}">Medical Records</a>
-                <a class="collapse-item {{ request()->is('attachments-list') ? 'active' : '' }}" href="{{ url('/attachments-list') }}">Attachments</a>
+                <a class="collapse-item {{ request()->is('medical-records-list') ? 'active' : '' }}"
+                    href="{{ url('/medical-records-list') }}">Medical Records</a>
+                <a class="collapse-item {{ request()->is('attachments-list') ? 'active' : '' }}"
+                    href="{{ url('/attachments-list') }}">Attachments</a>
             </div>
         </div>
     </li>
