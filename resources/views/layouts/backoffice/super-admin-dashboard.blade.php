@@ -19,9 +19,9 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/backoffice/sb-admin-2.min.css') }}" rel="stylesheet">
-
+    <link href="{{ asset('css/backoffice/custom-styles.css') }}" rel="stylesheet">
 </head>
- 
+
 <body id="page-top">
 
     <!-- Page Wrapper -->
@@ -31,7 +31,7 @@
         @include('components.backoffice.sidebar')
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
-          
+
             <!-- Main Content -->
             <div id="content">
                 @include('components.backoffice.topbar')

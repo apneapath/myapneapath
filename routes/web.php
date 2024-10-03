@@ -71,6 +71,9 @@ Route::middleware([
 Route::get('/users-list', function () {
     return view('backoffice.admin.users-list');
 });
+Route::get('/add-user', function () {
+    return view('backoffice.admin.add-user');
+});
 
 //users-list
 Route::get('/roles-list', function () {
