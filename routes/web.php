@@ -57,6 +57,24 @@ Route::get('/appointments-list', function () {
     return view('backoffice.appointments.appointments-list');
 });
 
+//users-list
+Route::get('/users-list', function () {
+    return view('backoffice.admin.users-list');
+});
+
+//add-user
+Route::get('/add-user', function () {
+    return view('backoffice.admin.add-user');
+});
+
+//post users-list
+Route::post('/users-list', [UserController::class, 'add'])->name('users-list');
+
+//users-list
+Route::get('/roles-list', function () {
+    return view('backoffice.admin.roles-list');
+});
+
 //Temporary commented
 Route::middleware([
     'auth:sanctum',
@@ -66,20 +84,6 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-});
-
-
-Route::get('/users-list', function () {
-    return view('backoffice.admin.users-list');
-});
-Route::get('/add-user', function () {
-    return view('backoffice.admin.add-user');
-});
-Route::post('/users-list', [UserController::class, 'add'])->name('users-list');
-
-//users-list
-Route::get('/roles-list', function () {
-    return view('backoffice.admin.roles-list');
 });
 
 
