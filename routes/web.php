@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\UserController;
 
 Route::get('/', function () {
     return view('storefront.index');
@@ -74,6 +75,7 @@ Route::get('/users-list', function () {
 Route::get('/add-user', function () {
     return view('backoffice.admin.add-user');
 });
+Route::post('/users-list', [UserController::class, 'add'])->name('users-list');
 
 //users-list
 Route::get('/roles-list', function () {
