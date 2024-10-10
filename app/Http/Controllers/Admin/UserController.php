@@ -28,4 +28,12 @@ class UserController extends Controller
 
         return redirect()->route('users-list')->with('success', 'User registered successfully!');
     }
+
+    public function index()
+    {
+        $users = User::orderBy('created_at', 'desc')->get();
+        return response()->json($users);
+    }
+
+
 }

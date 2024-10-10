@@ -35,7 +35,7 @@
         <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item {{ request()->is('users-list') ? 'active' : '' }}"
-                    href="{{ url('/users-list') }}">User</a>
+                    href="{{ url('/users-list') }}">Users</a>
                 <a class="collapse-item {{ request()->is('roles-list') ? 'active' : '' }}"
                     href="{{ url('/roles-list') }}">Roles</a>
             </div>

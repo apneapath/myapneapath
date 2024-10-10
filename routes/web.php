@@ -62,6 +62,9 @@ Route::get('/users-list', function () {
     return view('backoffice.admin.users-list');
 });
 
+Route::get('/users', [UserController::class, 'index'])->name('users.index');
+
+
 //add-user
 Route::get('/add-user', function () {
     return view('backoffice.admin.add-user');
