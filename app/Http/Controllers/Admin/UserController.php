@@ -24,6 +24,11 @@ class UserController extends Controller
         $user->status = $request->status;
         $user->username = $request->userName;
         $user->password = bcrypt($request->password); // Hash the password
+
+        // Set the name by combining first and last names
+        $user->name = trim($user->first_name . ' ' . $user->last_name);
+
+        // Save the user
         $user->save();
 
         return redirect()->route('users-list')->with('success', 'User registered successfully!');

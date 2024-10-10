@@ -9,7 +9,7 @@
             <script>
                 setTimeout(() => {
                     document.getElementById('success-alert').style.display = 'none';
-                }, 3000);
+                }, 5000);
             </script>
         @endif
 
@@ -22,11 +22,10 @@
                 Create User</a>
         </div>
 
-        <table id="user-table" class="display">
+        <table id="user-table" class="row-border stripe hover">
             <thead>
                 <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
+                    <th>Name</th>
                     <th>Email</th>
                     <th>Role</th>
                     <th>Status</th>
@@ -54,8 +53,7 @@
                     users.forEach(function(user) {
                         $('#user-list').append(
                             `<tr>
-                                <td>${user.first_name}</td>
-                                <td>${user.last_name}</td>
+                                <td>${user.name}</td>
                                 <td>${user.email}</td>
                                 <td>${user.role}</td>
                                 <td>${user.status}</td>
