@@ -53,12 +53,13 @@
                     users.forEach(function(user) {
                         $('#user-list').append(
                             `<tr>
-                                <td>${user.name}</td>
-                                <td>${user.email}</td>
-                                <td>${user.role}</td>
-                                <td>${user.status}</td>
-                                <td><a href="/add-user" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fa-regular fa-eye"></i></a></td>
-                            </tr>`
+                        
+                        <td><img src="${user.photo}" alt="${user.name}'s Photo" style="max-width: 33px; max-height: 33px;"> ${user.name}</td>
+                        <td>${user.email}</td>
+                        <td>${user.role}</td>
+                        <td>${user.status}</td>
+                        <td><a href="/add-user" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fa-regular fa-eye"></i></a></td>
+                    </tr>`
                         );
                     });
 
