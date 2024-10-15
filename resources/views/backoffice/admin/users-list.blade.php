@@ -59,7 +59,7 @@
                         <td>${user.role}</td>
                         <td>${user.status}</td>
                         <td>
-                            <a title="Edit user profile" href="/edit-user" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <a title="Edit user profile" href="/edit-user/${user.id}" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fa-solid fa-pen-to-square"></i></a>
                             <a title="View user profile" href="/add-user" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fa-regular fa-eye"></i></a>
                             <a title="Delete user profile" href="/delete-user" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"><i class="fa-solid fa-trash"></i></a>   
                         </td>

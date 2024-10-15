@@ -62,8 +62,8 @@ Route::get('/users-list', function () {
     return view('backoffice.admin.users-list');
 });
 
+//route for user AJAX
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
-
 
 //add-user
 Route::get('/add-user', function () {
@@ -72,6 +72,14 @@ Route::get('/add-user', function () {
 
 //post users-list
 Route::post('/users-list', [UserController::class, 'add'])->name('users-list');
+
+//edit user
+Route::get('/edit-user/{id}', [UserController::class, 'edit'])->name('edit-user');
+
+
+//update user
+Route::post('/update-user', [UserController::class, 'update'])->name('update-user');
+
 
 //users-list
 Route::get('/roles-list', function () {

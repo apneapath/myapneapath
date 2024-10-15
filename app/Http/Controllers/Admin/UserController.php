@@ -63,5 +63,29 @@ class UserController extends Controller
     }
 
 
+    public function edit($id)
+    {
+        $user = User::findOrFail($id); // Retrieve the user by ID
+        return view('backoffice.admin.edit-user', compact('user')); // Update the path
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $id,
+            'role' => 'required|string',
+            'status' => 'required|string',
+            // Add other validations as needed
+        ]);
+
+        $user = User::findOrFail($id);
+        $user->update($request->all()); // Update user details
+        // Handle photo upload if needed
+        // ...
+
+        return redirect()->route('users.index')->with('success', 'User updated successfully!');
+    }
+
 
 }
