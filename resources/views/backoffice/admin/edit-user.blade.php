@@ -22,14 +22,18 @@
                                 @csrf
                                 <div class="row">
                                     <div class="col-2">
-                                        <label for="photo">
+                                        <div class="position-relative">
                                             @if ($user->photo)
                                                 <img src="{{ asset('storage/' . $user->photo) }}" alt="User Photo"
                                                     style="max-width: 100px; margin-top: 10px;"
                                                     title="Click to change photo">
                                             @endif
-                                        </label>
-                                        <input type="file" class="form-control" id="photo" name="photo" hidden>
+                                            <label title="Change photo" for="photo"
+                                                class="d-none d-sm-inline-block btn btn-sm btn-light shadow-sm rounded-circle"
+                                                style="margin-bottom: -90px; margin-left: -30px"><i
+                                                    class="fa-solid fa-pen"></i></label>
+                                            <input type="file" class="form-control" id="photo" name="photo" hidden>
+                                        </div>
                                     </div>
                                     <div class="col-5">
 
@@ -109,24 +113,30 @@
                                         </div>
                                     </div>
                                     <div class="col-5">
-                                        <div class="form-group col">
-                                            <label for="address">Full Address</label>
-                                            <textarea class="form-control" id="address" name="address" rows="3">{{ old('address', $user->address) }}</textarea>
-                                        </div>
-                                        <div class="form-group col">
-                                            <label for="userName">Username</label>
-                                            <input type="text" class="form-control" id="userName" name="userName"
-                                                value="{{ old('username', $user->username) }}">
-                                        </div>
-                                        <div class="form-group col">
-                                            <label for="password">Password</label>
-                                            <input type="password" class="form-control" id="password" name="password"
-                                                value="{{ old('password', $user->password) }}">
-                                        </div>
-                                        <div class="form-group col-12 d-flex flex-row-reverse">
-                                            <button type="submit"
-                                                class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Update
-                                                User</button>
+                                        <div class="row">
+                                            <div class="form-group col-12">
+                                                <label for="address">Full Address</label>
+                                                <textarea class="form-control" id="address" name="address" rows="3">{{ old('address', $user->address) }}</textarea>
+                                            </div>
+                                            <div class="form-group col-12">
+                                                <label for="userName">Username</label>
+                                                <input type="text" class="form-control" id="userName" name="userName"
+                                                    value="{{ old('username', $user->username) }}">
+                                            </div>
+                                            <div class="form-group col-12">
+                                                <label for="password">Password</label>
+                                                <input type="password" class="form-control" id="password"
+                                                    name="password" value="{{ old('password', $user->password) }}"
+                                                    disabled>
+                                            </div>
+                                            <div class="form-group text-right col-12">
+                                                <a href="/users-list"
+                                                    class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">Back</a>
+                                                <button type="submit"
+                                                    class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Update
+                                                    User</button>
+
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
