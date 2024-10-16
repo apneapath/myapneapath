@@ -79,12 +79,12 @@
                                         <div class="row">
                                             <div class="form-group col-6">
                                                 <label for="firstName">First Name</label>
-                                                <input type="text" class="form-control" id="firstName" name="first_name"
+                                                <input type="text" class="form-control" id="firstName" name="firstName"
                                                     value="{{ old('first_name', $user->first_name) }}">
                                             </div>
                                             <div class="form-group col-6">
                                                 <label for="lastName">Last Name</label>
-                                                <input type="text" class="form-control" id="lastName" name="last_name"
+                                                <input type="text" class="form-control" id="lastName" name="lastName"
                                                     value="{{ old('last_name', $user->last_name) }}">
                                             </div>
                                         </div>
@@ -115,12 +115,13 @@
                                             <div class="form-group col-12">
                                                 <label for="email">Email address</label>
                                                 <input type="email" class="form-control" id="email" name="email"
-                                                    disabled value="{{ old('email', $user->email) }}">
+                                                    value="{{ old('email', $user->email) }}">
+
                                             </div>
                                             <div class="form-group col-6">
                                                 <label for="phoneNumber">Phone No.</label>
                                                 <input type="tel" class="form-control" id="phoneNumber"
-                                                    name="phone_number"
+                                                    name="phoneNumber"
                                                     value="{{ old('phone_number', $user->phone_number) }}">
                                             </div>
                                             <div class="form-group col-6">

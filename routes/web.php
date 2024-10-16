@@ -78,7 +78,8 @@ Route::get('/edit-user/{id}', [UserController::class, 'edit'])->name('edit-user'
 
 
 //update user
-Route::post('/update-user', [UserController::class, 'update'])->name('update-user');
+Route::post('/update-user/{id}', [UserController::class, 'update'])->name('update-user');
+
 
 
 //users-list

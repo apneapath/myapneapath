@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 
 class UserController extends Controller
@@ -71,21 +72,57 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
+        // Validate the request
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $id,
-            'role' => 'required|string',
+            'firstName' => 'required|string|max:255',
+            'lastName' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'phoneNumber' => 'nullable|string|max:15',
+            'gender' => 'required|string',
             'status' => 'required|string',
-            // Add other validations as needed
+            'role' => 'required|string',
+            'address' => 'nullable|string',
+            'username' => 'nullable|string|max:255',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
+        // Retrieve the user
         $user = User::findOrFail($id);
-        $user->update($request->all()); // Update user details
-        // Handle photo upload if needed
-        // ...
 
-        return redirect()->route('users.index')->with('success', 'User updated successfully!');
+        // Update user properties
+        $user->first_name = $request->firstName;
+        $user->last_name = $request->lastName;
+        $user->gender = $request->gender;
+        $user->status = $request->status;
+        $user->email = $request->email;
+        $user->phone_number = $request->phoneNumber;
+        $user->role = $request->role;
+        $user->address = $request->address;
+        $user->username = $request->username;
+
+        // Update the name by combining first and last names
+        $user->name = trim($user->first_name . ' ' . $user->last_name);
+
+        // Handle the photo upload
+        if ($request->hasFile('photo')) {
+            // Delete the old photo if it exists
+            if ($user->photo && Storage::disk('public')->exists($user->photo)) {
+                Storage::disk('public')->delete($user->photo);
+            }
+
+            // Store the new photo
+            $timestamp = time();
+            $filename = strtolower($user->first_name . '_' . $user->last_name . '_' . $timestamp . '.' . $request->file('photo')->getClientOriginalExtension());
+            $photoPath = $request->file('photo')->storeAs('photos', $filename, 'public');
+            $user->photo = $photoPath; // Store the path in the database
+        }
+
+        // Save the user
+        $user->save();
+
+        return redirect()->route('users-list')->with('success', 'User updated successfully!');
     }
+
 
 
 }
