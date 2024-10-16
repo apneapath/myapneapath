@@ -4,10 +4,6 @@
     <div class="container-fluid">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h4 class=" mb-0 text-gray-800">Update User Information</h4>
-            <a href="/add-user" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                <i class="fa-solid fa-user-plus"></i>
-                Create User
-            </a>
         </div>
 
         <div>
@@ -147,9 +143,12 @@
                                             <div class="form-group text-right col-12">
                                                 <a href="/users-list"
                                                     class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">Cancel</a>
-                                                <button type="submit"
+                                                {{-- <button type="submit"
                                                     class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Update
-                                                    User</button>
+                                                    User</button> --}}
+                                                <button type="submit" id="updateButton"
+                                                    class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+                                                    disabled>Update User</button>
                                             </div>
                                         </div>
                                     </div>
@@ -162,23 +161,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        document.getElementById('phoneNumber').addEventListener('input', function(e) {
-            this.value = this.value.replace(/[^0-9]/g, '');
-        });
-
-        function previewPhoto(event) {
-            const file = event.target.files[0];
-            const preview = document.getElementById('photoPreview');
-
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    preview.src = e.target.result; // Set the image source to the file's data URL
-                }
-                reader.readAsDataURL(file); // Read the file as a data URL
-            }
-        }
-    </script>
 @endsection

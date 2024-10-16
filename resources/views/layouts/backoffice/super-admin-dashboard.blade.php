@@ -93,6 +93,11 @@
     <script src="{{ asset('js/backoffice/demo/chart-pie-demo.js') }}"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
+    <!-- Submit button custom scripts -->
+    <script src="{{ asset('js/backoffice/submit-button.js') }}"></script>
+    <!-- Submit button custom scripts -->
+    <script src="{{ asset('js/backoffice/input-phone-number.js') }}"></script>
+
 </body>
 
 </html>
