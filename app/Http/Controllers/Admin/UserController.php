@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+
 
 class UserController extends Controller
 {
@@ -84,10 +86,22 @@ class UserController extends Controller
             'address' => 'nullable|string',
             'username' => 'nullable|string|max:255',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'current_password' => 'nullable|string',
+            'new_password' => 'nullable|string|min:8|confirmed',
         ]);
 
         // Retrieve the user
         $user = User::findOrFail($id);
+
+        // Check if current password is provided and valid
+        if ($request->filled('current_password') && Hash::check($request->current_password, $user->password)) {
+            if ($request->filled('new_password')) {
+                $user->password = Hash::make($request->new_password); // Hash the new password
+            }
+        } else if ($request->filled('current_password')) {
+            // Return an error message if the current password is incorrect
+            return back()->withErrors(['current_password' => 'Current password is incorrect.']);
+        }
 
         // Update user properties
         $user->first_name = $request->firstName;

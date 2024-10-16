@@ -112,25 +112,38 @@
                                                         Assistance (VA)</option>
                                                 </select>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-5">
-                                        <div class="row">
+                                            <div class="form-group col-12">
+                                                <label for="userName">Username</label>
+                                                <input type="text" class="form-control" id="userName" name="username"
+                                                    value="{{ old('username', $user->username) }}">
+                                            </div>
                                             <div class="form-group col-12">
                                                 <label for="address">Full Address</label>
                                                 <textarea class="form-control" id="address" name="address" rows="3">{{ old('address', $user->address) }}</textarea>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-5">
+                                        <div class="row">
+                                            <!-- Password Fields -->
                                             <div class="form-group col-12">
-                                                <label for="userName">Username</label>
-                                                <input type="text" class="form-control" id="userName"
-                                                    name="username" value="{{ old('username', $user->username) }}">
+                                                <label for="current_password">Current Password</label>
+                                                <input type="password" class="form-control" id="current_password"
+                                                    name="current_password">
                                             </div>
-                                            {{-- <div class="form-group col-12">
-                                                <label for="password">Password</label>
-                                                <input type="password" class="form-control" id="password"
-                                                    name="password" value="{{ old('password', $user->password) }}"
-                                                    disabled>
-                                            </div> --}}
+
+                                            <div class="form-group col-12">
+                                                <label for="new_password">New Password</label>
+                                                <input type="password" class="form-control" id="new_password"
+                                                    name="new_password">
+                                            </div>
+
+                                            <div class="form-group col-12">
+                                                <label for="new_password_confirmation">Confirm New Password</label>
+                                                <input type="password" class="form-control"
+                                                    id="new_password_confirmation" name="new_password_confirmation">
+                                            </div>
+
                                             <div class="form-group text-right col-12">
                                                 <a href="/users-list"
                                                     class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">Cancel</a>
@@ -140,6 +153,7 @@
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
                             </form>
                         </div>
