@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <div>
-                <h1 class="h3 mb-0 text-gray-800">New User Registration</h1>
+                <h4 class=" mb-0 text-gray-800">New User Registration</h4>
             </div>
             <a href="/add-user" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                 <i class="fa-solid fa-user-plus"></i>

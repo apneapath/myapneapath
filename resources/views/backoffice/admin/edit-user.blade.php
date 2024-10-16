@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Update User Information</h1>
+            <h4 class=" mb-0 text-gray-800">Update User Information</h4>
             <a href="/add-user" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                 <i class="fa-solid fa-user-plus"></i>
                 Create User
@@ -31,34 +31,6 @@
                                 <div class="row">
                                     <div class="col-2">
                                         <div class="position-relative">
-                                            {{-- @if ($user->photo)
-                                                <img src="{{ asset('storage/' . $user->photo) }}" alt="User Photo"
-                                                    style="max-width: 100px; margin-top: 10px;"
-                                                    title="Click to change photo">
-                                            @endif
-                                            <label title="Change photo" for="photo"
-                                                class="d-none d-sm-inline-block btn btn-sm btn-light shadow-sm rounded-circle"
-                                                style="margin-bottom: -90px; margin-left: -30px"><i
-                                                    class="fa-solid fa-pen"></i></label>
-                                            <input type="file" class="form-control" id="photo" name="photo" hidden> --}}
-                                            {{-- <div class="position-relative">
-                                                @if ($user->photo && Storage::disk('public')->exists($user->photo))
-                                                    <img src="{{ asset('storage/' . $user->photo) }}" alt="User Photo"
-                                                        style="max-width: 100px; margin-top: 10px;"
-                                                        title="Click to change photo">
-                                                @else
-                                                    <img src="{{ asset('img/backoffice/avatar/user-default-photo.png') }}"
-                                                        alt="Default User Photo"
-                                                        style="max-width: 100px; margin-top: 10px;">
-                                                @endif
-                                                <label title="Change photo" for="photo"
-                                                    class="d-none d-sm-inline-block btn btn-sm btn-light shadow-sm rounded-circle"
-                                                    style="margin-bottom: -90px; margin-left: -30px">
-                                                    <i class="fa-solid fa-pen"></i>
-                                                </label>
-                                                <input type="file" class="form-control" id="photo" name="photo"
-                                                    hidden>
-                                            </div> --}}
                                             <div class="position-relative">
                                                 <img id="photoPreview"
                                                     src="{{ $user->photo && Storage::disk('public')->exists($user->photo) ? asset('storage/' . $user->photo) : asset('img/backoffice/avatar/user-default-photo.png') }}"
@@ -152,12 +124,12 @@
                                                 <input type="text" class="form-control" id="userName"
                                                     name="username" value="{{ old('username', $user->username) }}">
                                             </div>
-                                            <div class="form-group col-12">
+                                            {{-- <div class="form-group col-12">
                                                 <label for="password">Password</label>
                                                 <input type="password" class="form-control" id="password"
                                                     name="password" value="{{ old('password', $user->password) }}"
                                                     disabled>
-                                            </div>
+                                            </div> --}}
                                             <div class="form-group text-right col-12">
                                                 <a href="/users-list"
                                                     class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">Back</a>
