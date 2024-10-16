@@ -54,7 +54,7 @@
                         $('#user-list').append(
                             `<tr>
                         
-                        <td><img src="${user.photo}" alt="${user.name}'s Photo" style="max-width: 33px; max-height: 33px;"> ${user.name}</td>
+                        <td><img style="border-radius: 100%; width: 35px; height: 35px" src="${user.photo}" alt="${user.name}'s Photo" style="max-width: 33px; max-height: 33px;"> ${user.name}</td>
                         <td>${user.email}</td>
                         <td>${user.role}</td>
                         <td>${user.status}</td>

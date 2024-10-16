@@ -34,7 +34,8 @@
                                             <div class="position-relative">
                                                 <img id="photoPreview"
                                                     src="{{ $user->photo && Storage::disk('public')->exists($user->photo) ? asset('storage/' . $user->photo) : asset('img/backoffice/avatar/user-default-photo.png') }}"
-                                                    alt="User Photo" style="max-width: 100px; margin-top: 10px;"
+                                                    alt="User Photo"
+                                                    style="width: 100px; height: 100px; margin-top: 10px; border-radius: 100%"
                                                     title="Click to change photo">
 
                                                 <label title="Change photo" for="photo"
@@ -132,7 +133,7 @@
                                             </div> --}}
                                             <div class="form-group text-right col-12">
                                                 <a href="/users-list"
-                                                    class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">Back</a>
+                                                    class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">Cancel</a>
                                                 <button type="submit"
                                                     class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Update
                                                     User</button>
