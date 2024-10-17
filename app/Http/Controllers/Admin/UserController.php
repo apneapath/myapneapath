@@ -137,6 +137,23 @@ class UserController extends Controller
         return redirect()->route('users-list')->with('success', 'User updated successfully!');
     }
 
+    public function delete($id)
+    {
+        // Find the user by ID
+        $user = User::findOrFail($id);
+
+        // Optionally, delete the user's photo if it exists
+        if ($user->photo && Storage::disk('public')->exists($user->photo)) {
+            Storage::disk('public')->delete($user->photo);
+        }
+
+        // Delete the user
+        $user->delete();
+
+        return redirect()->route('users-list')->with('success', 'User deleted successfully!');
+    }
+
+
 
 
 }

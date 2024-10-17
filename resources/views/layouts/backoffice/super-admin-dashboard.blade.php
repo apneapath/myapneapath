@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
 
     <title>Admin Dashboard</title>
 
@@ -20,6 +22,10 @@
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/backoffice/sb-admin-2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/backoffice/custom-styles.css') }}" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
 </head>
 
 <body id="page-top">

@@ -36,6 +36,29 @@
         </table>
     </div>
 
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this user? This action cannot be undone.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <form id="deleteUserForm" action="" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
@@ -53,7 +76,6 @@
                     users.forEach(function(user) {
                         $('#user-list').append(
                             `<tr>
-                        
                         <td><img style="border-radius: 100%; width: 35px; height: 35px" src="${user.photo}" alt="${user.name}'s Photo" style="max-width: 33px; max-height: 33px;"> ${user.name}</td>
                         <td>${user.email}</td>
                         <td>${user.role}</td>
@@ -61,9 +83,11 @@
                         <td>
                             <a title="Edit user profile" href="/edit-user/${user.id}" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fa-solid fa-pen-to-square"></i></a>
                             <a title="View user profile" href="/add-user" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fa-regular fa-eye"></i></a>
-                            <a title="Delete user profile" href="/delete-user" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"><i class="fa-solid fa-trash"></i></a>   
+                            <button type="button" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="setDeleteUserId(${user.id});">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
                         </td>
-                    </tr>`
+                    </tr>`.replace(':id', user.id)
                         );
                     });
 
@@ -74,6 +98,11 @@
                     alert('Error fetching users.');
                 }
             });
+        }
+
+        function setDeleteUserId(id) {
+            const form = document.getElementById('deleteUserForm');
+            form.action = `/delete-user/${id}`;
         }
     </script>
 @endsection
