@@ -153,6 +153,13 @@ class UserController extends Controller
         return redirect()->route('users-list')->with('success', 'User deleted successfully!');
     }
 
+    public function view($id)
+    {
+        $user = User::findOrFail($id); // Fetch user by ID
+        return view('backoffice.admin.view-user', compact('user')); // Pass the user to the view
+    }
+
+
 
 
 

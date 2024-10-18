@@ -142,7 +142,9 @@
 
                                             <div class="form-group text-right col-12">
                                                 <a href="/users-list"
-                                                    class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">Cancel</a>
+                                                    class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">Back
+                                                    to Users
+                                                    List</a>
                                                 {{-- <button type="submit"
                                                     class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Update
                                                     User</button> --}}

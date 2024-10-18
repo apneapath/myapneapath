@@ -83,7 +83,8 @@ Route::post('/update-user/{id}', [UserController::class, 'update'])->name('updat
 //delete user
 Route::delete('/delete-user/{id}', [UserController::class, 'delete'])->name('delete-user');
 
-
+//update user
+Route::get('/view-user/{id}', [UserController::class, 'view'])->name('view-user');
 
 
 
