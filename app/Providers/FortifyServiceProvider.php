@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
+use App\Actions\Fortify\CustomLogin; // Add this import at the top
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -26,6 +27,24 @@ class FortifyServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
+    // public function boot(): void
+    // {
+    //     Fortify::createUsersUsing(CreateNewUser::class);
+    //     Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
+    //     Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
+    //     Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
+
+    //     RateLimiter::for('login', function (Request $request) {
+    //         $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())).'|'.$request->ip());
+
+    //         return Limit::perMinute(5)->by($throttleKey);
+    //     });
+
+    //     RateLimiter::for('two-factor', function (Request $request) {
+    //         return Limit::perMinute(5)->by($request->session()->get('login.id'));
+    //     });
+    // }
+
     public function boot(): void
     {
         Fortify::createUsersUsing(CreateNewUser::class);
@@ -33,8 +52,13 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
 
+        // Add custom authentication logic
+        Fortify::authenticateUsing(function (Request $request) {
+            return (new CustomLogin())->login($request->only('email', 'password'));
+        });
+
         RateLimiter::for('login', function (Request $request) {
-            $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())).'|'.$request->ip());
+            $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())) . '|' . $request->ip());
 
             return Limit::perMinute(5)->by($throttleKey);
         });
@@ -43,4 +67,5 @@ class FortifyServiceProvider extends ServiceProvider
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
         });
     }
+
 }

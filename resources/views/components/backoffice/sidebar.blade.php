@@ -38,6 +38,8 @@
                     href="{{ url('/users-list') }}">Users</a>
                 <a class="collapse-item {{ request()->is('roles-list') ? 'active' : '' }}"
                     href="{{ url('/roles-list') }}">Roles</a>
+                <a class="collapse-item {{ request()->is('activity-logs') ? 'active' : '' }}"
+                    href="{{ url('/activity-logs') }}">Activity Logs</a>
             </div>
         </div>
     </li>

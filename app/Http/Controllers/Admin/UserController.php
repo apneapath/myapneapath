@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\ActivityLog;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
@@ -134,6 +135,12 @@ class UserController extends Controller
         // Save the user
         $user->save();
 
+        // Log activity after the update
+        ActivityLog::create([
+            'user_id' => $user->id,
+            'action' => 'User updated their profile',
+        ]);
+
         return redirect()->route('users-list')->with('success', 'User updated successfully!');
     }
 
@@ -158,6 +165,20 @@ class UserController extends Controller
         $user = User::findOrFail($id); // Fetch user by ID
         return view('backoffice.admin.view-user', compact('user')); // Pass the user to the view
     }
+
+    public function viewActivityLogs(Request $request)
+    {
+        // Fetch logs, you can customize the query based on your needs
+        $logs = ActivityLog::orderBy('created_at', 'desc')->paginate(10);
+
+        return view('backoffice.admin.activity-logs', compact('logs'));
+    }
+
+    // public function activityLogs()
+    // {
+    //     $logs = ActivityLog::with('user')->latest()->get();
+    //     return view('logs.activity', compact('logs'));
+    // }
 
 
 

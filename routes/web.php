@@ -86,6 +86,9 @@ Route::delete('/delete-user/{id}', [UserController::class, 'delete'])->name('del
 //update user
 Route::get('/view-user/{id}', [UserController::class, 'view'])->name('view-user');
 
+//activity logs view
+Route::get('/activity-logs', [UserController::class, 'viewActivityLogs'])->name('activity-logs');
+
 
 
 //users-list
