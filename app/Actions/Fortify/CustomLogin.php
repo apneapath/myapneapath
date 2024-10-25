@@ -13,8 +13,10 @@ class CustomLogin
         if (Auth::attempt($credentials)) {
             // Log activity
             ActivityLog::create([
-                'user_id' => Auth::id(),
+                'user_id' => Auth::id(), // Or the relevant user's ID
+                'user_name' => Auth::user()->name, // Get the name of the logged-in user
                 'action' => 'User logged in',
+                'action_detail' => 'User has logged in successfully.', // Customize this if needed
             ]);
 
             return Auth::user();

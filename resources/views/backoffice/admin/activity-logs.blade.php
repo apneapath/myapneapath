@@ -23,7 +23,9 @@
             <thead>
                 <tr>
                     <th>User ID</th>
+                    <th>User Name</th>
                     <th>Action</th>
+                    <th>Action Detail</th>
                     <th>Timestamp</th>
                 </tr>
             </thead>
@@ -31,8 +33,10 @@
                 @foreach ($logs as $log)
                     <tr>
                         <td>{{ $log->user_id }}</td>
+                        <td>{{ $log->user_name }}</td>
                         <td>{{ $log->action }}</td>
-                        <td>{{ $log->created_at->format('Y-m-d H:i:s') }}</td>
+                        <td>{{ $log->action_detail }}</td>
+                        <td>{{ $log->created_at }}</td>
                     </tr>
                 @endforeach
             </tbody>

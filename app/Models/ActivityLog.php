@@ -9,8 +9,9 @@ class ActivityLog extends Model
     //use HasFactory;
 
     protected $fillable = [
-        'user_id', // Add this line
+        'user_id',
+        'user_name',
         'action',
-        'created_at', // Include other fields as needed
+        'action_detail',
     ];
 }

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 
 class UserController extends Controller
@@ -63,6 +64,7 @@ class UserController extends Controller
             ];
         });
 
+
         return response()->json($users);
     }
 
@@ -94,15 +96,29 @@ class UserController extends Controller
         // Retrieve the user
         $user = User::findOrFail($id);
 
+        // Store old values for comparison
+        $oldValues = [
+            'email' => $user->email,
+            'name' => $user->name,
+            'phone_number' => $user->phone_number,
+            'gender' => $user->gender,
+            'status' => $user->status,
+            'role' => $user->role,
+            'address' => $user->address,
+            'username' => $user->username,
+        ];
+
         // Check if current password is provided and valid
         if ($request->filled('current_password') && Hash::check($request->current_password, $user->password)) {
             if ($request->filled('new_password')) {
                 $user->password = Hash::make($request->new_password); // Hash the new password
             }
-        } else if ($request->filled('current_password')) {
-            // Return an error message if the current password is incorrect
+        } elseif ($request->filled('current_password')) {
             return back()->withErrors(['current_password' => 'Current password is incorrect.']);
         }
+
+        // Store the old photo path for comparison
+        $oldPhoto = $user->photo;
 
         // Update user properties
         $user->first_name = $request->firstName;
@@ -118,11 +134,14 @@ class UserController extends Controller
         // Update the name by combining first and last names
         $user->name = trim($user->first_name . ' ' . $user->last_name);
 
+        // Prepare action details
+        $actionDetails = [];
+
         // Handle the photo upload
         if ($request->hasFile('photo')) {
             // Delete the old photo if it exists
-            if ($user->photo && Storage::disk('public')->exists($user->photo)) {
-                Storage::disk('public')->delete($user->photo);
+            if ($oldPhoto && Storage::disk('public')->exists($oldPhoto)) {
+                Storage::disk('public')->delete($oldPhoto);
             }
 
             // Store the new photo
@@ -130,19 +149,35 @@ class UserController extends Controller
             $filename = strtolower($user->first_name . '_' . $user->last_name . '_' . $timestamp . '.' . $request->file('photo')->getClientOriginalExtension());
             $photoPath = $request->file('photo')->storeAs('photos', $filename, 'public');
             $user->photo = $photoPath; // Store the path in the database
+
+            // Log photo update
+            $actionDetails[] = "Updated profile photo.";
         }
 
         // Save the user
         $user->save();
 
-        // Log activity after the update
+        // Check for changes and log them
+        foreach ($oldValues as $key => $oldValue) {
+            $newValue = $user->$key; // Dynamic property access
+            if ($oldValue != $newValue) {
+                $actionDetails[] = "Changed {$key} from {$oldValue} to {$newValue}.";
+            }
+        }
+
+        // Log activity with detailed action
+
         ActivityLog::create([
             'user_id' => $user->id,
-            'action' => 'User updated their profile',
+            'user_name' => $user->name, // Ensure this is populated correctly
+            'action' => 'Profile Update',
+            'action_detail' => implode(' ', $actionDetails),
         ]);
+
 
         return redirect()->route('users-list')->with('success', 'User updated successfully!');
     }
+
 
     public function delete($id)
     {
@@ -168,20 +203,10 @@ class UserController extends Controller
 
     public function viewActivityLogs(Request $request)
     {
-        // Fetch logs, you can customize the query based on your needs
-        $logs = ActivityLog::orderBy('created_at', 'desc')->paginate(10);
+        // Fetch all logs, ordering by created_at in descending order
+        $logs = ActivityLog::orderBy('created_at', 'desc')->get();
 
         return view('backoffice.admin.activity-logs', compact('logs'));
     }
-
-    // public function activityLogs()
-    // {
-    //     $logs = ActivityLog::with('user')->latest()->get();
-    //     return view('logs.activity', compact('logs'));
-    // }
-
-
-
-
 
 }
