@@ -157,22 +157,26 @@ class UserController extends Controller
         // Save the user
         $user->save();
 
+        // Initialize actionDetails
+        $actionDetails = [];
+
         // Check for changes and log them
         foreach ($oldValues as $key => $oldValue) {
             $newValue = $user->$key; // Dynamic property access
             if ($oldValue != $newValue) {
-                $actionDetails[] = "Changed {$key} from {$oldValue} to {$newValue}.";
+                // Add each change as a list item
+                $actionDetails[] = "<li>Changed {$key} from {$oldValue} to {$newValue}.</li>";
             }
         }
 
         // Log activity with detailed action
-
         ActivityLog::create([
             'user_id' => $user->id,
-            'user_name' => $user->name, // Ensure this is populated correctly
+            'user_name' => $user->name,
             'action' => 'Profile Update',
-            'action_detail' => implode(' ', $actionDetails),
+            'action_detail' => '<ul>' . implode('', $actionDetails) . '</ul>', // Combine changes into a list
         ]);
+
 
 
         return redirect()->route('users-list')->with('success', 'User updated successfully!');

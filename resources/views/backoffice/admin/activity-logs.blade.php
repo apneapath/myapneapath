@@ -30,16 +30,23 @@
                 </tr>
             </thead>
             <tbody id="activity-log-list">
-                @foreach ($logs as $log)
+                @if ($logs->isEmpty())
                     <tr>
-                        <td>{{ $log->user_id }}</td>
-                        <td>{{ $log->user_name }}</td>
-                        <td>{{ $log->action }}</td>
-                        <td>{{ $log->action_detail }}</td>
-                        <td>{{ $log->created_at }}</td>
+                        <td colspan="5" class="text-center">No activity logs available.</td>
                     </tr>
-                @endforeach
+                @else
+                    @foreach ($logs as $log)
+                        <tr>
+                            <td>{{ $log->user_id }}</td>
+                            <td>{{ $log->user_name }}</td>
+                            <td>{{ $log->action }}</td>
+                            <td>{!! $log->action_detail !!}</td>
+                            <td>{{ $log->created_at }}</td>
+                        </tr>
+                    @endforeach
+                @endif
             </tbody>
+
         </table>
     </div>
 
