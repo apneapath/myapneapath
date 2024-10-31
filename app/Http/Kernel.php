@@ -19,6 +19,7 @@ class Kernel extends HttpKernel
         'auth' => \App\Http\Middleware\Authenticate::class,
         'verified' => \Laravel\Jetstream\Http\Middleware\EnsureEmailIsVerified::class,
         'checkRole' => \App\Http\Middleware\CheckUserRole::class, // Ensure this line is present
+        'role' => \App\Http\Middleware\CheckRole::class,
     ];
 
 

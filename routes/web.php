@@ -96,6 +96,19 @@ Route::get('/roles-list', function () {
     return view('backoffice.admin.roles-list');
 });
 
+Route::group(['middleware' => ['role:Super Admin']], function () {
+    // Admin routes
+});
+
+Route::group(['middleware' => ['role:Administrator']], function () {
+    // Editor routes
+});
+
+Route::group(['middleware' => ['role:Virtual Assistant']], function () {
+    // Editor routes
+});
+
+
 //Temporary commented
 Route::middleware([
     'auth:sanctum',
