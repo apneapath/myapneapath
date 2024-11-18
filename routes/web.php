@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
+use App\Models\Role;  // Import the Role model
 
 Route::get('/', function () {
     return view('storefront.index');
@@ -66,9 +67,16 @@ Route::get('/users-list', function () {
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
 
 //add-user
-Route::get('/add-user', function () {
-    return view('backoffice.admin.add-user');
-});
+// Route::get('/add-user', function () {
+//     return view('backoffice.admin.add-user');
+// });
+
+
+
+Route::get('/add-user', [UserController::class, 'showForm'])->name('users.showForm');
+
+
+
 
 //post users-list
 Route::post('/users-list', [UserController::class, 'add'])->name('users-list');

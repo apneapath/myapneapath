@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Role;
 use App\Models\ActivityLog;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
@@ -15,8 +16,29 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
     //
+    public function showForm()
+    {
+        $roles = Role::all();  // Get all available roles
+        return view('backoffice.admin.add-user', compact('roles'));  // Pass roles to the view
+    }
+
     public function add(Request $request)
     {
+        // Validate the incoming request data
+        $validated = $request->validate([
+            'firstName' => 'required|string|max:255',
+            'lastName' => 'required|string|max:255',
+            'gender' => 'required|string',
+            'email' => 'required|email|unique:users,email',
+            'address' => 'required|string',
+            'phoneNumber' => 'required|string',
+            'role' => 'required|string|exists:roles,name', // Ensure the role exists in the roles table
+            'status' => 'required|string|in:Active,Inactive',
+            'username' => 'nullable|string|max:255|unique:users,username',
+            'password' => 'required|string|min:8|confirmed', // Ensure password confirmation
+            'photo' => 'nullable|image|mimes:jpg,png,jpeg,gif|max:2048', // Handle photo upload validation
+        ]);
+
         // Create the user
         $user = new User();
         $user->first_name = $request->firstName;
@@ -25,54 +47,65 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->address = $request->address;
         $user->phone_number = $request->phoneNumber;
-        $user->role = $request->role;
         $user->status = $request->status;
         $user->username = $request->userName;
         $user->password = bcrypt($request->password); // Hash the password
-
 
         // Handle the photo upload
         if ($request->hasFile('photo')) {
             // Get the current timestamp
             $timestamp = time();
-
             // Create a filename based on first name, last name, and timestamp
             $filename = strtolower($user->first_name . '_' . $user->last_name . '_' . $timestamp . '.' . $request->file('photo')->getClientOriginalExtension());
-
             // Store the photo
             $photoPath = $request->file('photo')->storeAs('photos', $filename, 'public');
             $user->photo = $photoPath; // Store the path in the database
         }
 
         // Save the user
-        $user->name = trim($user->first_name . ' ' . $user->last_name);// Set the name by combining first and last names
+        $user->name = trim($user->first_name . ' ' . $user->last_name); // Set the name by combining first and last names
         $user->save();
 
+        // Assign the role to the user via the pivot table
+        $role = Role::where('name', $request->role)->first(); // Find the role by name
+        if ($role) {
+            $user->roles()->attach($role); // Attach the role to the user (many-to-many relationship)
+        } else {
+            return redirect()->route('users.add')->with('error', 'Role not found.');
+        }
+
+        // Redirect to the user list with a success message
         return redirect()->route('users-list')->with('success', 'User registered successfully!');
     }
 
     public function index()
     {
-        $users = User::orderBy('created_at', 'desc')->get()->map(function ($user) {
-            return [
-                'id' => $user->id, // Include the user ID if needed
-                'name' => $user->name,
-                'email' => $user->email,
-                'role' => $user->role,
-                'status' => $user->status,
-                'photo' => $user->photo ? asset('storage/' . $user->photo) : asset('img/backoffice/avatar/user-default-photo.png'), // Photo URL
-            ];
-        });
-
+        // Fetch users with their associated roles
+        $users = User::with('roles') // Eager load roles
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->map(function ($user) {
+                // Get the roles associated with the user (if any)
+                $roles = $user->roles->pluck('name')->join(', '); // Join multiple roles with a comma
+    
+                return [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'role' => $roles, // Display roles as a comma-separated string
+                    'status' => $user->status,
+                    'photo' => $user->photo ? asset('storage/' . $user->photo) : asset('img/backoffice/avatar/user-default-photo.png'), // Photo URL
+                ];
+            });
 
         return response()->json($users);
     }
 
-
     public function edit($id)
     {
-        $user = User::findOrFail($id); // Retrieve the user by ID
-        return view('backoffice.admin.edit-user', compact('user')); // Update the path
+        $user = User::with('roles')->findOrFail($id);
+        $roles = Role::all(); // Get all roles from the Role model
+        return view('backoffice.admin.edit-user', compact('user', 'roles'));
     }
 
     public function update(Request $request, $id)
@@ -85,7 +118,7 @@ class UserController extends Controller
             'phoneNumber' => 'nullable|string|max:15',
             'gender' => 'required|string',
             'status' => 'required|string',
-            'role' => 'required|string',
+            'role' => 'required|array', // Role should be an array (multiple roles can be selected)
             'address' => 'nullable|string',
             'username' => 'nullable|string|max:255',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -103,7 +136,7 @@ class UserController extends Controller
             'phone_number' => $user->phone_number,
             'gender' => $user->gender,
             'status' => $user->status,
-            'role' => $user->role,
+            'role' => $user->roles->pluck('name')->toArray(), // Fetch current roles
             'address' => $user->address,
             'username' => $user->username,
         ];
@@ -127,7 +160,6 @@ class UserController extends Controller
         $user->status = $request->status;
         $user->email = $request->email;
         $user->phone_number = $request->phoneNumber;
-        $user->role = $request->role;
         $user->address = $request->address;
         $user->username = $request->username;
 
@@ -157,15 +189,15 @@ class UserController extends Controller
         // Save the user
         $user->save();
 
-        // Initialize actionDetails
-        $actionDetails = [];
+        // Sync roles (syncs the role_user pivot table)
+        $user->roles()->sync($request->role); // Pass the role IDs as an array to sync the roles
 
         // Check for changes and log them
         foreach ($oldValues as $key => $oldValue) {
             $newValue = $user->$key; // Dynamic property access
             if ($oldValue != $newValue) {
                 // Add each change as a list item
-                $actionDetails[] = "<li>Changed {$key} from {$oldValue} to {$newValue}.</li>";
+                $actionDetails[] = "<li>Changed {$key} from " . implode(', ', (array) $oldValue) . " to " . implode(', ', (array) $newValue) . ".</li>";
             }
         }
 
@@ -177,11 +209,8 @@ class UserController extends Controller
             'action_detail' => '<ul>' . implode('', $actionDetails) . '</ul>', // Combine changes into a list
         ]);
 
-
-
         return redirect()->route('users-list')->with('success', 'User updated successfully!');
     }
-
 
     public function delete($id)
     {

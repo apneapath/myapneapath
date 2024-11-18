@@ -95,17 +95,14 @@
                                             </div>
                                             <div class="form-group col-6">
                                                 <label for="role">Role</label>
-                                                <select id="role" class="form-control" name="role" required>
-                                                    <option value="" disabled selected>Choose...</option>
-                                                    <option value="Super Admin"
-                                                        {{ $user->role == 'Super Admin' ? 'selected' : '' }}>Super Admin
-                                                    </option>
-                                                    <option value="Administrator"
-                                                        {{ $user->role == 'Administrator' ? 'selected' : '' }}>
-                                                        Administrator</option>
-                                                    <option value="Virtual Assistance"
-                                                        {{ $user->role == 'Virtual Assistance' ? 'selected' : '' }}>Virtual
-                                                        Assistance (VA)</option>
+                                                <select id="role" name="role[]" class="form-control" required>
+                                                    <option value="" disabled>Choose...</option>
+                                                    @foreach ($roles as $role)
+                                                        <option value="{{ $role->id }}"
+                                                            {{ in_array($role->id, old('role', $user->roles->pluck('id')->toArray())) ? 'selected' : '' }}>
+                                                            {{ $role->name }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                             <div class="form-group col-12">

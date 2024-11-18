@@ -18,7 +18,13 @@
                             <div class="col-10">
                                 <h5>Name: {{ $user->first_name }} {{ $user->last_name }}</h5>
                                 <p>Email: {{ $user->email }}</p>
-                                <p>Role: {{ $user->role }}</p>
+                                <p>Role:
+                                    @foreach ($user->roles as $role)
+                                        {{ $role->name }}@if (!$loop->last)
+                                            ,
+                                        @endif
+                                    @endforeach
+                                </p>
                                 <p>Status: {{ $user->status }}</p>
                                 <p>Phone: {{ $user->phone_number }}</p>
                                 <p>Address: {{ $user->address }}</p>

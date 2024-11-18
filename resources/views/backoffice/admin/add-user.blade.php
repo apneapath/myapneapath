@@ -62,17 +62,15 @@
                                         <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber"
                                             placeholder="ex. (00)0-0000-0000" required>
                                     </div>
-
                                     <div class="form-group col-3">
                                         <label for="role">Role</label>
                                         <select id="role" class="form-control" name="role" required>
                                             <option value="" disabled selected>Choose...</option>
-                                            <option value="Super Admin">Super Admin</option>
-                                            <option value="Administrator">Administrator</option>
-                                            <option value="Virtual Assistance">Virtual Assistance (VA)</option>
+                                            @foreach ($roles as $role)
+                                                <option value="{{ $role->name }}">{{ $role->name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
-
                                     <div class="form-group col-3">
                                         <label for="status">Status</label>
                                         <select id="status" class="form-control" name="status" required>
@@ -97,10 +95,15 @@
                                                 placeholder="ex. 8 character" required>
                                         </div>
                                         <div class="form-group col-4">
+                                            <label for="password_confirmation">Confirm Password</label>
+                                            <input type="password" class="form-control" id="password_confirmation"
+                                                name="password_confirmation" placeholder="Confirm password" required>
+                                        </div>
+                                        <div class="form-group col-4">
                                             <div class="mb-3">
                                                 <label for="formFile">Upload Photo</label>
-                                                <input class="form-control" type="file" name="photo" accept="image/*"
-                                                    id="formFile">
+                                                <input class="form-control" type="file" name="photo"
+                                                    accept="image/*" id="formFile">
                                             </div>
                                         </div>
                                     </div>

@@ -69,7 +69,7 @@
 
         function fetchUsers() {
             $.ajax({
-                url: '{{ route('users.index') }}',
+                url: '{{ route('users.index') }}', // Adjust this route to match your correct route name
                 method: 'GET',
                 success: function(users) {
                     $('#user-list').empty(); // Clear the current list
@@ -78,7 +78,7 @@
                             `<tr>
                         <td><img style="border-radius: 100%; width: 35px; height: 35px" src="${user.photo}" alt="${user.name}'s Photo" style="max-width: 33px; max-height: 33px;"> ${user.name}</td>
                         <td>${user.email}</td>
-                        <td>${user.role}</td>
+                        <td>${user.role}</td>  <!-- Display roles -->
                         <td>${user.status}</td>
                         <td>
                             <a title="Edit user profile" href="/edit-user/${user.id}" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fa-solid fa-pen-to-square"></i></a>
