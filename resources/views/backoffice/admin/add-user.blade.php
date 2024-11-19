@@ -15,7 +15,7 @@
         <div>
             <div class="row justify-content-center align-items-center h-100">
                 <div class="col-12 col-lg-12 col-xl-12">
-                    <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                    <div class="card shadow-2-strong card-registration" style="border-radius: 5px;">
                         <div class="card-body p-4 p-md-5">
                             <form method="POST" action="{{ route('users-list') }}" enctype="multipart/form-data">
                                 @csrf
@@ -112,7 +112,7 @@
                                     <div class="col-2 d-flex flex-row-reverse">
                                         <div class="form-group">
                                             <a href="/users-list"
-                                                class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">Back</a>
+                                                class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">Cancel</a>
                                             <button type="submit" id="submit" name="submit"
                                                 class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Save</button>
                                         </div>

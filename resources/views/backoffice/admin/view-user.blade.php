@@ -8,7 +8,7 @@
 
         <div class="row justify-content-center align-items-center h-100">
             <div class="col-12">
-                <div class="card shadow-2-strong" style="border-radius: 15px;">
+                <div class="card shadow-2-strong" style="border-radius: 5px;">
                     <div class="card-body p-4 p-md-5">
                         <div class="row">
                             <div class="col-2">

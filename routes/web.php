@@ -97,6 +97,12 @@ Route::get('/add-role', [RoleController::class, 'create'])->name('roles.create')
 // Store new role
 Route::post('/roles', [RoleController::class, 'store'])->name('roles.store');
 
+// Show form to edit an existing role
+Route::get('/roles/{role}/edit', [RoleController::class, 'edit'])->name('roles.edit');
+
+// Update a role
+Route::put('/roles/{role}', [RoleController::class, 'update'])->name('roles.update');
+
 // Delete a role
 Route::delete('/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
 
