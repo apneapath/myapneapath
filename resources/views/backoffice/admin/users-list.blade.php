@@ -2,6 +2,16 @@
 
 @section('content')
     <div class="container-fluid">
+
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <div>
+                <h4 class=" mb-0 text-gray-800">Users List</h4>
+            </div>
+            <a href="/add-user" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                <i class="fa-solid fa-user-plus"></i>
+                Create User</a>
+        </div>
+
         @if (session('success'))
             <div class="alert alert-success" role="alert" id="success-alert">
                 {{ session('success') }}
@@ -12,15 +22,6 @@
                 }, 5000);
             </script>
         @endif
-
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <div>
-                <h4 class=" mb-0 text-gray-800">Users List</h4>
-            </div>
-            <a href="/add-user" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                <i class="fa-solid fa-user-plus"></i>
-                Create User</a>
-        </div>
 
         <table id="user-table" class="row-border stripe hover">
             <thead>

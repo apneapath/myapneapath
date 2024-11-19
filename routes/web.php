@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Models\Role;  // Import the Role model
 
 Route::get('/', function () {
@@ -66,24 +67,13 @@ Route::get('/users-list', function () {
 //route for user AJAX
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
 
-//add-user
-// Route::get('/add-user', function () {
-//     return view('backoffice.admin.add-user');
-// });
-
-
-
 Route::get('/add-user', [UserController::class, 'showForm'])->name('users.showForm');
-
-
-
 
 //post users-list
 Route::post('/users-list', [UserController::class, 'add'])->name('users-list');
 
 //edit user
 Route::get('/edit-user/{id}', [UserController::class, 'edit'])->name('edit-user');
-
 
 //update user
 Route::post('/update-user/{id}', [UserController::class, 'update'])->name('update-user');
@@ -98,11 +88,19 @@ Route::get('/view-user/{id}', [UserController::class, 'view'])->name('view-user'
 Route::get('/activity-logs', [UserController::class, 'viewActivityLogs'])->name('activity-logs');
 
 
+//roles-list
+Route::get('/roles-list', [RoleController::class, 'index'])->name('roles.index');
 
-//users-list
-Route::get('/roles-list', function () {
-    return view('backoffice.admin.roles-list');
-});
+// Show form to create a new role
+Route::get('/add-role', [RoleController::class, 'create'])->name('roles.create');
+
+// Store new role
+Route::post('/roles', [RoleController::class, 'store'])->name('roles.store');
+
+// Delete a role
+Route::delete('/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
+
+
 
 Route::group(['middleware' => ['role:Super Admin']], function () {
     // Admin routes
