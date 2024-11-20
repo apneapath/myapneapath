@@ -33,7 +33,8 @@
 
                                 <div class="form-group">
                                     <label for="permissions">Permissions</label>
-                                    <select name="permissions[]" id="permissions" class="form-control" required>
+                                    <select name="permissions[]" id="permissions-edit" class="form-control"
+                                        multiple="multiple" required>
                                         @foreach ($permissions as $permission)
                                             <option value="{{ $permission->id }}"
                                                 {{ $role->permissions->contains($permission->id) ? 'selected' : '' }}>
@@ -54,7 +55,21 @@
                 </div>
             </div>
         </div>
-
-
     </div>
+
+    <!-- Include jQuery and Select2 Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+
+    <script>
+        $(document).ready(function() {
+            // Apply Select2 to permissions select box (Edit Role)
+            $('#permissions-edit').select2({
+                placeholder: "Select permissions",
+                allowClear: true,
+                width: '100%', // Ensures the dropdown takes up full width
+            });
+        });
+    </script>
 @endsection
