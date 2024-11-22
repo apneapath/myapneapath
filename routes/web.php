@@ -64,6 +64,10 @@ Route::get('/users-list', function () {
     return view('backoffice.admin.users-list');
 });
 
+// In routes/web.php
+// Route::get('/users-list', [UserController::class, 'index'])->name('users.index');
+
+
 //route for user AJAX
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
 

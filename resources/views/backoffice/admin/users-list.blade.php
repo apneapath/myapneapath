@@ -7,9 +7,13 @@
             <div>
                 <h4 class=" mb-0 text-gray-800">Users List</h4>
             </div>
-            <a href="/add-user" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                <i class="fa-solid fa-user-plus"></i>
-                Create User</a>
+            <!-- Check if the user has the 'create posts' permission -->
+            @if (auth()->user()->can('create posts'))
+                <a href="/add-user" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                    <i class="fa-solid fa-user-plus"></i>
+                    Create User
+                </a>
+            @endif
         </div>
 
         @if (session('success'))
