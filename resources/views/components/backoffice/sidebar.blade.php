@@ -22,27 +22,79 @@
 
     <hr class="sidebar-divider">
 
-    <!-- Heading -->
-    <div class="sidebar-heading">Administrator</div>
 
-    <!-- Nav Item - Referral Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree"
-            aria-expanded="true" aria-controls="collapseThree">
-            <i class="fa-solid fa-gear"></i>
-            <span>Admin</span>
+
+    <!--Using the @ role Blade Directive (Preferred Method with Spatie/Permission Package)-->
+    {{-- @if (auth()->user()->hasRole('Super Admin'))
+        <a href="/add-user" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fa-solid fa-user-plus"></i> Create User
         </a>
-        <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item {{ request()->is('users-list') ? 'active' : '' }}"
-                    href="{{ url('/users-list') }}">Users</a>
-                <a class="collapse-item {{ request()->is('roles-list') ? 'active' : '' }}"
-                    href="{{ url('/roles-list') }}">Roles</a>
-                <a class="collapse-item {{ request()->is('activity-logs') ? 'active' : '' }}"
-                    href="{{ url('/activity-logs') }}">Activity Logs</a>
+    @endif --}}
+
+    <!--Or, you can use @ role and @ endrole:-->
+    {{-- @role('Super Admin')
+        <a href="/add-user" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fa-solid fa-user-plus"></i> Create User
+        </a>
+    @endrole --}}
+
+    <!--Manually Checking Roles Using hasRole() Method-->
+    {{-- @if (auth()->user()->hasRole('Super Admin'))
+        <a href="/add-user" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fa-solid fa-user-plus"></i> Create User
+        </a>
+    @endif --}}
+
+    <!--Using Multiple Roles-->
+    {{-- @if (auth()->user()->hasRole(['Super Admin', 'Admin']))
+        <a href="/add-user" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fa-solid fa-user-plus"></i> Create User
+        </a>
+    @endif --}}
+
+    <!--Checking User Permissions-->
+    {{-- @if (auth()->user()->can('create posts'))
+        <a href="/add-user" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fa-solid fa-user-plus"></i> Create User
+        </a>
+    @endif --}}
+
+    <!--Combining Roles and Permissions-->
+    {{-- @if (auth()->user()->hasRole('Super Admin') && auth()->user()->can('create posts'))
+        <a href="/add-user" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fa-solid fa-user-plus"></i> Create User
+        </a>
+    @endif --}}
+
+
+
+
+    @role('Super Admin')
+        <!-- Heading -->
+        <div class="sidebar-heading">Administrator</div>
+
+        <!-- Nav Item - Referral Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree"
+                aria-expanded="true" aria-controls="collapseThree">
+                <i class="fa-solid fa-gear"></i>
+                <span>Admin</span>
+            </a>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item {{ request()->is('users-list') ? 'active' : '' }}"
+                        href="{{ url('/users-list') }}">Users</a>
+                    <a class="collapse-item {{ request()->is('roles-list') ? 'active' : '' }}"
+                        href="{{ url('/roles-list') }}">Roles</a>
+                    <a class="collapse-item {{ request()->is('activity-logs') ? 'active' : '' }}"
+                        href="{{ url('/activity-logs') }}">Activity Logs</a>
+                </div>
             </div>
-        </div>
-    </li>
+        </li>
+    @endrole
+
+
+
 
     <!-- Divider -->
     <hr class="sidebar-divider">
