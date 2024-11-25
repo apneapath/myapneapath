@@ -78,6 +78,31 @@ class UserController extends Controller
         return redirect()->route('users-list')->with('success', 'User registered successfully!');
     }
 
+    // public function index()
+    // {
+    //     // Fetch users with their associated roles
+    //     $users = User::with('roles') // Eager load roles
+    //         ->orderBy('created_at', 'desc')
+    //         ->get()
+    //         ->map(function ($user) {
+    //             // Get the roles associated with the user (if any)
+    //             $roles = $user->roles->pluck('name')->join(', '); // Join multiple roles with a comma
+
+    //             return [
+    //                 'id' => $user->id,
+    //                 'name' => $user->name,
+    //                 'email' => $user->email,
+    //                 'role' => $roles, // Display roles as a comma-separated string
+    //                 'status' => $user->status,
+    //                 'photo' => $user->photo ? asset('storage/' . $user->photo) : asset('img/backoffice/avatar/user-default-photo.png'), // Photo URL
+    //             ];
+    //         });
+
+    //     return response()->json($users);
+    // }
+
+
+
     public function index()
     {
         // Fetch users with their associated roles
@@ -88,6 +113,7 @@ class UserController extends Controller
                 // Get the roles associated with the user (if any)
                 $roles = $user->roles->pluck('name')->join(', '); // Join multiple roles with a comma
     
+                // Return the necessary data for each user
                 return [
                     'id' => $user->id,
                     'name' => $user->name,
@@ -98,8 +124,20 @@ class UserController extends Controller
                 ];
             });
 
-        return response()->json($users);
+        // Check if the logged-in user has permissions
+        $canEdit = auth()->user()->can('edit posts');
+        $canView = auth()->user()->can('view posts');
+        $canDelete = auth()->user()->can('delete posts');
+
+        // Return the users along with permission flags
+        return response()->json([
+            'users' => $users,
+            'canEdit' => $canEdit,
+            'canView' => $canView,
+            'canDelete' => $canDelete,
+        ]);
     }
+
 
     public function edit($id)
     {

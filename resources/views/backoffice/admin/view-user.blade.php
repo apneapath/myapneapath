@@ -32,8 +32,12 @@
                                 <p>Username: {{ $user->username }}</p>
                                 <a href="{{ route('users-list') }}" class="btn btn-sm btn-secondary mt-3">Back to Users
                                     List</a>
-                                <a href="{{ route('edit-user', $user->id) }}" class="btn btn-sm btn-primary mt-3">Edit
-                                    User</a>
+
+
+                                @if (auth()->user()->can('edit posts'))
+                                    <a href="{{ route('edit-user', $user->id) }}" class="btn btn-sm btn-primary mt-3">Edit
+                                        User</a>
+                                @endif
                             </div>
                         </div>
                     </div>

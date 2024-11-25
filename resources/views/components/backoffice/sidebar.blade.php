@@ -67,9 +67,7 @@
     @endif --}}
 
 
-
-
-    @role('Super Admin')
+    @if (auth()->user()->hasRole('Super Admin') || auth()->user()->hasRole('Administrator'))
         <!-- Heading -->
         <div class="sidebar-heading">Administrator</div>
 
@@ -84,14 +82,16 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item {{ request()->is('users-list') ? 'active' : '' }}"
                         href="{{ url('/users-list') }}">Users</a>
-                    <a class="collapse-item {{ request()->is('roles-list') ? 'active' : '' }}"
-                        href="{{ url('/roles-list') }}">Roles</a>
-                    <a class="collapse-item {{ request()->is('activity-logs') ? 'active' : '' }}"
-                        href="{{ url('/activity-logs') }}">Activity Logs</a>
+                    @if (auth()->user()->hasRole('Super Admin'))
+                        <a class="collapse-item {{ request()->is('roles-list') ? 'active' : '' }}"
+                            href="{{ url('/roles-list') }}">Roles</a>
+                        <a class="collapse-item {{ request()->is('activity-logs') ? 'active' : '' }}"
+                            href="{{ url('/activity-logs') }}">Activity Logs</a>
+                    @endif
                 </div>
             </div>
         </li>
-    @endrole
+    @endif
 
 
 

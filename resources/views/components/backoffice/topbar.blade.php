@@ -169,14 +169,19 @@
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <span class="mr-2 d-none d-lg-inline text-gray-600 small">
-
                       @if (auth()->check())
                           Logged in as: {{ auth()->user()->first_name }}
+                          @foreach (auth()->user()->roles as $role)
+                              <br> Role: {{ $role->name }}
+                          @endforeach
                       @else
                           You are not logged in.
                       @endif
                   </span>
-                  <img class="img-profile rounded-circle" src="{{ asset('img/backoffice/undraw_profile.svg') }}">
+                  {{-- <img class="img-profile rounded-circle" src="{{ asset('img/backoffice/undraw_profile.svg') }}"> --}}
+                  <img class="img-profile rounded-circle"
+                      src="{{ auth()->user()->photo ? asset('storage/' . auth()->user()->photo) : asset('img/backoffice/undraw_profile.svg') }}"
+                      alt="User Photo">
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
