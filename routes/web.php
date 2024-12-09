@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\PatientController;
+
+// use App\Http\Controllers\Admin\PatientController;
+// use App\Http\Controllers\PatientController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Models\Role;  // Import the Role model
 
@@ -109,6 +113,52 @@ Route::put('/roles/{role}', [RoleController::class, 'update'])->name('roles.upda
 
 // Delete a role
 Route::delete('/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
+
+
+
+// Route for patient AJAX - fetching patients list
+// Route::get('/patients', [PatientController::class, 'index'])->name('patients.index');
+Route::get('/patients', [PatientController::class, 'index'])->name('patients.index');
+
+
+
+
+
+
+// Show form to create a new patient
+// Route::get('/add-patient', [PatientController::class, 'create'])->name('patients.create');
+
+// // Store a new patient
+// Route::post('/patients-list', [PatientController::class, 'store'])->name('patients.store');
+
+// // Edit patient
+// Route::get('/edit-patient/{id}', [PatientController::class, 'edit'])->name('patients.edit');
+
+// // Update patient
+// Route::post('/update-patient/{id}', [PatientController::class, 'update'])->name('patients.update');
+
+// // Delete patient
+// Route::delete('/delete-patient/{id}', [PatientController::class, 'destroy'])->name('patients.destroy');
+
+// // View patient details
+// Route::get('/view-patient/{id}', [PatientController::class, 'show'])->name('patients.show');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
