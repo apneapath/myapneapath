@@ -11,63 +11,6 @@ use Carbon\Carbon;
 class PatientController extends Controller
 {
     // Display a list of patients
-    // public function index()
-    // {
-    //     try {
-    //         // Fetch patients with their associated data, if any (e.g., appointments, doctor, etc.)
-    //         // For this example, we won't eager load anything, but you can modify this to include related data.
-    //         $patients = Patient::select(
-    //             'id',
-    //             'first_name',
-    //             'last_name',
-    //             'contact_number',
-    //             'dob',
-    //             'email',
-    //             'address'
-    //             // Add more necessary fields here
-    //         )
-    //             ->orderBy('created_at', 'desc') // Optional: Order by creation date
-    //             ->get()
-    //             ->map(function ($patient) {
-    //                 // Format the dob as Y-m-d (or any format you prefer)
-    //                 $patient->dob = Carbon::parse($patient->dob)->format('Y-m-d');
-    //                 // Return the necessary data for each patient
-    //                 return [
-    //                     'id' => $patient->id,
-    //                     'first_name' => $patient->first_name,
-    //                     'last_name' => $patient->last_name,
-    //                     'contact_number' => $patient->contact_number,
-    //                     'dob' => $patient->dob,  // Formatted date
-    //                     'email' => $patient->email,
-    //                     'address' => $patient->address,
-    //                 ];
-    //             });
-
-    //         // Check if the logged-in user has permissions
-    //         $canEdit = auth()->user()->can('edit patients');
-    //         $canView = auth()->user()->can('view patients');
-    //         $canDelete = auth()->user()->can('delete patients');
-
-    //         // Return the patients along with permission flags
-    //         return response()->json([
-    //             'patients' => $patients,
-    //             'canEdit' => $canEdit,
-    //             'canView' => $canView,
-    //             'canDelete' => $canDelete,
-    //         ]);
-    //     } catch (\Exception $e) {
-    //         // Log the exception (optional, you can enable logging in a production environment)
-    //         // Log::error('Error fetching patients: ' . $e->getMessage());
-
-    //         // Return an error response
-    //         return response()->json([
-    //             'error' => 'Unable to fetch patients.',
-    //             'message' => $e->getMessage(),
-    //         ], 500);
-    //     }
-    // }
-
-
     public function index()
     {
         try {
@@ -98,9 +41,9 @@ class PatientController extends Controller
                 });
 
             // Check if the logged-in user has permissions
-            $canEdit = auth()->user()->can('edit patients');
-            $canView = auth()->user()->can('view patients');
-            $canDelete = auth()->user()->can('delete patients');
+            $canEdit = auth()->user()->can('edit posts');
+            $canView = auth()->user()->can('view posts');
+            $canDelete = auth()->user()->can('delete posts');
 
             // Return the patients along with permission flags
             return response()->json([

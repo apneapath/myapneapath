@@ -126,7 +126,7 @@ Route::get('/patients', [PatientController::class, 'index'])->name('patients.ind
 
 
 // Show form to create a new patient
-// Route::get('/add-patient', [PatientController::class, 'create'])->name('patients.create');
+Route::get('/add-patient', [PatientController::class, 'create'])->name('patients.create');
 
 // // Store a new patient
 // Route::post('/patients-list', [PatientController::class, 'store'])->name('patients.store');

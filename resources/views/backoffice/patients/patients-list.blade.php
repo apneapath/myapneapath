@@ -8,12 +8,12 @@
             </div>
 
             <!-- Check if the user has permission to create a new patient -->
-            {{-- @if (auth()->user()->can('create patients'))
+            @if (auth()->user()->can('create posts'))
                 <a href="{{ route('patients.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                     <i class="fa-solid fa-user-plus"></i>
                     Add Patient
                 </a>
-            @endif --}}
+            @endif
         </div>
 
         @if (session('success'))
