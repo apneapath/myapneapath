@@ -68,6 +68,8 @@ Route::get('/users-list', function () {
     return view('backoffice.admin.users-list');
 });
 
+
+//USER----------------------------------------------------------------------------------------------------------------------------------
 //route for user AJAX
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
 
@@ -91,7 +93,7 @@ Route::get('/view-user/{id}', [UserController::class, 'view'])->name('view-user'
 //activity logs view
 Route::get('/activity-logs', [UserController::class, 'viewActivityLogs'])->name('activity-logs');
 
-
+//ROLES--------------------------------------------------------------------------------------------------------------------------------
 //roles-list
 Route::get('/roles-list', [RoleController::class, 'index'])->name('roles.index');
 
@@ -110,6 +112,8 @@ Route::put('/roles/{role}', [RoleController::class, 'update'])->name('roles.upda
 // Delete a role
 Route::delete('/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
 
+
+//PATIENTS--------------------------------------------------------------------------------------------------------------------------------
 // Show all patients (AJAX)
 Route::get('/patients', [PatientController::class, 'index'])->name('patients.index');
 
@@ -126,7 +130,7 @@ Route::post('/patients-list', [PatientController::class, 'add'])->name('patients
 // Route::post('/update-patient/{id}', [PatientController::class, 'update'])->name('patients.update');
 
 // // Delete the patient
-// Route::delete('/delete-patient/{id}', [PatientController::class, 'delete'])->name('patients.delete');
+Route::delete('/delete-patient/{id}', [PatientController::class, 'destroy'])->name('patients.destroy');
 
 // // View patient details
 // Route::get('/view-patient/{id}', [PatientController::class, 'view'])->name('patients.view');

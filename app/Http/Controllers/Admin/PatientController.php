@@ -187,9 +187,15 @@ class PatientController extends Controller
         return redirect()->route('patients.index')->with('success', 'Patient updated successfully!');
     }
     // Delete a patient
-    public function destroy(Patient $patient)
+    public function destroy($id)
     {
+        // Find the patient by id
+        $patient = Patient::findOrFail($id);
+
+        // Delete the patient
         $patient->delete();
-        return redirect()->route('patients.index');
+
+        // Redirect with a success message
+        return redirect()->route('patients-list')->with('success', 'Patient deleted successfully.');
     }
 }
