@@ -99,7 +99,7 @@
                     <td>${patient.address}</td>
                     <td>
                         ${canEdit ? `<a title="Edit patient details" href="/edit-patient/${patient.id}" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fa-solid fa-pen-to-square"></i></a>` : ''}
-                        ${canView ? `<a title="View patient details" href="/view-patient/${patient.id}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fa-regular fa-eye"></i></a>` : ''}
+                        ${canView ? `<a title="View patient details" href="/patient-dashboard/${patient.id}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fa-regular fa-eye"></i></a>` : ''}
                         ${canDelete ? `<button type="button" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="setDeletePatientId(${patient.id});"><i class="fa-solid fa-trash"></i></button>` : ''}
                     </td>
                 </tr>

@@ -123,18 +123,24 @@ class PatientController extends Controller
         return back()->with('error', 'Failed to create patient.');
     }
 
-    // Show a specific patient's details
-    public function view($id)
-    {
-        // Find the patient by ID
-        $patient = Patient::find($id);
-        if (!$patient) {
-            return redirect()->route('patients.index')->with('error', 'Patient not found.');
-        }
 
-        // Return view with the patient data
-        return view('patients.view', compact('patient'));
+
+
+    // Show a specific patient's details
+    // TO BE CONTINUE PATIENT DASHBOARD-----------------------------------------------------------------------------------------------------
+    public function show($id)
+    {
+        // Fetch patient details along with their referrals
+        $patient = Patient::with('referrals.doctor') // Eager load referrals with doctor info
+            ->findOrFail($id);
+
+        return view('patient-dashboard', compact('patient'));
     }
+
+
+
+
+
 
     // Show the form to edit a patient's information
     public function edit($id)

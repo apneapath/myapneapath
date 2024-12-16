@@ -132,8 +132,13 @@ Route::post('/update-patient/{id}', [PatientController::class, 'update'])->name(
 // // Delete the patient
 Route::delete('/delete-patient/{id}', [PatientController::class, 'destroy'])->name('patients.destroy');
 
-// // View patient details
-// Route::get('/view-patient/{id}', [PatientController::class, 'view'])->name('patients.view');
+
+
+// TO BE CONTINUE PATIENT DASHBOARD-----------------------------------------------------------------------------------------------------
+// //Patient dashboard
+Route::get('/patient-dashboard/{id}', [PatientController::class, 'show'])->name('patient-dashboard');
+
+
 
 Route::group(['middleware' => ['role:Super Admin']], function () {
     // Admin routes
