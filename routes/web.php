@@ -124,10 +124,10 @@ Route::get('/add-patient', [PatientController::class, 'showForm'])->name('patien
 Route::post('/patients-list', [PatientController::class, 'add'])->name('patients-list');
 
 // // Show the form to edit an existing patient
-// Route::get('/edit-patient/{id}', [PatientController::class, 'edit'])->name('patients.edit');
+Route::get('/edit-patient/{id}', [PatientController::class, 'edit'])->name('patients.edit');
 
 // // Update the patient
-// Route::post('/update-patient/{id}', [PatientController::class, 'update'])->name('patients.update');
+Route::post('/update-patient/{id}', [PatientController::class, 'update'])->name('patients.update');
 
 // // Delete the patient
 Route::delete('/delete-patient/{id}', [PatientController::class, 'destroy'])->name('patients.destroy');

@@ -137,10 +137,14 @@ class PatientController extends Controller
     }
 
     // Show the form to edit a patient's information
-    public function edit(Patient $patient)
+    public function edit($id)
     {
-        return view('patients.edit', compact('patient'));
+        // Find the patient by id
+        $patient = Patient::findOrFail($id);
+        // Return the edit view with the patient's data
+        return view('backoffice.patients.edit-patient', compact('patient'));
     }
+
     // Update a patient's information
     public function update(Request $request, $id)
     {
@@ -184,7 +188,7 @@ class PatientController extends Controller
         }
 
         // If not an AJAX request, redirect
-        return redirect()->route('patients.index')->with('success', 'Patient updated successfully!');
+        return redirect()->route('patients-list')->with('success', 'Patient updated successfully!');
     }
     // Delete a patient
     public function destroy($id)
