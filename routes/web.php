@@ -68,10 +68,6 @@ Route::get('/users-list', function () {
     return view('backoffice.admin.users-list');
 });
 
-// In routes/web.php
-// Route::get('/users-list', [UserController::class, 'index'])->name('users.index');
-
-
 //route for user AJAX
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
 
@@ -114,53 +110,26 @@ Route::put('/roles/{role}', [RoleController::class, 'update'])->name('roles.upda
 // Delete a role
 Route::delete('/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
 
-
-
-// Route for patient AJAX - fetching patients list
-// Route::get('/patients', [PatientController::class, 'index'])->name('patients.index');
+// Show all patients (AJAX)
 Route::get('/patients', [PatientController::class, 'index'])->name('patients.index');
 
+// // Show the form to create a new patient
+Route::get('/add-patient', [PatientController::class, 'showForm'])->name('patients.showForm');
 
+// // Store a new patient (AJAX request for the patient list)
+Route::post('/patients-list', [PatientController::class, 'add'])->name('patients-list');
 
-
-
-
-// Show form to create a new patient
-Route::get('/add-patient', [PatientController::class, 'create'])->name('patients.create');
-
-// // Store a new patient
-// Route::post('/patients-list', [PatientController::class, 'store'])->name('patients.store');
-
-// // Edit patient
+// // Show the form to edit an existing patient
 // Route::get('/edit-patient/{id}', [PatientController::class, 'edit'])->name('patients.edit');
 
-// // Update patient
+// // Update the patient
 // Route::post('/update-patient/{id}', [PatientController::class, 'update'])->name('patients.update');
 
-// // Delete patient
-// Route::delete('/delete-patient/{id}', [PatientController::class, 'destroy'])->name('patients.destroy');
+// // Delete the patient
+// Route::delete('/delete-patient/{id}', [PatientController::class, 'delete'])->name('patients.delete');
 
 // // View patient details
-// Route::get('/view-patient/{id}', [PatientController::class, 'show'])->name('patients.show');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// Route::get('/view-patient/{id}', [PatientController::class, 'view'])->name('patients.view');
 
 Route::group(['middleware' => ['role:Super Admin']], function () {
     // Admin routes

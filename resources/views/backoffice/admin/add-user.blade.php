@@ -109,7 +109,7 @@
                                     </div>
 
 
-                                    <div class="col-2 d-flex flex-row-reverse">
+                                    <div class="col-12 d-flex flex-row-reverse">
                                         <div class="form-group">
                                             <a href="/users-list"
                                                 class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">Cancel</a>

@@ -24,12 +24,11 @@ class Patient extends Model
         'city',
         'state',
         'postal_code',
-        'country',
+        'country',  // If you want to include the country field
         'emergency_contact_name',
         'emergency_contact_phone',
-        'name',
-        'address'
     ];
+
 
     // Automatically set the name and address before creating or updating a patient
     public static function boot()

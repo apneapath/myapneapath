@@ -63,48 +63,77 @@ class PatientController extends Controller
             ], 500);
         }
     }
-
-
-
-
-    // Show the form to create a new patient
-    public function create()
+    public function showForm()
     {
-        return view('patients.create');
+        return view('backoffice.patients.add-patient');  // Pass roles to the view
     }
 
     // Store a new patient in the database
-    public function store(Request $request)
+    public function add(Request $request)
     {
-        // Validate individual fields
-        $request->validate([
+        // Validate the incoming data
+        $validatedData = $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'gender' => 'required|string',
+            'gender' => 'required|string|max:10',
             'dob' => 'required|date',
-            'contact_number' => 'required|string|max:15',
-            'street_address' => 'required|string',
-            'city' => 'required|string',
-            'state' => 'required|string',
-            'postal_code' => 'required|string',
-            'country' => 'required|string',
+            'contact_number' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'medical_history' => 'nullable|string',
+            'allergies' => 'nullable|string',
+            'insurance_provider' => 'nullable|string|max:255',
+            'policy_number' => 'nullable|string|max:255',
+            'street_address' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'state' => 'required|string|max:255',
+            'postal_code' => 'required|string|max:20',
+            'country' => 'nullable|string|max:255',
+            'emergency_contact_name' => 'required|string|max:255',
+            'emergency_contact_phone' => 'required|string|max:255',
         ]);
 
-        // Manually create name and address before saving
-        $data = $request->all();
-        $data['name'] = $data['first_name'] . ' ' . $data['last_name'];
-        $data['address'] = $data['street_address'] . ', ' . $data['city'] . ', ' . $data['state'] . ' ' . $data['postal_code'] . ', ' . $data['country'];
+        // Create a new patient record
+        $patient = Patient::create($validatedData);
 
-        // Store the patient record with the calculated name and address
-        Patient::create($data);
+        // Check if the patient was created successfully
+        if ($patient) {
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Patient added successfully!',
+                    'patient' => $patient
+                ]);
+            }
 
-        return redirect()->route('patients.index');
+            // If not an AJAX request, redirect to patients list
+            return redirect()->route('patients-list')->with('success', 'Patient added successfully!');
+            // Corrected redirect
+            // return redirect()->route('patients.index')->with('success', 'Patient added successfully!');
+
+        }
+
+        // If creation failed
+        if ($request->ajax()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to create patient.'
+            ], 500);
+        }
+
+        return back()->with('error', 'Failed to create patient.');
     }
 
     // Show a specific patient's details
-    public function show(Patient $patient)
+    public function view($id)
     {
-        return view('patients.show', compact('patient'));
+        // Find the patient by ID
+        $patient = Patient::find($id);
+        if (!$patient) {
+            return redirect()->route('patients.index')->with('error', 'Patient not found.');
+        }
+
+        // Return view with the patient data
+        return view('patients.view', compact('patient'));
     }
 
     // Show the form to edit a patient's information
@@ -112,35 +141,51 @@ class PatientController extends Controller
     {
         return view('patients.edit', compact('patient'));
     }
-
     // Update a patient's information
-    public function update(Request $request, Patient $patient)
+    public function update(Request $request, $id)
     {
-        // Validate individual fields
-        $request->validate([
+        // Find the patient by ID
+        $patient = Patient::find($id);
+        if (!$patient) {
+            return redirect()->route('patients.index')->with('error', 'Patient not found.');
+        }
+
+        // Validate the data
+        $validatedData = $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'gender' => 'required|string',
+            'gender' => 'required|string|max:10',
             'dob' => 'required|date',
-            'contact_number' => 'required|string|max:15',
-            'street_address' => 'required|string',
-            'city' => 'required|string',
-            'state' => 'required|string',
-            'postal_code' => 'required|string',
-            'country' => 'required|string',
+            'contact_number' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'medical_history' => 'nullable|string',
+            'allergies' => 'nullable|string',
+            'insurance_provider' => 'nullable|string|max:255',
+            'policy_number' => 'nullable|string|max:255',
+            'street_address' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'state' => 'required|string|max:255',
+            'postal_code' => 'required|string|max:20',
+            'country' => 'nullable|string|max:255',
+            'emergency_contact_name' => 'required|string|max:255',
+            'emergency_contact_phone' => 'required|string|max:255',
         ]);
 
-        // Manually create name and address before updating
-        $data = $request->all();
-        $data['name'] = $data['first_name'] . ' ' . $data['last_name'];
-        $data['address'] = $data['street_address'] . ', ' . $data['city'] . ', ' . $data['state'] . ' ' . $data['postal_code'] . ', ' . $data['country'];
+        // Update patient data
+        $patient->update($validatedData);
 
-        // Update the patient record with the calculated name and address
-        $patient->update($data);
+        // Respond to AJAX request
+        if ($request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Patient updated successfully!',
+                'patient' => $patient
+            ]);
+        }
 
-        return redirect()->route('patients.index');
+        // If not an AJAX request, redirect
+        return redirect()->route('patients.index')->with('success', 'Patient updated successfully!');
     }
-
     // Delete a patient
     public function destroy(Patient $patient)
     {

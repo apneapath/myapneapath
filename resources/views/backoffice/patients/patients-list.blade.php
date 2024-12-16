@@ -9,7 +9,7 @@
 
             <!-- Check if the user has permission to create a new patient -->
             @if (auth()->user()->can('create posts'))
-                <a href="{{ route('patients.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                <a href="/add-patient" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                     <i class="fa-solid fa-user-plus"></i>
                     Add Patient
                 </a>
@@ -81,7 +81,7 @@
                 success: function(response) {
                     $('#patient-list').empty(); // Clear the current list
 
-                    // Get permissions from the response
+                    // Get permissions and patient list from the response
                     const {
                         canEdit,
                         canView,
@@ -92,18 +92,18 @@
                     // Loop through the patients and append them to the table
                     patients.forEach(function(patient) {
                         $('#patient-list').append(`
-                    <tr>
-                        <td>${patient.first_name} ${patient.last_name}</td>
-                        <td>${patient.contact_number}</td>
-                        <td>${patient.dob}</td> <!-- dob is formatted in the backend -->
-                        <td>${patient.address}</td>
-                        <td>
-                            ${canEdit ? `<a title="Edit patient details" href="/edit-patient/${patient.id}" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fa-solid fa-pen-to-square"></i></a>` : ''}
-                            ${canView ? `<a title="View patient details" href="/view-patient/${patient.id}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fa-regular fa-eye"></i></a>` : ''}
-                            ${canDelete ? `<button type="button" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="setDeletePatientId(${patient.id});"><i class="fa-solid fa-trash"></i></button>` : ''}
-                        </td>
-                    </tr>
-                `);
+                <tr>
+                    <td>${patient.first_name} ${patient.last_name}</td>
+                    <td>${patient.contact_number}</td>
+                    <td>${patient.dob}</td> <!-- dob is formatted in the backend -->
+                    <td>${patient.address}</td>
+                    <td>
+                        ${canEdit ? `<a title="Edit patient details" href="/edit-patient/${patient.id}" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fa-solid fa-pen-to-square"></i></a>` : ''}
+                        ${canView ? `<a title="View patient details" href="/view-patient/${patient.id}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fa-regular fa-eye"></i></a>` : ''}
+                        ${canDelete ? `<button type="button" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="setDeletePatientId(${patient.id});"><i class="fa-solid fa-trash"></i></button>` : ''}
+                    </td>
+                </tr>
+            `);
                     });
 
                     // Initialize DataTable after populating the table
