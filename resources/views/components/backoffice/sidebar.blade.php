@@ -111,10 +111,10 @@
     <hr class="sidebar-divider">
 
     <!-- Nav Item - Doctor -->
-    <li class="nav-item {{ request()->is('doctors-list') ? 'active' : '' }}">
-        <a href="{{ url('/doctors-list') }}" class="nav-link">
+    <li class="nav-item {{ request()->is('providers-list') ? 'active' : '' }}">
+        <a href="{{ url('/providers-list') }}" class="nav-link">
             <i class="fa-solid fa-user-doctor"></i>
-            <span>Doctors</span>
+            <span>Providers</span>
         </a>
     </li>
 

@@ -3,9 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PatientController;
-
-// use App\Http\Controllers\Admin\PatientController;
-// use App\Http\Controllers\PatientController;
+use App\Http\Controllers\Admin\ProviderController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Models\Role;  // Import the Role model
 
@@ -24,8 +22,8 @@ Route::get('/patients-list', function () {
 });
 
 //doctors-list
-Route::get('/doctors-list', function () {
-    return view('backoffice.doctors.doctors-list');
+Route::get('/providers-list', function () {
+    return view('backoffice.provider.providers-list');
 });
 
 //specialties-list
@@ -137,6 +135,24 @@ Route::delete('/delete-patient/{id}', [PatientController::class, 'destroy'])->na
 // TO BE CONTINUE PATIENT DASHBOARD-----------------------------------------------------------------------------------------------------
 // //Patient dashboard
 Route::get('/patient-dashboard/{id}', [PatientController::class, 'show'])->name('patient-dashboard');
+
+
+//PROVIDER------------------------------------------------------------------------------------------------------------------------------
+// Show all providers (AJAX)
+Route::get('/providers', [ProviderController::class, 'index'])->name('providers.index');
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
