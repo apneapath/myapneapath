@@ -30,8 +30,8 @@
         <table id="providers-table" class="row-border stripe hover">
             <thead>
                 <tr>
-                    <th>Specialization</th>
                     <th>Name</th>
+                    <th>Specialization</th>
                     <th>Clinic Name</th>
                     <th>Location</th>
                     <th>Contact Number</th>
@@ -95,8 +95,8 @@
                     providers.forEach(function(provider) {
                         $('#provider-list').append(`
                     <tr>
-                        <td>${provider.specialization}</td> <!-- Add specialization here -->
                         <td>${provider.name}</td>
+                        <td>${provider.specialization}</td> <!-- Add specialization here -->
                         <td>${provider.clinic_name}</td>
                         <td>${provider.address}</td>
                         <td>${provider.contact_number}</td>
