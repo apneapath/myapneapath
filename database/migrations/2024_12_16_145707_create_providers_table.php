@@ -20,7 +20,7 @@ class CreateProvidersTable extends Migration
             $table->string('specialization')->nullable(); // Specialization
             $table->string('license_number')->nullable(); // License number
             $table->string('clinic_name')->nullable(); // Clinic name
-            $table->string('street_address');
+            $table->string('clinic_address');
             $table->string('city');
             $table->string('state');
             $table->string('postal_code');

@@ -23,7 +23,7 @@ Route::get('/patients-list', function () {
 
 //doctors-list
 Route::get('/providers-list', function () {
-    return view('backoffice.provider.providers-list');
+    return view('backoffice.providers.providers-list');
 });
 
 //specialties-list
@@ -140,6 +140,13 @@ Route::get('/patient-dashboard/{id}', [PatientController::class, 'show'])->name(
 //PROVIDER------------------------------------------------------------------------------------------------------------------------------
 // Show all providers (AJAX)
 Route::get('/providers', [ProviderController::class, 'index'])->name('providers.index');
+
+// Route to show the create provider form
+Route::get('/add-provider', [ProviderController::class, 'showForm'])->name('providers.showForm');
+
+// Route to handle the form submission for adding a new provider
+Route::post('/providers-list', [ProviderController::class, 'add'])->name('providers-list');
+
 
 
 

@@ -15,21 +15,20 @@ class Provider extends Model
         'last_name',
         'gender',
         'dob',
-        'contact_number',
         'email',
+        'contact_number',
+        'emergency_contact_name',
+        'emergency_contact_phone',
         'specialization',
         'license_number',
         'clinic_name',
-        'street_address',
+        'clinic_address',  // changed from street_address to clinic_address
         'city',
         'state',
         'postal_code',
         'country',
-        'emergency_contact_name',
-        'emergency_contact_phone',
         'work_hours',
         'account_status',
-        'login_history',
     ];
 
     // If you need to convert the `work_hours` or `login_history` columns to array type
@@ -48,12 +47,11 @@ class Provider extends Model
             $provider->name = $provider->first_name . ' ' . $provider->last_name;
 
             // Concatenate address fields to generate full address
-            $provider->address = $provider->street_address . ', ' . $provider->city . ', ' . $provider->state . ' ' . $provider->postal_code . ', ' . $provider->country;
+            $provider->address = $provider->clinic_address . ', ' . $provider->city . ', ' . $provider->state . ' ' . $provider->postal_code . ', ' . $provider->country;
         });
     }
 
     // Optionally, you can define relationships with other models like Patient, User, etc.
-    // For example, if providers are related to users:
     public function user()
     {
         return $this->belongsTo(User::class);

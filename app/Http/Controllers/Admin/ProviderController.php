@@ -11,14 +11,6 @@ use Carbon\Carbon;
 class ProviderController extends Controller
 {
     // Display a listing of all providers
-    // public function index()
-    // {
-    //     $providers = Provider::all(); // Fetch all providers from the database
-    //     return view('providers.index', compact('providers')); // Pass providers to the view
-    // }
-
-
-
     public function index()
     {
         try {
@@ -30,7 +22,7 @@ class ProviderController extends Controller
                 'contact_number',
                 'dob',
                 'email',
-                'street_address',
+                'clinic_address',
                 'city',
                 'state',
                 'postal_code',
@@ -46,7 +38,7 @@ class ProviderController extends Controller
 
                     // Combine name and address into the expected structure
                     $provider->name = $provider->first_name . ' ' . $provider->last_name;
-                    $provider->address = $provider->street_address . ', ' . $provider->city . ', ' . $provider->state . ' ' . $provider->postal_code;
+                    $provider->address = $provider->clinic_address . ', ' . $provider->city . ', ' . $provider->state . ' ' . $provider->postal_code;
 
                     return [
                         'id' => $provider->id,
@@ -85,50 +77,111 @@ class ProviderController extends Controller
         }
     }
 
-
-
-
-
     // Show the form for creating a new provider
-    public function create()
+    public function showForm()
     {
-        return view('providers.create');
+        return view('backoffice.providers.add-provider');  // Return the view for the create provider form
     }
 
+
     // Store a newly created provider in the database
-    public function store(Request $request)
+    // public function store(Request $request)
+    // {
+    //     // Validate input data
+    //     $request->validate([
+    //         'first_name' => 'required|string|max:255',
+    //         'last_name' => 'required|string|max:255',
+    //         'gender' => 'required|string|max:10',
+    //         'dob' => 'required|date',
+    //         'contact_number' => 'required|string|max:255',
+    //         'email' => 'required|email|max:255',
+    //         'specialization' => 'nullable|string|max:255',
+    //         'license_number' => 'nullable|string|max:255',
+    //         'clinic_name' => 'nullable|string|max:255',
+    //         'street_address' => 'required|string|max:255',
+    //         'city' => 'required|string|max:255',
+    //         'state' => 'required|string|max:255',
+    //         'postal_code' => 'required|string|max:20',
+    //         'country' => 'nullable|string|max:255',
+    //         'emergency_contact_name' => 'required|string|max:255',
+    //         'emergency_contact_phone' => 'required|string|max:255',
+    //         'work_hours' => 'nullable|json', // Make sure to handle as JSON
+    //         'account_status' => 'nullable|in:Active,Suspended,Retired',
+    //         'login_history' => 'nullable|json',
+    //     ]);
+
+    //     // Create a provider and set the dynamic fields (name, address)
+    //     $provider = new Provider($request->all());
+
+    //     // The name and address will be set automatically by the model's boot() method
+    //     $provider->save();
+
+    //     return redirect()->route('providers.index')->with('success', 'Provider created successfully!');
+    // }
+
+
+    public function add(Request $request)
     {
-        // Validate input data
-        $request->validate([
+        // Validate the incoming data
+        $validatedData = $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'gender' => 'required|string|max:10',
             'dob' => 'required|date',
+            'email' => 'required|email|max:255|unique:providers,email',
             'contact_number' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
+            'emergency_contact_name' => 'required|string|max:255',
+            'emergency_contact_phone' => 'required|string|max:255',
             'specialization' => 'nullable|string|max:255',
             'license_number' => 'nullable|string|max:255',
             'clinic_name' => 'nullable|string|max:255',
-            'street_address' => 'required|string|max:255',
+            'clinic_address' => 'required|string|max:255',
             'city' => 'required|string|max:255',
             'state' => 'required|string|max:255',
             'postal_code' => 'required|string|max:20',
             'country' => 'nullable|string|max:255',
-            'emergency_contact_name' => 'required|string|max:255',
-            'emergency_contact_phone' => 'required|string|max:255',
-            'work_hours' => 'nullable|json', // Make sure to handle as JSON
+            'work_hours' => 'nullable|string',  // Adjust validation for work_hours
             'account_status' => 'nullable|in:Active,Suspended,Retired',
-            'login_history' => 'nullable|json',
         ]);
 
-        // Create a provider and set the dynamic fields (name, address)
-        $provider = new Provider($request->all());
+        try {
+            // Create the provider record
+            $provider = Provider::create($validatedData);
 
-        // The name and address will be set automatically by the model's boot() method
-        $provider->save();
+            // Check if the provider was created successfully
+            if ($provider) {
+                if ($request->ajax()) {
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Provider added successfully!',
+                        'provider' => $provider
+                    ]);
+                }
 
-        return redirect()->route('providers.index')->with('success', 'Provider created successfully!');
+                // If it's not an AJAX request, redirect back to the provider list
+                return redirect()->route('providers-list')->with('success', 'Provider added successfully!');
+            }
+
+            // If creation failed
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Failed to create provider.'
+                ], 500);
+            }
+
+            return back()->with('error', 'Failed to create provider.');
+
+        } catch (\Exception $e) {
+            // Log the error for debugging purposes
+            \Log::error('Error creating provider: ' . $e->getMessage());
+
+            // Handle the error properly
+            return back()->with('error', 'An error occurred while saving the provider.');
+        }
     }
+
+
 
     // Display the specified provider details
     public function show(Provider $provider)

@@ -30,9 +30,10 @@
         <table id="providers-table" class="row-border stripe hover">
             <thead>
                 <tr>
-                    <th>Name</th>
                     <th>Specialization</th>
+                    <th>Name</th>
                     <th>Clinic Name</th>
+                    <th>Location</th>
                     <th>Contact Number</th>
                     <th>Account Status</th>
                     <th>Action</th>
@@ -94,12 +95,12 @@
                     providers.forEach(function(provider) {
                         $('#provider-list').append(`
                     <tr>
-                        <td>${provider.name}</td>
                         <td>${provider.specialization}</td> <!-- Add specialization here -->
+                        <td>${provider.name}</td>
                         <td>${provider.clinic_name}</td>
+                        <td>${provider.address}</td>
                         <td>${provider.contact_number}</td>
                         <td>${provider.account_status}</td>
-                        
                         <td>
                             ${canEdit ? `<a title="Edit provider details" href="/edit-provider/${provider.id}" class="btn btn-sm btn-success"><i class="fa-solid fa-pen-to-square"></i></a>` : ''}
                             ${canView ? `<a title="View provider details" href="/provider-dashboard/${provider.id}" class="btn btn-sm btn-primary"><i class="fa-regular fa-eye"></i></a>` : ''}
