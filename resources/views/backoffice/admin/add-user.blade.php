@@ -22,7 +22,7 @@
                                 <div class="row">
                                     <div class="row mb-5 align-items-start justify-content-start">
                                         <div>
-                                            <h5 class="text-gray-800">Basic Information</h5>
+                                            <h5 class="mb-3 text-gray-800">Basic Information</h5>
                                         </div>
                                         <div class="form-group col-3">
                                             <label for="firstName">First Name</label>
@@ -64,7 +64,7 @@
 
                                     <div class="row mb-5 align-items-start justify-content-start">
                                         <div>
-                                            <h5 class="text-gray-800">User Setting</h5>
+                                            <h5 class="mb-3 text-gray-800">User Setting</h5>
                                         </div>
                                         <div class="form-group col-3">
                                             <label for="role">Role</label>

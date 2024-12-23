@@ -24,7 +24,7 @@
                                     <div class="row mb-5 align-items-start justify-content-start">
                                         <!-- First Name -->
                                         <div>
-                                            <h5 class="text-gray-800">Basic Information</h5>
+                                            <h5 class="mb-3 text-gray-800">Basic Information</h5>
                                         </div>
 
                                         <div class="form-group col-3">
@@ -152,7 +152,7 @@
 
                                     <div class="row mb-5 align-items-start justify-content-start">
                                         <div>
-                                            <h5 class="text-gray-800">Availability</h5>
+                                            <h5 class="mb-3 text-gray-800">Availability</h5>
                                         </div>
 
                                         <!-- Working Hours -->
