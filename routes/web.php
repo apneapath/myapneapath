@@ -153,6 +153,9 @@ Route::get('/edit-provider/{id}', [ProviderController::class, 'edit'])->name('pr
 // Update the provider
 Route::post('/update-provider/{id}', [ProviderController::class, 'update'])->name('providers.update');
 
+// // Delete the provider
+Route::delete('/delete-provider/{id}', [ProviderController::class, 'destroy'])->name('providers.destroy');
+
 
 
 

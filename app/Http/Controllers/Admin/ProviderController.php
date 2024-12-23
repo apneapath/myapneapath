@@ -213,9 +213,13 @@ class ProviderController extends Controller
 
 
     // Remove the specified provider from the database
-    public function destroy(Provider $provider)
+    public function destroy($id)
     {
+        // Find the patient by id
+        $provider = Provider::findOrFail($id);
+
+        // Delete the provider
         $provider->delete();
-        return redirect()->route('providers.index')->with('success', 'Provider deleted successfully!');
+        return redirect()->route('providers-list')->with('success', 'Provider deleted successfully!');
     }
 }

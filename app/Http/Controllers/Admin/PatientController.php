@@ -67,7 +67,6 @@ class PatientController extends Controller
     {
         return view('backoffice.patients.add-patient');  // Pass roles to the view
     }
-
     // Store a new patient in the database
     public function add(Request $request)
     {
