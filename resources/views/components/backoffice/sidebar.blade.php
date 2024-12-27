@@ -121,6 +121,26 @@
     <!-- Divider -->
     <hr class="sidebar-divider">
 
+    <!-- Nav Item - Referral Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+            aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fa-solid fa-arrow-right-arrow-left"></i>
+            <span>Referrals</span>
+        </a>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item {{ request()->is('referrals-list') ? 'active' : '' }}"
+                    href="{{ url('/referrals-list') }}">Referral</a>
+                <a class="collapse-item {{ request()->is('referral-types-list') ? 'active' : '' }}"
+                    href="{{ url('/referral-types-list') }}">Referral Types</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
     <!-- Nav Item - Specialties -->
     <li class="nav-item {{ request()->is('specialties-list') ? 'active' : '' }}">
         <a href="{{ url('/specialties-list') }}" class="nav-link">
@@ -140,28 +160,11 @@
         </a>
     </li>
 
+    {{-- <!-- Heading -->
+    <div class="sidebar-heading">TRANSACTIONS</div> --}}
+
     <!-- Divider -->
     <hr class="sidebar-divider">
-
-    <!-- Heading -->
-    <div class="sidebar-heading">TRANSACTIONS</div>
-
-    <!-- Nav Item - Referral Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-            aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fa-solid fa-arrow-right-arrow-left"></i>
-            <span>Referrals</span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item {{ request()->is('referrals-list') ? 'active' : '' }}"
-                    href="{{ url('/referrals-list') }}">Referrals</a>
-                <a class="collapse-item {{ request()->is('referral-types-list') ? 'active' : '' }}"
-                    href="{{ url('/referral-types-list') }}">Referral Types</a>
-            </div>
-        </div>
-    </li>
 
     <!-- Nav Item - Utilities Collapse Menu -->
     <li class="nav-item">
