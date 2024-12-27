@@ -11,7 +11,7 @@
             @if (auth()->user()->can('create posts'))
                 <a href="/add-patient" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                     <i class="fa-solid fa-user-plus"></i>
-                    Add Patient
+                    Create New Patient
                 </a>
             @endif
         </div>
@@ -98,9 +98,9 @@
                     <td>${patient.dob}</td> <!-- dob is formatted in the backend -->
                     <td>${patient.address}</td>
                     <td>
-                        ${canEdit ? `<a title="Edit patient details" href="/edit-patient/${patient.id}" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fa-solid fa-pen-to-square"></i></a>` : ''}
-                        ${canView ? `<a title="View patient details" href="/patient-dashboard/${patient.id}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fa-regular fa-eye"></i></a>` : ''}
-                        ${canDelete ? `<button type="button" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="setDeletePatientId(${patient.id});"><i class="fa-solid fa-trash"></i></button>` : ''}
+                        ${canEdit ? `<a title="Edit" href="/edit-patient/${patient.id}" class="d-none d-sm-inline-block btn btn-sm"><span style="color: Dodgerblue;"><i class="fa-solid fa-file-pen"></i></span></a>` : ''}
+                        ${canView ? `<a title="View" href="/patient-dashboard/${patient.id}" class="d-none d-sm-inline-block btn btn-sm"><span style="color: Dodgerblue;"><i class="fa-solid fa-eye"></i></span></a>` : ''}
+                        ${canDelete ? `<button title="Delete" type="button" class="d-none d-sm-inline-block btn btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="setDeletePatientId(${patient.id});"><span style="color: Dodgerblue;"><i class="fa-solid fa-trash"></i></span></button>` : ''}
                     </td>
                 </tr>
             `);

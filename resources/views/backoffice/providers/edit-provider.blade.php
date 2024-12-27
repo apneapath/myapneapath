@@ -4,8 +4,11 @@
     <div class="container-fluid">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <div>
-                <h4 class=" mb-0 text-gray-800">Edit Provider</h4>
+                <h4 class=" mb-0 text-gray-800">Update Provider Information</h4>
             </div>
+            <a href="/providers-list" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                <i class="fa-solid fa-list"></i> View Provider List
+            </a>
         </div>
 
         <div>
@@ -58,19 +61,17 @@
                                         <!-- Date of Birth -->
                                         <div class="row form-group col-13">
                                             <label class="col-sm-2" for="dob">Date of Birth</label>
-                                            <div class="col-10">
+                                            <div class="col-3">
                                                 <input type="date" class="form-control" id="dob" name="dob"
                                                     value="{{ $provider->dob }}" required>
                                             </div>
                                         </div>
+                                    </div>
 
-                                        <!-- Email -->
-                                        <div class="row form-group col-12">
-                                            <label class="col-sm-2"for="email">Email address</label>
-                                            <div class="col-10">
-                                                <input type="email" class="form-control" id="email" name="email"
-                                                    value="{{ $provider->email }}" placeholder="name@example.com" required>
-                                            </div>
+                                    <div class="row col-12 mb-5 align-items-start justify-content-start">
+
+                                        <div>
+                                            <h5 class="mb-3 text-gray-800">Contact Information</h5>
                                         </div>
 
                                         <!-- Contact Number -->
@@ -80,6 +81,15 @@
                                                 <input type="text" class="form-control" id="contactNumber"
                                                     name="contact_number" value="{{ $provider->contact_number }}"
                                                     placeholder="ex. (00)0-0000-0000" required>
+                                            </div>
+                                        </div>
+
+                                        <!-- Email -->
+                                        <div class="row form-group col-12">
+                                            <label class="col-sm-2"for="email">Email address</label>
+                                            <div class="col-10">
+                                                <input type="email" class="form-control" id="email" name="email"
+                                                    value="{{ $provider->email }}" placeholder="name@example.com" required>
                                             </div>
                                         </div>
 
@@ -171,7 +181,7 @@
                                             </div>
                                         </div>
 
-                                        <!-- Postal -->
+                                        <!-- Postal Code -->
                                         <div class="row form-group col-12">
                                             <label class="col-sm-2" for="postalCode">Postal Code</label>
                                             <div class="col-10">
@@ -226,13 +236,13 @@
                                         </div>
                                     </div>
 
-                                    <div class="row mb-5 align-items-start justify-content-start justify-content-between">
+                                    <div class="row align-items-start justify-content-start justify-content-between">
                                         <div class="col-12 d-flex flex-row-reverse">
                                             <div class="form-group">
                                                 <a href="{{ route('providers-list') }}"
                                                     class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">Cancel</a>
                                                 <button type="submit" id="submit" name="submit"
-                                                    class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Save</button>
+                                                    class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Update</button>
                                             </div>
                                         </div>
                                     </div>

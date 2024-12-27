@@ -11,7 +11,7 @@
             @if (auth()->user()->can('create posts'))
                 <a href="/add-provider" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                     <i class="fa-solid fa-user-plus"></i>
-                    Add Provider
+                    Create New Provider
                 </a>
             @endif
         </div>
@@ -102,9 +102,9 @@
                         <td>${provider.contact_number}</td>
                         <td>${provider.account_status}</td>
                         <td>
-                            ${canEdit ? `<a title="Edit provider details" href="/edit-provider/${provider.id}" class="btn btn-sm btn-success"><i class="fa-solid fa-pen-to-square"></i></a>` : ''}
-                            ${canView ? `<a title="View provider details" href="/provider-dashboard/${provider.id}" class="btn btn-sm btn-primary"><i class="fa-regular fa-eye"></i></a>` : ''}
-                            ${canDelete ? `<button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="setDeleteProviderId(${provider.id});"><i class="fa-solid fa-trash"></i></button>` : ''}
+                            ${canEdit ? `<a title="Edit provider details" href="/edit-provider/${provider.id}" class="btn btn-sm"><span style="color: Dodgerblue;"><i class="fa-solid fa-file-pen"></i></span></a>` : ''}
+                            ${canView ? `<a title="View provider details" href="/provider-dashboard/${provider.id}" class="btn btn-sm"><span style="color: Dodgerblue;"><i class="fa-solid fa-eye"></i></span></a>` : ''}
+                            ${canDelete ? `<button type="button" class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="setDeleteProviderId(${provider.id});"><span style="color: Dodgerblue;"><i class="fa-solid fa-trash"></i></span></button>` : ''}
                         </td>
                     </tr>
                 `);

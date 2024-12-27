@@ -11,7 +11,7 @@
             @if (auth()->user()->can('create posts'))
                 <a href="/add-user" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                     <i class="fa-solid fa-user-plus"></i>
-                    Create User
+                    Create New User
                 </a>
             @endif
         </div>
@@ -67,51 +67,6 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-    {{-- <script>
-        $(document).ready(function() {
-            fetchUsers();
-        });
-
-        function fetchUsers() {
-            $.ajax({
-                url: '{{ route('users.index') }}', // Adjust this route to match your correct route name
-                method: 'GET',
-                success: function(users) {
-                    $('#user-list').empty(); // Clear the current list
-                    users.forEach(function(user) {
-                        $('#user-list').append(
-                            `<tr>
-                        <td><img style="border-radius: 100%; width: 35px; height: 35px" src="${user.photo}" alt="${user.name}'s Photo" style="max-width: 33px; max-height: 33px;"> ${user.name}</td>
-                        <td>${user.email}</td>
-                        <td>${user.role}</td>  <!-- Display roles -->
-                        <td>${user.status}</td>
-                        <td>
-                            <a title="Edit user profile" href="/edit-user/${user.id}" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fa-solid fa-pen-to-square"></i></a>
-                            <a title="View user profile" href="/view-user/${user.id}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fa-regular fa-eye"></i></a>
-                            <button type="button" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="setDeleteUserId(${user.id});">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
-                        </td>
-                    </tr>`.replace(':id', user.id)
-                        );
-                    });
-
-                    // Initialize DataTable after populating
-                    $('#user-table').DataTable();
-                },
-                error: function() {
-                    alert('Error fetching users.');
-                }
-            });
-        }
-
-        function setDeleteUserId(id) {
-            const form = document.getElementById('deleteUserForm');
-            form.action = `/delete-user/${id}`;
-        }
-    </script> --}}
-
-
     <script>
         $(document).ready(function() {
             fetchUsers();
@@ -137,9 +92,9 @@
                                 <td>${user.role}</td> <!-- Display roles -->
                                 <td>${user.status}</td>
                                 <td>
-                                    ${canEdit ? `<a title="Edit user profile" href="/edit-user/${user.id}" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fa-solid fa-pen-to-square"></i></a>` : ''}
-                                    ${canView ? `<a title="View user profile" href="/view-user/${user.id}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fa-regular fa-eye"></i></a>` : ''}
-                                    ${canDelete ? `<button type="button" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="setDeleteUserId(${user.id});"><i class="fa-solid fa-trash"></i></button>` : ''}
+                                    ${canEdit ? `<a title="Edit" href="/edit-user/${user.id}" class="d-none d-sm-inline-block btn btn-sm"><span style="color: Dodgerblue;"><i class="fa-solid fa-file-pen"></i></span></a>` : ''}
+                                    ${canView ? `<a title="View" href="/view-user/${user.id}" class="d-none d-sm-inline-block btn btn-sm"><span style="color: Dodgerblue;"><i class="fa-solid fa-eye"></i></span></a>` : ''}
+                                    ${canDelete ? `<button title="Delete" type="button" class="d-none d-sm-inline-block btn btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="setDeleteUserId(${user.id});"><span style="color: Dodgerblue;"><i class="fa-solid fa-trash"></i></span></button>` : ''}
                                 </td>
                             </tr>`
                         );

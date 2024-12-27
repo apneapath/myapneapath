@@ -4,11 +4,10 @@
     <div class="container-fluid">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <div>
-                <h4 class=" mb-0 text-gray-800">New Provider Registration</h4>
+                <h4 class=" mb-0 text-gray-800">Create New Provider</h4>
             </div>
             <a href="/providers-list" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                <i class="fa-solid fa-user-plus"></i>
-                Add Provider
+                <i class="fa-solid fa-list"></i> View Provider List
             </a>
         </div>
 
@@ -22,11 +21,12 @@
                                 @csrf
                                 <div class="row">
                                     <div class="row mb-5 align-items-start justify-content-start">
-                                        <!-- First Name -->
+
                                         <div>
                                             <h5 class="mb-3 text-gray-800">Basic Information</h5>
                                         </div>
 
+                                        <!-- First Name -->
                                         <div class="form-group col-3">
                                             <label for="firstName">First Name</label>
                                             <input type="text" class="form-control" id="firstName" name="first_name"
@@ -78,7 +78,7 @@
                                                 name="emergency_contact_name" placeholder="ex. Danilo" required>
                                         </div>
 
-                                        <!-- Emergency Contact Phone -->
+                                        <!-- Emergency Contact Number -->
                                         <div class="form-group col-3">
                                             <label for="emergencyContactPhone">Emergency Contact Phone</label>
                                             <input type="text" class="form-control" id="emergencyContactPhone"
@@ -185,18 +185,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    {{-- <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-                                    <script>
-                                        // Initialize Flatpickr for the 'workingHours' field
-                                        flatpickr("#workingHours", {
-                                            enableTime: true,
-                                            noCalendar: true,
-                                            dateFormat: "H:i",
-                                            time_24hr: true,
-                                            placeholder: "HH:mm"
-                                        });
-                                    </script> --}}
                             </form>
                         </div>
                     </div>

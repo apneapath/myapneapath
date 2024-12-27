@@ -36,19 +36,19 @@
                         <td>{{ $role->name }}</td>
                         <td>
                             @foreach ($role->permissions as $permission)
-                                <span class="badge badge-info">{{ $permission->name }}</span>
+                                <span class="badge badge-secondary">{{ $permission->name }}</span>
                             @endforeach
                         </td>
                         <td>
-                            <a href="{{ route('roles.edit', $role->id) }}"
-                                class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i
-                                    class="fa-solid fa-pen-to-square"></i></a>
+                            <a href="{{ route('roles.edit', $role->id) }}" title="Edit"
+                                class="d-none d-sm-inline-block btn btn-sm"><span style="color: Dodgerblue;"><i
+                                        class="fa-solid fa-file-pen"></i></span></a>
 
                             <!-- Trigger Modal for Deletion -->
-                            <button type="button" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"
+                            <button title="Delete" type="button" class="d-none d-sm-inline-block btn"
                                 data-bs-toggle="modal" data-bs-target="#deleteModal"
                                 onclick="setDeleteRoleId({{ $role->id }});">
-                                <i class="fa-solid fa-trash"></i>
+                                <span style="color: Dodgerblue;"><i class="fa-solid fa-trash"></i></span>
                             </button>
                         </td>
                     </tr>

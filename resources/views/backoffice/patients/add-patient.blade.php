@@ -4,11 +4,10 @@
     <div class="container-fluid">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <div>
-                <h4 class=" mb-0 text-gray-800">New Patient Registration</h4>
+                <h4 class=" mb-0 text-gray-800">Create New Patient</h4>
             </div>
-            <a href="/add-patient" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                <i class="fa-solid fa-user-plus"></i>
-                Add Patient
+            <a href="/patients-list" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                <i class="fa-solid fa-list"></i> View Patient List
             </a>
         </div>
 
@@ -25,18 +24,22 @@
                                         <div>
                                             <h5 class="mb-3 text-gray-800">Basic Information</h5>
                                         </div>
+
+                                        <!-- First Name -->
                                         <div class="form-group col-3">
                                             <label for="firstName">First Name</label>
                                             <input type="text" class="form-control" id="firstName" name="first_name"
                                                 placeholder="ex. John" required>
                                         </div>
 
+                                        <!-- Last Name -->
                                         <div class="form-group col-3">
                                             <label for="lastName">Last Name</label>
                                             <input type="text" class="form-control" id="lastName" name="last_name"
                                                 placeholder="ex. Doe" required>
                                         </div>
 
+                                        <!-- Gender -->
                                         <div class="form-group col-3">
                                             <label for="gender">Gender</label>
                                             <select id="gender" class="form-control" name="gender" required>
@@ -46,6 +49,7 @@
                                             </select>
                                         </div>
 
+                                        <!-- Date of Birth -->
                                         <div class="form-group col-3">
                                             <label for="dob">Date of Birth</label>
                                             <input type="date" class="form-control" id="dob" name="dob"
@@ -57,24 +61,29 @@
                                         <div>
                                             <h5 class="mb-3 text-gray-800">Contact Information</h5>
                                         </div>
+
+                                        <!-- Phone Number -->
                                         <div class="form-group col-3">
                                             <label for="contactNumber">Contact Number</label>
                                             <input type="text" class="form-control" id="contactNumber"
                                                 name="contact_number" placeholder="ex. (00)0-0000-0000" required>
                                         </div>
 
+                                        <!-- Email -->
                                         <div class="form-group col-3">
                                             <label for="email">Email address</label>
                                             <input type="email" class="form-control" id="email" name="email"
                                                 placeholder="name@example.com" required>
                                         </div>
 
+                                        <!-- Emergency Contact Name -->
                                         <div class="form-group col-3">
                                             <label for="emergencyContactName">Emergency Contact Name</label>
                                             <input type="text" class="form-control" id="emergencyContactName"
                                                 name="emergency_contact_name" placeholder="ex. Jane Doe" required>
                                         </div>
 
+                                        <!-- Emergency Contact Number -->
                                         <div class="form-group col-3">
                                             <label for="emergencyContactPhone">Emergency Contact Phone</label>
                                             <input type="text" class="form-control" id="emergencyContactPhone"
@@ -90,67 +99,74 @@
                                             <h5 class="mb-3 text-gray-800">Address</h5>
                                         </div>
 
+                                        <!-- Address -->
                                         <div class="form-group col-4">
                                             <label for="streetAddress">Street Address</label>
                                             <input type="text" class="form-control" id="streetAddress"
                                                 name="street_address" placeholder="ex. 123 Main St" required>
                                         </div>
 
+                                        <!-- City -->
                                         <div class="form-group col-2">
                                             <label for="city">City</label>
                                             <input type="text" class="form-control" id="city" name="city"
                                                 placeholder="ex. New York" required>
                                         </div>
 
+                                        <!-- State -->
                                         <div class="form-group col-2">
                                             <label for="state">State</label>
                                             <input type="text" class="form-control" id="state" name="state"
                                                 placeholder="ex. NY" required>
                                         </div>
 
+                                        <!-- Postal COde -->
                                         <div class="form-group col-2">
                                             <label for="postalCode">Postal Code</label>
                                             <input type="text" class="form-control" id="postalCode"
                                                 name="postal_code" placeholder="ex. 10001" required>
                                         </div>
 
+                                        <!-- Country -->
                                         <div class="form-group col-2">
                                             <label for="country">Country</label>
                                             <input type="text" class="form-control" id="country" name="country"
                                                 placeholder="ex. United State" required>
                                         </div>
-
-
                                     </div>
 
                                     <div class="row mb-5 align-items-start justify-content-start">
                                         <div>
                                             <h5 class="mb-3 text-gray-800">Medical Information</h5>
                                         </div>
+
+                                        <!-- Medical History -->
                                         <div class="form-group col-6">
                                             <label for="medicalHistory">Medical History</label>
                                             <textarea class="form-control" id="medicalHistory" name="medical_history" placeholder="Any medical conditions?"
                                                 required></textarea>
                                         </div>
 
+                                        <!-- Allergies -->
                                         <div class="form-group col-6">
                                             <label for="allergies">Allergies</label>
                                             <textarea class="form-control" id="allergies" name="allergies" placeholder="List any allergies" required></textarea>
                                         </div>
-
-
                                     </div>
 
                                     <div class="row mb-5 align-items-start justify-content-start">
                                         <div>
                                             <h5 class="mb-3 text-gray-800">Insurance Information</h5>
                                         </div>
+
+                                        <!-- Insurance Provider -->
                                         <div class="form-group col-3">
                                             <label for="insuranceProvider">Insurance Provider</label>
                                             <input type="text" class="form-control" id="insuranceProvider"
                                                 name="insurance_provider" placeholder="ex. Blue Cross" required>
                                         </div>
 
+                                        <!-- Policy Number -->
                                         <div class="form-group col-3">
                                             <label for="policyNumber">Policy Number</label>
                                             <input type="text" class="form-control" id="policyNumber"

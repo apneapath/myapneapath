@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h4 class="mb-0 text-gray-800">Edit Role</h4>
+            <h4 class="mb-0 text-gray-800">Update Role Permissions</h4>
         </div>
 
         @if ($errors->any())
@@ -45,8 +45,7 @@
                                 </div>
 
                                 <div class="form-group text-right">
-                                    <a href="{{ route('roles.index') }}" class="btn btn-sm btn-secondary">Back to Roles
-                                        List</a>
+                                    <a href="{{ route('roles.index') }}" class="btn btn-sm btn-secondary">Cancel</a>
                                     <button type="submit" class="btn btn-sm btn-primary">Update Role</button>
                                 </div>
                             </form>

@@ -31,12 +31,15 @@
                                     </select>
                                 </div>
 
-                                <a href="{{ route('roles.index') }}"
-                                    class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">Cancel</a>
+                                <div class="text-right">
+                                    <a href="{{ route('roles.index') }}"
+                                        class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">Cancel</a>
 
-                                <button type="submit"
-                                    class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Create
-                                    Role</button>
+                                    <button type="submit"
+                                        class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Save</button>
+                                </div>
+
+
                             </form>
                         </div>
                     </div>
