@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('patient_id')->constrained()->onDelete('cascade'); // patient being referred
             $table->foreignId('referring_provider_id')->constrained('users'); // provider referring the patient
-            $table->foreignId('referred_provider_id')->nullable()->constrained('users'); // provider being referred to
+            $table->foreignId('referred_provider_id')->nullable()->constrained('providers'); // provider being referred to
             $table->text('reason'); // reason for referral
             $table->string('urgency')->default('routine'); // referral urgency (urgent, routine)
             $table->enum('status', ['pending', 'accepted', 'rejected', 'completed'])->default('pending'); // referral status
