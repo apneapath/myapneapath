@@ -62,4 +62,10 @@ class Provider extends Model
     {
         return $this->hasMany(Patient::class);
     }
+
+    public function referrals()
+    {
+        return $this->hasMany(Referral::class, 'referring_provider_id');
+    }
+
 }

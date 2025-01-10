@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PatientController;
 use App\Http\Controllers\Admin\ProviderController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\ReferralController;
 use App\Models\Role;  // Import the Role model
 
 Route::get('/', function () {
@@ -157,7 +158,29 @@ Route::post('/update-provider/{id}', [ProviderController::class, 'update'])->nam
 Route::delete('/delete-provider/{id}', [ProviderController::class, 'destroy'])->name('providers.destroy');
 
 
+//REFERRAL------------------------------------------------------------------------------------------------------------------------------
+// Show all referrals (AJAX)
+Route::get('/referrals', [ReferralController::class, 'index'])->name('referrals.index');
 
+// Route to show the create referral form
+Route::get('/create-referral', [ReferralController::class, 'showForm'])->name('referrals.showForm');
+
+// Route to handle the form submission for adding a new referral
+Route::post('/referrals-list', [ReferralController::class, 'add'])->name('referrals-list');
+
+
+
+// Route to handle the form submission for adding a new provider
+// Route::post('/providers-list', [ProviderController::class, 'add'])->name('providers-list');
+
+// Show the form to edit an existing provider
+// Route::get('/edit-provider/{id}', [ProviderController::class, 'edit'])->name('provider.edit');
+
+// Update the provider
+// Route::post('/update-provider/{id}', [ProviderController::class, 'update'])->name('providers.update');
+
+// // Delete the provider
+// Route::delete('/delete-provider/{id}', [ProviderController::class, 'destroy'])->name('providers.destroy');
 
 
 
