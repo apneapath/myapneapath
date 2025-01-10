@@ -16,6 +16,7 @@ class Referral extends Model
         'reason',
         'urgency',
         'status',
+        'notes',  // Add notes to the fillable property
     ];
 
     public function patient()
@@ -33,6 +34,11 @@ class Referral extends Model
     {
         // This refers to the Provider model (the referred provider)
         return $this->belongsTo(Provider::class, 'referred_provider_id');
+    }
+
+    public function attachments()
+    {
+        return $this->hasMany(Attachment::class);
     }
 
 }

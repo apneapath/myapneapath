@@ -62,7 +62,7 @@
                         </div> --}}
 
                         <!-- Notes Section -->
-                        {{-- <div class="mt-4">
+                        <div class="mt-4">
                             <h5>Referral Notes</h5>
                             <ul>
                                 @foreach ($referral->notes as $note)
@@ -71,18 +71,21 @@
                             </ul>
                             <textarea placeholder="Add a note..." class="form-control" rows="3"></textarea>
                             <button class="btn btn-sm btn-success mt-2">Add Note</button>
-                        </div> --}}
+                        </div>
 
                         <!-- Attachments Section -->
-                        {{-- <div class="mt-4">
+                        <div class="mt-4">
                             <h5>Attachments</h5>
                             <ul>
                                 @foreach ($referral->attachments as $attachment)
-                                    <li><a href="{{ asset('storage/' . $attachment->file_path) }}"
-                                            download>{{ $attachment->filename }}</a></li>
+                                    <li>
+                                        <a href="{{ asset('storage/' . $attachment->file_path) }}" target="_blank">
+                                            {{ basename($attachment->file_path) }}
+                                        </a>
+                                    </li>
                                 @endforeach
                             </ul>
-                        </div> --}}
+                        </div>
                     </div>
                 </div>
             </div>

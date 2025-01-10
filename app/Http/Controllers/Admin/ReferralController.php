@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;  // Ensure you're importing the correct Controller class
 use App\Models\Referral;
+use App\Models\Attachment;  // Import the Attachment model
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Patient;
@@ -59,26 +60,72 @@ class ReferralController extends Controller
     }
 
     // // Handle the referral creation
+    // public function add(Request $request)
+    // {
+    //     $request->validate([
+    //         'patient_id' => 'required|exists:patients,id',
+    //         'referred_provider_id' => 'required|exists:providers,id',
+    //         'reason' => 'required|string',
+    //         'urgency' => 'required|in:routine,urgent',
+    //     ]);
+
+    //     Referral::create([
+    //         'patient_id' => $request->patient_id,
+    //         'referring_provider_id' => Auth::id(), // Use logged-in provider
+    //         'referred_provider_id' => $request->referred_provider_id,
+    //         'reason' => $request->reason,
+    //         'urgency' => $request->urgency,
+    //         'status' => 'pending',
+    //     ]);
+
+    //     // return redirect()->route('referrals-list')->with('success', 'Referral created successfully!');
+    //     return redirect()->route('referrals-list')->with('success', 'User registered successfully!');
+    // }
+
+
     public function add(Request $request)
     {
         $request->validate([
             'patient_id' => 'required|exists:patients,id',
-            'referred_provider_id' => 'required|exists:providers,id',
+            'referred_provider_id' => 'required|exists:providers,id', // Ensure referred_provider_id is valid
             'reason' => 'required|string',
             'urgency' => 'required|in:routine,urgent',
+            'notes' => 'nullable|string',  // Make sure notes is nullable and validated
+            'attachments' => 'nullable|array', // Ensure attachments are an array
+            'attachments.*' => 'file|mimes:jpg,jpeg,png,pdf,docx,txt|max:2048' // Validate file types and sizes
         ]);
 
-        Referral::create([
+        // Create referral and store the notes
+        $referral = Referral::create([
             'patient_id' => $request->patient_id,
-            'referring_provider_id' => Auth::id(), // Use logged-in provider
+            'referring_provider_id' => Auth::id(),
             'referred_provider_id' => $request->referred_provider_id,
             'reason' => $request->reason,
             'urgency' => $request->urgency,
             'status' => 'pending',
+            'notes' => $request->notes,  // Make sure the notes are being passed here
         ]);
 
-        // return redirect()->route('referrals-list')->with('success', 'Referral created successfully!');
-        return redirect()->route('referrals-list')->with('success', 'User registered successfully!');
+        // Handling file upload for attachments
+        if ($request->hasFile('attachments')) {
+            foreach ($request->file('attachments') as $file) {
+                // Store the file and get the stored path
+                $path = $file->store('attachments', 'public');  // Store in public disk
+
+                // Get the original filename
+                $filename = $file->getClientOriginalName();
+
+                // Save the attachment in the database
+                Attachment::create([
+                    'referral_id' => $referral->id,
+                    'file_path' => $path,
+                    'filename' => $filename,  // Save the original filename
+                ]);
+            }
+        }
+
+        return redirect()->route('referrals-list')->with('success', 'Referral created successfully!');
     }
+
 }
 
