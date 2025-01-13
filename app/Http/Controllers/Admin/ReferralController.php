@@ -59,30 +59,6 @@ class ReferralController extends Controller
         return view('backoffice.referrals.create-referral', compact('patients', 'providers'));
     }
 
-    // // Handle the referral creation
-    // public function add(Request $request)
-    // {
-    //     $request->validate([
-    //         'patient_id' => 'required|exists:patients,id',
-    //         'referred_provider_id' => 'required|exists:providers,id',
-    //         'reason' => 'required|string',
-    //         'urgency' => 'required|in:routine,urgent',
-    //     ]);
-
-    //     Referral::create([
-    //         'patient_id' => $request->patient_id,
-    //         'referring_provider_id' => Auth::id(), // Use logged-in provider
-    //         'referred_provider_id' => $request->referred_provider_id,
-    //         'reason' => $request->reason,
-    //         'urgency' => $request->urgency,
-    //         'status' => 'pending',
-    //     ]);
-
-    //     // return redirect()->route('referrals-list')->with('success', 'Referral created successfully!');
-    //     return redirect()->route('referrals-list')->with('success', 'User registered successfully!');
-    // }
-
-
     public function add(Request $request)
     {
         $request->validate([
@@ -127,5 +103,16 @@ class ReferralController extends Controller
         return redirect()->route('referrals-list')->with('success', 'Referral created successfully!');
     }
 
+    public function view($id)
+    {
+        // Retrieve the referral with related data
+        $referral = Referral::with(['patient', 'referringProvider', 'referredProvider', 'attachments'])
+            ->findOrFail($id);
+
+        // Return the view with referral data
+        return view('backoffice.referrals.view-referral', compact('referral'));
+    }
+
 }
+
 

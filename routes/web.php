@@ -168,6 +168,13 @@ Route::get('/create-referral', [ReferralController::class, 'showForm'])->name('r
 // Route to handle the form submission for adding a new referral
 Route::post('/referrals-list', [ReferralController::class, 'add'])->name('referrals-list');
 
+//View referral
+Route::get('/view-referral/{id}', [ReferralController::class, 'view'])->name('view-referral');
+
+//edit referral
+Route::get('/edit-referral/{id}', [ReferralController::class, 'edit'])->name('edit-referral');
+
+
 
 
 // Route to handle the form submission for adding a new provider
