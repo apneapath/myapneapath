@@ -26,7 +26,7 @@
                                 </div>
                             @endif
 
-                            <form method="POST" action="{{ route('patients.update', $patient->id) }}">
+                            <form method="POST" action="{{ route('patients.update', $patient->patient_code) }}">
                                 @csrf
                                 <div class="row">
                                     {{-- <div class="col-2">
@@ -229,6 +229,15 @@
                                                     <textarea class="form-control" id="allergies" name="allergies" rows="3">{{ old('allergies', $patient->allergies) }}</textarea>
                                                 </div>
                                             </div>
+
+                                            <!-- PCP -->
+                                            <div class="row form-group col-12">
+                                                <label class="col-sm-2" for="pcp">PCP</label>
+                                                <div class="col-10">
+                                                    <input type="text" name="pcp" id="pcp"
+                                                        class="form-control" value="{{ old('pcp', $patient->pcp) }}">
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <div class="row mb-5">
@@ -255,6 +264,15 @@
                                                     <input type="text" class="form-control" id="policyNumber"
                                                         name="policy_number"
                                                         value="{{ old('policy_number', $patient->policy_number) }}">
+                                                </div>
+                                            </div>
+
+                                            <!-- SSN -->
+                                            <div class="row form-group col-12">
+                                                <label class="col-sm-2" for="ssn">SSN</label>
+                                                <div class="col-10">
+                                                    <input type="text" name="ssn" id="ssn"
+                                                        class="form-control" value="{{ old('ssn', $patient->ssn) }}">
                                                 </div>
                                             </div>
                                         </div>

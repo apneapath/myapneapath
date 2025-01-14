@@ -10,16 +10,19 @@ class Patient extends Model
     use HasFactory;
 
     protected $fillable = [
+        'patient_code',
         'first_name',
         'last_name',
         'gender',
         'dob',
+        'pcp', // Add pcp to the fillable array
         'contact_number',
         'email',
         'medical_history',
         'allergies',
         'insurance_provider',
         'policy_number',
+        'ssn', // Add ssn to the fillable array
         'street_address',
         'city',
         'state',

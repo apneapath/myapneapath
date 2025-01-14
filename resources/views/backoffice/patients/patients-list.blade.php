@@ -30,10 +30,12 @@
         <table id="patients-table" class="row-border stripe hover">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Contact Number</th>
+                    <th>Account ID</th>
+                    <th>Patient Name</th>
                     <th>DOB</th>
-                    <th>Address</th>
+                    <th>PCP</th>
+                    <th>Insurance</th>
+                    {{-- <th>Address</th> --}}
                     <th>Action</th>
                 </tr>
             </thead>
@@ -93,14 +95,16 @@
                     patients.forEach(function(patient) {
                         $('#patient-list').append(`
                 <tr>
+                    <td>${patient.patient_code}</td>
                     <td>${patient.first_name} ${patient.last_name}</td>
-                    <td>${patient.contact_number}</td>
                     <td>${patient.dob}</td> <!-- dob is formatted in the backend -->
-                    <td>${patient.address}</td>
+                    <td>${patient.pcp}</td>
+                    <td>${patient.insurance_provider ?? 'N/A'}</td>
+                    
                     <td>
-                        ${canEdit ? `<a title="Edit" href="/edit-patient/${patient.id}" class="d-none d-sm-inline-block btn btn-sm"><span style="color: Dodgerblue;"><i class="fa-solid fa-file-pen"></i></span></a>` : ''}
-                        ${canView ? `<a title="View" href="/patient-dashboard/${patient.id}" class="d-none d-sm-inline-block btn btn-sm"><span style="color: Dodgerblue;"><i class="fa-solid fa-eye"></i></span></a>` : ''}
-                        ${canDelete ? `<button title="Delete" type="button" class="d-none d-sm-inline-block btn btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="setDeletePatientId(${patient.id});"><span style="color: Dodgerblue;"><i class="fa-solid fa-trash"></i></span></button>` : ''}
+                        ${canEdit ? `<a title="Edit" href="/edit-patient/${patient.patient_code}" class="d-none d-sm-inline-block btn btn-sm"><span style="color: Dodgerblue;"><i class="fa-solid fa-file-pen"></i></span></a>` : ''}
+                        ${canView ? `<a title="View" href="/patient-dashboard/${patient.patient_code}" class="d-none d-sm-inline-block btn btn-sm"><span style="color: Dodgerblue;"><i class="fa-solid fa-eye"></i></span></a>` : ''}
+                       <!-- ${canDelete ? `<button title="Delete" type="button" class="d-none d-sm-inline-block btn btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="setDeletePatientId(${patient.id});"><span style="color: Dodgerblue;"><i class="fa-solid fa-trash"></i></span></button>` : ''} -->
                     </td>
                 </tr>
             `);

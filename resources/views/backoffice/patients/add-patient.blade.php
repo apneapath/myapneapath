@@ -141,17 +141,24 @@
                                         </div>
 
                                         <!-- Medical History -->
-                                        <div class="form-group col-6">
+                                        <div class="form-group col-5">
                                             <label for="medicalHistory">Medical History</label>
                                             <textarea class="form-control" id="medicalHistory" name="medical_history" placeholder="Any medical conditions?"
                                                 required></textarea>
                                         </div>
 
                                         <!-- Allergies -->
-                                        <div class="form-group col-6">
+                                        <div class="form-group col-5">
                                             <label for="allergies">Allergies</label>
                                             <textarea class="form-control" id="allergies" name="allergies" placeholder="List any allergies" required></textarea>
                                         </div>
+
+                                        <!-- PCP -->
+                                        <div class="form-group col-2">
+                                            <label for="pcp">PCP</label>
+                                            <input type="text" name="pcp" id="pcp" class="form-control">
+                                        </div>
+
                                     </div>
 
                                     <div class="row mb-5 align-items-start justify-content-start">
@@ -171,6 +178,12 @@
                                             <label for="policyNumber">Policy Number</label>
                                             <input type="text" class="form-control" id="policyNumber"
                                                 name="policy_number" placeholder="ex. 12345XYZ" required>
+                                        </div>
+
+                                        <!-- SSN -->
+                                        <div class="form-group col-3">
+                                            <label for="ssn">SSN</label>
+                                            <input type="text" name="ssn" id="ssn" class="form-control">
                                         </div>
                                     </div>
 

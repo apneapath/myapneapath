@@ -30,7 +30,7 @@
         <table id="referrals-table" class="row-border stripe hover">
             <thead>
                 <tr>
-                    <th>Patient</th>
+                    <th>Patient Name</th>
                     <th>Referring Provider</th>
                     <th>Referred Provider</th>
                     <th>Reason</th>
