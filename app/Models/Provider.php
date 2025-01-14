@@ -11,6 +11,7 @@ class Provider extends Model
 
     // Define which attributes are mass assignable
     protected $fillable = [
+        'provider_code',
         'first_name',
         'last_name',
         'gender',

@@ -17,7 +17,7 @@
                     <div class="card shadow-2-strong card-registration" style="border-radius: 5px;">
                         <div class="card-body p-4 p-md-5">
                             <!-- Form to edit an existing provider -->
-                            <form method="POST" action="{{ route('providers.update', $provider->id) }}">
+                            <form method="POST" action="{{ route('providers.update', $provider->provider_code) }}">
                                 @csrf
                                 <div class="row">
                                     <div class="row col-12 mb-5 align-items-start justify-content-start">

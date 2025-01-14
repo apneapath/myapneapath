@@ -149,10 +149,10 @@ Route::get('/add-provider', [ProviderController::class, 'showForm'])->name('prov
 Route::post('/providers-list', [ProviderController::class, 'add'])->name('providers-list');
 
 // Show the form to edit an existing provider
-Route::get('/edit-provider/{id}', [ProviderController::class, 'edit'])->name('provider.edit');
+Route::get('/edit-provider/{provider_code}', [ProviderController::class, 'edit'])->name('provider.edit');
 
 // Update the provider
-Route::post('/update-provider/{id}', [ProviderController::class, 'update'])->name('providers.update');
+Route::post('/update-provider/{provider_code}', [ProviderController::class, 'update'])->name('providers.update');
 
 // // Delete the provider
 Route::delete('/delete-provider/{id}', [ProviderController::class, 'destroy'])->name('providers.destroy');

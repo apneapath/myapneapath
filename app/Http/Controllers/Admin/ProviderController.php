@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class ProviderController extends Controller
 {
@@ -18,6 +19,7 @@ class ProviderController extends Controller
             // Fetch providers with specific columns, including 'clinic_name' and 'account_status'
             $providers = Provider::select(
                 'id',
+                'provider_code',
                 'first_name',
                 'last_name',
                 'contact_number',
@@ -43,6 +45,7 @@ class ProviderController extends Controller
 
                     return [
                         'id' => $provider->id,
+                        'provider_code' => $provider->provider_code,
                         'name' => $provider->name,
                         'contact_number' => $provider->contact_number,
                         'dob' => $provider->dob,
@@ -85,6 +88,67 @@ class ProviderController extends Controller
     }
 
     // Store a newly created provider in the database
+    // public function add(Request $request)
+    // {
+    //     // Validate the incoming data
+    //     $validatedData = $request->validate([
+    //         'first_name' => 'required|string|max:255',
+    //         'last_name' => 'required|string|max:255',
+    //         'gender' => 'required|string|max:10',
+    //         'dob' => 'required|date',
+    //         'email' => 'required|email|max:255|unique:providers,email',
+    //         'contact_number' => 'required|string|max:255',
+    //         'emergency_contact_name' => 'required|string|max:255',
+    //         'emergency_contact_phone' => 'required|string|max:255',
+    //         'specialization' => 'nullable|string|max:255',
+    //         'license_number' => 'nullable|string|max:255',
+    //         'clinic_name' => 'nullable|string|max:255',
+    //         'clinic_address' => 'required|string|max:255',
+    //         'city' => 'required|string|max:255',
+    //         'state' => 'required|string|max:255',
+    //         'postal_code' => 'required|string|max:20',
+    //         'country' => 'nullable|string|max:255',
+    //         'work_hours' => 'nullable|string',  // Adjust validation for work_hours
+    //         'account_status' => 'nullable|in:Active,Suspended,Retired',
+    //     ]);
+
+    //     try {
+    //         // Create the provider record
+    //         $provider = Provider::create($validatedData);
+
+    //         // Check if the provider was created successfully
+    //         if ($provider) {
+    //             if ($request->ajax()) {
+    //                 return response()->json([
+    //                     'success' => true,
+    //                     'message' => 'Provider added successfully!',
+    //                     'provider' => $provider
+    //                 ]);
+    //             }
+
+    //             // If it's not an AJAX request, redirect back to the provider list
+    //             return redirect()->route('providers-list')->with('success', 'Provider added successfully!');
+    //         }
+
+    //         // If creation failed
+    //         if ($request->ajax()) {
+    //             return response()->json([
+    //                 'success' => false,
+    //                 'message' => 'Failed to create provider.'
+    //             ], 500);
+    //         }
+
+    //         return back()->with('error', 'Failed to create provider.');
+
+    //     } catch (\Exception $e) {
+    //         // Log the error for debugging purposes
+    //         \Log::error('Error creating provider: ' . $e->getMessage());
+
+    //         // Handle the error properly
+    //         return back()->with('error', 'An error occurred while saving the provider.');
+    //     }
+    // }
+
     public function add(Request $request)
     {
         // Validate the incoming data
@@ -112,6 +176,14 @@ class ProviderController extends Controller
         try {
             // Create the provider record
             $provider = Provider::create($validatedData);
+
+            // Generate the provider code in the format 'PROV-<ID>-<3 random characters>'
+            $randomCharacters = strtoupper(Str::random(2)); // 3 random characters in uppercase
+            $providerCode = 'MAP-PROV' . $provider->id . $randomCharacters;
+
+            // Assign the generated provider code to the provider
+            $provider->provider_code = $providerCode;
+            $provider->save(); // Save the provider with the generated provider code
 
             // Check if the provider was created successfully
             if ($provider) {
@@ -146,6 +218,7 @@ class ProviderController extends Controller
         }
     }
 
+
     // Display the specified provider details
     public function show(Provider $provider)
     {
@@ -153,21 +226,84 @@ class ProviderController extends Controller
     }
 
     // Show the form for editing a provider
-    public function edit($id)
+    // public function edit($id)
+    // {
+    //     // Find the patient by id
+    //     $provider = Provider::findOrFail($id);
+    //     // Return the edit view with the patient's data
+    //     return view('backoffice.providers.edit-provider', compact('provider'));
+    // }
+
+    public function edit($provider_code)
     {
-        // Find the patient by id
-        $provider = Provider::findOrFail($id);
-        // Return the edit view with the patient's data
+        // Find the provider by provider_code instead of id
+        $provider = Provider::where('provider_code', $provider_code)->first();
+
+        // If provider not found, redirect with an error message
+        if (!$provider) {
+            return redirect()->route('providers-list')->with('error', 'Provider not found.');
+        }
+
+        // Return the edit view with the provider's data
         return view('backoffice.providers.edit-provider', compact('provider'));
     }
 
+
     // Update the specified provider in the database
-    public function update(Request $request, $id)
+    // public function update(Request $request, $id)
+    // {
+    //     // Find the provider by ID
+    //     $provider = Provider::find($id);
+    //     if (!$provider) {
+    //         return redirect()->route('providers.index')->with('error', 'Provider not found.');
+    //     }
+
+    //     // Validate the data
+    //     $validatedData = $request->validate([
+    //         'first_name' => 'required|string|max:255',
+    //         'last_name' => 'required|string|max:255',
+    //         'gender' => 'required|string|max:10',
+    //         'dob' => 'required|date',
+    //         'contact_number' => 'required|string|max:255',
+    //         'emergency_contact_name' => 'required|string|max:255',
+    //         'emergency_contact_phone' => 'required|string|max:255',
+    //         'email' => 'required|email|max:255',
+    //         'specialization' => 'nullable|string|max:255',
+    //         'license_number' => 'nullable|string|max:255',
+    //         'clinic_name' => 'nullable|string|max:255',
+    //         'clinic_address' => 'required|string|max:255',
+    //         'city' => 'required|string|max:255',
+    //         'state' => 'required|string|max:255',
+    //         'postal_code' => 'required|string|max:20',
+    //         'country' => 'nullable|string|max:255',
+    //         'work_hours' => 'nullable|string',
+    //         'account_status' => 'nullable|in:Active,Suspended,Retired',
+    //     ]);
+
+    //     // Update provider data
+    //     $provider->update($validatedData);
+
+    //     // Respond to AJAX request (if applicable)
+    //     if ($request->ajax()) {
+    //         return response()->json([
+    //             'success' => true,
+    //             'message' => 'Provider updated successfully!',
+    //             'provider' => $provider
+    //         ]);
+    //     }
+
+    //     // If not an AJAX request, redirect back
+    //     return redirect()->route('providers-list')->with('success', 'Provider updated successfully!');
+    // }
+
+    public function update(Request $request, $provider_code)
     {
-        // Find the provider by ID
-        $provider = Provider::find($id);
+        // Find the provider by provider_code
+        $provider = Provider::where('provider_code', $provider_code)->first();
+
+        // If provider not found, return an error response
         if (!$provider) {
-            return redirect()->route('providers.index')->with('error', 'Provider not found.');
+            return redirect()->route('providers-list')->with('error', 'Provider not found.');
         }
 
         // Validate the data
@@ -207,6 +343,7 @@ class ProviderController extends Controller
         // If not an AJAX request, redirect back
         return redirect()->route('providers-list')->with('success', 'Provider updated successfully!');
     }
+
 
 
 
