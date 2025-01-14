@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h4 class="mb-0 text-gray-800">Referral ID: MAPREF.#00{{ $referral->id }} </h4>
+            <h4 class="mb-0 text-gray-800">Referral ID: {{ $referral->referral_code ?? 'N/A' }} </h4>
         </div>
 
         <div class="row justify-content-center align-items-center h-100">
