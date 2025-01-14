@@ -153,15 +153,26 @@ class ReferralController extends Controller
     }
 
 
-    public function view($id)
+    // public function view($id)
+    // {
+    //     // Retrieve the referral with related data
+    //     $referral = Referral::with(['patient', 'referringProvider', 'referredProvider', 'attachments'])
+    //         ->findOrFail($id);
+
+    //     // Return the view with referral data
+    //     return view('backoffice.referrals.view-referral', compact('referral'));
+    // }
+    public function view($referral_code)
     {
-        // Retrieve the referral with related data
+        // Retrieve the referral with related data using referral_code instead of id
         $referral = Referral::with(['patient', 'referringProvider', 'referredProvider', 'attachments'])
-            ->findOrFail($id);
+            ->where('referral_code', $referral_code)
+            ->firstOrFail();
 
         // Return the view with referral data
         return view('backoffice.referrals.view-referral', compact('referral'));
     }
+
 
 }
 
