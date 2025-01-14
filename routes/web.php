@@ -169,13 +169,8 @@ Route::get('/create-referral', [ReferralController::class, 'showForm'])->name('r
 Route::post('/referrals-list', [ReferralController::class, 'add'])->name('referrals-list');
 
 //View referral
-// Route::get('/view-referral/{id}', [ReferralController::class, 'view'])->name('view-referral');
-// View referral by referral code
 Route::get('/view-referral/{referral_code}', [ReferralController::class, 'view'])->name('view-referral');
 
-
-//edit referral
-// Route::get('/edit-referral/{id}', [ReferralController::class, 'edit'])->name('edit-referral');
 // Edit referral by referral code
 Route::get('/edit-referral/{referral_code}', [ReferralController::class, 'edit'])->name('edit-referral');
 Route::post('/update-referral/{referral_code}', [ReferralController::class, 'update'])->name('update-referral');

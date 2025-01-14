@@ -290,7 +290,8 @@
                             <a href="{{ route('referrals-list') }}" class="btn btn-sm btn-secondary">Back to Referrals
                                 List</a>
                             @if (auth()->user()->can('edit posts'))
-                                <a href="{{ route('edit-referral', $referral->id) }}" class="btn btn-sm btn-primary">Edit
+                                <a href="{{ route('edit-referral', $referral->referral_code) }}"
+                                    class="btn btn-sm btn-primary">Edit
                                     Referral</a>
                             @endif
                         </div>

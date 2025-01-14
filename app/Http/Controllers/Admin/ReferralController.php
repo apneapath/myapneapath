@@ -60,50 +60,6 @@ class ReferralController extends Controller
         return view('backoffice.referrals.create-referral', compact('patients', 'providers'));
     }
 
-    // public function add(Request $request)
-    // {
-    //     $request->validate([
-    //         'patient_id' => 'required|exists:patients,id',
-    //         'referred_provider_id' => 'required|exists:providers,id', // Ensure referred_provider_id is valid
-    //         'reason' => 'required|string',
-    //         'urgency' => 'required|in:routine,urgent',
-    //         'notes' => 'nullable|string',  // Make sure notes is nullable and validated
-    //         'attachments' => 'nullable|array', // Ensure attachments are an array
-    //         'attachments.*' => 'file|mimes:jpg,jpeg,png,pdf,docx,txt|max:2048' // Validate file types and sizes
-    //     ]);
-
-    //     // Create referral and store the notes
-    //     $referral = Referral::create([
-    //         'patient_id' => $request->patient_id,
-    //         'referring_provider_id' => Auth::id(),
-    //         'referred_provider_id' => $request->referred_provider_id,
-    //         'reason' => $request->reason,
-    //         'urgency' => $request->urgency,
-    //         'status' => 'pending',
-    //         'notes' => $request->notes,  // Make sure the notes are being passed here
-    //     ]);
-
-    //     // Handling file upload for attachments
-    //     if ($request->hasFile('attachments')) {
-    //         foreach ($request->file('attachments') as $file) {
-    //             // Store the file and get the stored path
-    //             $path = $file->store('attachments', 'public');  // Store in public disk
-
-    //             // Get the original filename
-    //             $filename = $file->getClientOriginalName();
-
-    //             // Save the attachment in the database
-    //             Attachment::create([
-    //                 'referral_id' => $referral->id,
-    //                 'file_path' => $path,
-    //                 'filename' => $filename,  // Save the original filename
-    //             ]);
-    //         }
-    //     }
-
-    //     return redirect()->route('referrals-list')->with('success', 'Referral created successfully!');
-    // }
-
     public function add(Request $request)
     {
         $request->validate([
@@ -116,9 +72,6 @@ class ReferralController extends Controller
             'attachments.*' => 'file|mimes:jpg,jpeg,png,pdf,docx,txt|max:2048' // Validate file types and sizes
         ]);
 
-        // Generate a unique referral code (MAP-REF + random string or sequential number)
-        $referralCode = 'MAP-REF' . strtoupper(Str::random(5));
-
         // Create referral and store the notes
         $referral = Referral::create([
             'patient_id' => $request->patient_id,
@@ -128,8 +81,15 @@ class ReferralController extends Controller
             'urgency' => $request->urgency,
             'status' => 'pending',
             'notes' => $request->notes,  // Make sure the notes are being passed here
-            'referral_code' => $referralCode,  // Store the generated referral code
         ]);
+
+        // Generate the referral code: 'MAP-<ID>-<3 random characters>'
+        $randomCharacters = strtoupper(Str::random(3)); // 3 random characters in uppercase
+        $referralCode = 'MAP-REF' . $referral->id . $randomCharacters;
+
+        // Assign the generated referral code
+        $referral->referral_code = $referralCode;
+        $referral->save(); // Save the referral with the referral code
 
         // Handling file upload for attachments
         if ($request->hasFile('attachments')) {
@@ -152,16 +112,6 @@ class ReferralController extends Controller
         return redirect()->route('referrals-list')->with('success', 'Referral created successfully!');
     }
 
-
-    // public function view($id)
-    // {
-    //     // Retrieve the referral with related data
-    //     $referral = Referral::with(['patient', 'referringProvider', 'referredProvider', 'attachments'])
-    //         ->findOrFail($id);
-
-    //     // Return the view with referral data
-    //     return view('backoffice.referrals.view-referral', compact('referral'));
-    // }
     public function view($referral_code)
     {
         // Retrieve the referral with related data using referral_code instead of id
