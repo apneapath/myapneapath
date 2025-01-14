@@ -175,7 +175,11 @@ Route::get('/view-referral/{referral_code}', [ReferralController::class, 'view']
 
 
 //edit referral
-Route::get('/edit-referral/{id}', [ReferralController::class, 'edit'])->name('edit-referral');
+// Route::get('/edit-referral/{id}', [ReferralController::class, 'edit'])->name('edit-referral');
+// Edit referral by referral code
+Route::get('/edit-referral/{referral_code}', [ReferralController::class, 'edit'])->name('edit-referral');
+Route::post('/update-referral/{referral_code}', [ReferralController::class, 'update'])->name('update-referral');
+
 
 
 

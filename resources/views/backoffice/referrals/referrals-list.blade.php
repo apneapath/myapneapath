@@ -117,7 +117,7 @@
                                 <td>${referral.urgency}</td>
                                 <td>${referral.status}</td>
                                 <td>
-                                    ${canEdit ? `<a title="Edit referral" href="/edit-referral/${referral.id}" class="btn btn-sm"><span style="color: Dodgerblue;"><i class="fa-solid fa-file-pen"></i></span></a>` : ''}
+                                    ${canEdit ? `<a title="Edit referral" href="/edit-referral/${referral.referral_code}" class="btn btn-sm"><span style="color: Dodgerblue;"><i class="fa-solid fa-file-pen"></i></span></a>` : ''}
                                     ${canView ? `<a title="View referral details" href="/view-referral/${referral.referral_code}" class="btn btn-sm"><span style="color: Dodgerblue;"><i class="fa-solid fa-eye"></i></span></a>` : ''}
                                     ${canDelete ? `<button type="button" class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="setDeleteReferralId(${referral.id});"><span style="color: Dodgerblue;"><i class="fa-solid fa-trash"></i></span></button>` : ''}
                                 </td>
