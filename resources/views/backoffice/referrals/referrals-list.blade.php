@@ -30,10 +30,11 @@
         <table id="referrals-table" class="row-border stripe hover">
             <thead>
                 <tr>
+                    <th>Referral ID</th>
                     <th>Patient Name</th>
-                    <th>Referring Provider</th>
+                    {{-- <th>Referring Provider</th> --}}
                     <th>Referred Provider</th>
-                    <th>Reason</th>
+                    {{-- <th>Reason</th> --}}
                     <th>Urgency</th>
                     <th>Status</th>
                     <th>Action</th>
@@ -110,16 +111,17 @@
 
                         $('#referral-list').append(`
                             <tr>
+                                <td>${referral.referral_code}</td>
                                 <td>${referral.patient.first_name} ${referral.patient.last_name}</td>
-                                <td>${referral.referring_provider ? referral.referring_provider.name : 'N/A'}</td>
+                                <!-- <td>${referral.referring_provider ? referral.referring_provider.name : 'N/A'}</td> -->
                                 <td>${referral.referred_provider ? referral.referred_provider.name : 'N/A'}</td>
-                                <td>${referral.reason}</td>
+                                <!-- <td>${referral.reason}</td>-->
                                 <td>${referral.urgency}</td>
                                 <td>${referral.status}</td>
                                 <td>
-                                    ${canEdit ? `<a title="Edit referral" href="/edit-referral/${referral.referral_code}" class="btn btn-sm"><span style="color: Dodgerblue;"><i class="fa-solid fa-file-pen"></i></span></a>` : ''}
+                                    <!--${canEdit ? `<a title="Edit referral" href="/edit-referral/${referral.referral_code}" class="btn btn-sm"><span style="color: Dodgerblue;"><i class="fa-solid fa-file-pen"></i></span></a>` : ''}-->
                                     ${canView ? `<a title="View referral details" href="/view-referral/${referral.referral_code}" class="btn btn-sm"><span style="color: Dodgerblue;"><i class="fa-solid fa-eye"></i></span></a>` : ''}
-                                    ${canDelete ? `<button type="button" class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="setDeleteReferralId(${referral.id});"><span style="color: Dodgerblue;"><i class="fa-solid fa-trash"></i></span></button>` : ''}
+                                    <!--${canDelete ? `<button type="button" class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="setDeleteReferralId(${referral.id});"><span style="color: Dodgerblue;"><i class="fa-solid fa-trash"></i></span></button>` : ''}-->
                                 </td>
                             </tr>
                         `);

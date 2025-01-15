@@ -258,8 +258,8 @@
                                         <p>No notes available.</p>
                                     @endif
                                 </ul>
-                                <textarea placeholder="Add a note..." class="form-control" rows="3"></textarea>
-                                <button class="btn btn-sm btn-success mt-2">Add Note</button>
+                                {{-- <textarea placeholder="Add a note..." class="form-control" rows="3"></textarea>
+                                <button class="btn btn-sm btn-success mt-2">Add Note</button> --}}
                             </div>
 
                             <!-- Attachments Section -->
