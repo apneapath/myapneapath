@@ -20,10 +20,38 @@ class ReferralController extends Controller
     //     $this->middleware(['auth', 'role:provider|admin']);
     // }
 
+    // public function index()
+    // {
+    //     // Get all referrals with eager loading
+    //     $referrals = Referral::with(['patient', 'referringProvider', 'referredProvider'])->get();
+
+    //     // Log each referral with referring and referred provider
+    //     \Log::info('Referrals:', $referrals->toArray());
+    //     $referrals->each(function ($referral) {
+    //         \Log::info('Referral', [
+    //             'Referring Provider' => $referral->referringProvider,
+    //             'Referred Provider' => $referral->referredProvider
+    //         ]);
+    //     });
+
+    //     $canEdit = auth()->user()->can('edit posts');
+    //     $canView = auth()->user()->can('view posts');
+    //     $canDelete = auth()->user()->can('delete posts');
+
+    //     return response()->json([
+    //         'canEdit' => $canEdit,
+    //         'canView' => $canView,
+    //         'canDelete' => $canDelete,
+    //         'referrals' => $referrals
+    //     ]);
+    // }
+
     public function index()
     {
-        // Get all referrals with eager loading
-        $referrals = Referral::with(['patient', 'referringProvider', 'referredProvider'])->get();
+        // Get all referrals with eager loading, ordered by created_at in descending order
+        $referrals = Referral::with(['patient', 'referringProvider', 'referredProvider'])
+            ->orderBy('created_at', 'desc')  // Sorting by created_at (most recent first)
+            ->get();
 
         // Log each referral with referring and referred provider
         \Log::info('Referrals:', $referrals->toArray());
@@ -34,10 +62,12 @@ class ReferralController extends Controller
             ]);
         });
 
+        // Check permissions for edit, view, and delete
         $canEdit = auth()->user()->can('edit posts');
         $canView = auth()->user()->can('view posts');
         $canDelete = auth()->user()->can('delete posts');
 
+        // Return the response with the ordered referrals and other data
         return response()->json([
             'canEdit' => $canEdit,
             'canView' => $canView,
@@ -45,6 +75,7 @@ class ReferralController extends Controller
             'referrals' => $referrals
         ]);
     }
+
 
     // Show the referral creation form
     public function showForm()

@@ -33,7 +33,7 @@
                                     <div class="col">
                                         <ul class="list-unstyled">
                                             <li><strong>Status</strong></li>
-                                            <li><span class="badge badge-secondary">{{ $referral->status }}</span></li>
+                                            <li><span class="badge badge-warning">{{ $referral->status }}</span></li>
                                         </ul>
                                     </div>
 

@@ -131,9 +131,20 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item {{ request()->is('referrals-list') ? 'active' : '' }}"
-                    href="{{ url('/referrals-list') }}">Referral</a>
+                    href="{{ url('/referrals-list') }}">All</a>
+
+                <a class="collapse-item {{ request()->is('incomming-referral-list') ? 'active' : '' }}"
+                    href="{{ url('/incomming-referral-list') }}">Incomming</a>
+
+                <a class="collapse-item {{ request()->is('outgoing-referral-list') ? 'active' : '' }}"
+                    href="{{ url('/outgoing-referral-list') }}">Outgoing</a>
+
                 <a class="collapse-item {{ request()->is('referral-types-list') ? 'active' : '' }}"
                     href="{{ url('/referral-types-list') }}">Referral Types</a>
+
+                <a class="collapse-item {{ request()->is('create-referral') ? 'active' : '' }}"
+                    href="{{ url('/create-referral') }}">Create Referral</a>
+
             </div>
         </div>
     </li>
