@@ -84,6 +84,13 @@
                                             <input type="text" class="form-control" id="emergencyContactPhone"
                                                 name="emergency_contact_phone" placeholder="ex. (00)0-0000-0000" required>
                                         </div>
+
+                                        <!-- Fax -->
+                                        <div class="form-group col-3">
+                                            <label for="fax_number">Fax Number</label>
+                                            <input type="text" id="fax_number" name="fax_number" class="form-control"
+                                                pattern="\d{10}" title="Fax number should be exactly 10 digits">
+                                        </div>
                                     </div>
 
                                     <div class="row mb-5 align-items-start justify-content-start">
@@ -105,11 +112,18 @@
                                                 name="license_number" placeholder="ex. n089" required>
                                         </div>
 
+                                        <!-- NPI -->
+                                        <div class="form-group col-3">
+                                            <label for="npi">NPI (National Provider Identifier)</label>
+                                            <input type="text" id="npi" name="npi" class="form-control"
+                                                required pattern="\d{10}" title="NPI should be exactly 10 digits">
+                                        </div>
+
                                         <!-- Clinic Name -->
                                         <div class="form-group col-3">
                                             <label for="clinicName">Clinic Name</label>
-                                            <input type="text" class="form-control" id="clinicName" name="clinic_name"
-                                                placeholder="ex. Glow Smile" required>
+                                            <input type="text" class="form-control" id="clinicName"
+                                                name="clinic_name" placeholder="ex. Glow Smile" required>
                                         </div>
 
                                         <!-- Clinic Address -->

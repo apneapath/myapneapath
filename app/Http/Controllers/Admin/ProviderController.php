@@ -30,7 +30,8 @@ class ProviderController extends Controller
                 'state',
                 'postal_code',
                 'specialization',
-                'clinic_name', // Include clinic_name
+                'npi',
+                'license_number', // Include clinic_name
                 'account_status' // Include account_status
             )
                 ->orderBy('created_at', 'desc')
@@ -52,7 +53,8 @@ class ProviderController extends Controller
                         'email' => $provider->email,
                         'address' => $provider->address,
                         'specialization' => $provider->specialization,
-                        'clinic_name' => $provider->clinic_name, // Include clinic_name
+                        'npi' => $provider->npi,
+                        'license_number' => $provider->license_number, // Include clinic_name
                         'account_status' => $provider->account_status, // Include account_status
                     ];
                 });
@@ -171,6 +173,8 @@ class ProviderController extends Controller
             'country' => 'nullable|string|max:255',
             'work_hours' => 'nullable|string',  // Adjust validation for work_hours
             'account_status' => 'nullable|in:Active,Suspended,Retired',
+            'npi' => 'required|digits:10|unique:providers,npi',  // Ensure it's 10 digits and unique
+            'fax_number' => 'nullable|digits:10',  // Ensure fax number is 10 digits long (optional)
         ]);
 
         try {
@@ -326,6 +330,8 @@ class ProviderController extends Controller
             'country' => 'nullable|string|max:255',
             'work_hours' => 'nullable|string',
             'account_status' => 'nullable|in:Active,Suspended,Retired',
+            'npi' => 'nullable|string|max:10',
+            'fax_number' => 'nullable|string|max:10',
         ]);
 
         // Update provider data

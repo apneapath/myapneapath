@@ -116,6 +116,16 @@
                                                     placeholder="ex. (00)0-0000-0000" required>
                                             </div>
                                         </div>
+
+                                        <!-- Fax Number -->
+                                        <div class="row form-group col-12">
+                                            <label class="col-sm-2" for="fax_number">Fax Number</label>
+                                            <div class="col-10">
+                                                <input type="text" name="fax_number" id="fax_number"
+                                                    class="form-control"
+                                                    value="{{ old('fax_number', $provider->fax_number ?? 'N/A') }}">
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="row col-12 mb-5 align-items-start justify-content-start">
@@ -140,6 +150,15 @@
                                                 <input type="text" class="form-control" id="licenseNumber"
                                                     name="license_number" value="{{ $provider->license_number }}"
                                                     placeholder="ex. n089">
+                                            </div>
+                                        </div>
+
+                                        <!-- NPI -->
+                                        <div class="row form-group col-12">
+                                            <label class="col-sm-2" for="npi">NPI</label>
+                                            <div class="col-10">
+                                                <input type="text" name="npi" id="npi" class="form-control"
+                                                    value="{{ old('npi', $provider->npi) }}">
                                             </div>
                                         </div>
 

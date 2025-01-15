@@ -20,7 +20,9 @@ class Provider extends Model
         'contact_number',
         'emergency_contact_name',
         'emergency_contact_phone',
+        'fax_number',
         'specialization',
+        'npi',
         'license_number',
         'clinic_name',
         'clinic_address',  // changed from street_address to clinic_address
