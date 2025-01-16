@@ -78,9 +78,72 @@ class PatientController extends Controller
     }
 
     // Store a new patient in the database
+    // public function add(Request $request)
+    // {
+    //     // Validate the incoming data
+    //     $validatedData = $request->validate([
+    //         'first_name' => 'required|string|max:255',
+    //         'last_name' => 'required|string|max:255',
+    //         'gender' => 'required|string|max:10',
+    //         'dob' => 'required|date',
+    //         'contact_number' => 'required|string|max:255',
+    //         'email' => 'required|email|max:255',
+    //         'medical_history' => 'nullable|string',
+    //         'allergies' => 'nullable|string',
+    //         'insurance_provider' => 'nullable|string|max:255',
+    //         'policy_number' => 'nullable|string|max:255',
+    //         'street_address' => 'required|string|max:255',
+    //         'city' => 'required|string|max:255',
+    //         'state' => 'required|string|max:255',
+    //         'postal_code' => 'required|string|max:20',
+    //         'country' => 'nullable|string|max:255',
+    //         'emergency_contact_name' => 'required|string|max:255',
+    //         'emergency_contact_phone' => 'required|string|max:255',
+    //         'pcp' => 'nullable|string|max:255', // Validate PCP
+    //         'ssn' => 'nullable|string|max:20',  // Validate SSN
+    //     ]);
+
+    //     // Create a new patient record with the validated data
+    //     $patient = Patient::create($validatedData);
+
+    //     // Check if the patient was created successfully
+    //     if ($patient) {
+    //         // Generate the patient code: 'MAP-PAT<id>-<3 random characters>'
+    //         $randomCharacters = strtoupper(Str::random(3)); // 3 random characters in uppercase
+    //         $patientCode = 'MAP-PAT' . $patient->id . $randomCharacters;
+
+    //         // Assign the generated patient code to the patient
+    //         $patient->patient_code = $patientCode;
+    //         $patient->save(); // Save the patient with the patient code
+
+    //         // If the request is an AJAX request, return a success response
+    //         if ($request->ajax()) {
+    //             return response()->json([
+    //                 'success' => true,
+    //                 'message' => 'Patient added successfully!',
+    //                 'patient' => $patient
+    //             ]);
+    //         }
+
+    //         // If not an AJAX request, redirect to the patients list with success message
+    //         return redirect()->route('patients-list')->with('success', 'Patient added successfully!');
+    //     }
+
+    //     // If creation failed
+    //     if ($request->ajax()) {
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'Failed to create patient.'
+    //         ], 500);
+    //     }
+
+    //     return back()->with('error', 'Failed to create patient.');
+    // }
+
+
     public function add(Request $request)
     {
-        // Validate the incoming data
+        // Validate the incoming data, including the password field
         $validatedData = $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
@@ -101,10 +164,14 @@ class PatientController extends Controller
             'emergency_contact_phone' => 'required|string|max:255',
             'pcp' => 'nullable|string|max:255', // Validate PCP
             'ssn' => 'nullable|string|max:20',  // Validate SSN
+            'password' => 'required|string|min:8', // Ensure the password field is validated
         ]);
 
         // Create a new patient record with the validated data
         $patient = Patient::create($validatedData);
+
+        // Hash the password before saving
+        $patient->password = bcrypt($request->password);
 
         // Check if the patient was created successfully
         if ($patient) {
@@ -139,6 +206,7 @@ class PatientController extends Controller
 
         return back()->with('error', 'Failed to create patient.');
     }
+
 
     // Show a specific patient's details
     // TO BE CONTINUE PATIENT DASHBOARD-----------------------------------------------------------------------------------------------------

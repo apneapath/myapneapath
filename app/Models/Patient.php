@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Foundation\Auth\User as Authenticatable; // Use the base User class
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -30,6 +32,7 @@ class Patient extends Model
         'country',  // If you want to include the country field
         'emergency_contact_name',
         'emergency_contact_phone',
+        'password',
     ];
 
 

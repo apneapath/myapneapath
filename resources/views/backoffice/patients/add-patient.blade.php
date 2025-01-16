@@ -187,6 +187,19 @@
                                         </div>
                                     </div>
 
+                                    <div class="row mb-5 align-items-start justify-content-start">
+                                        <div>
+                                            <h5 class="mb-3 text-gray-800">Password</h5>
+                                        </div>
+
+                                        <!-- Password -->
+                                        <div class="form-group col-3">
+                                            <label for="password">Password</label>
+                                            <input type="password" class="form-control" id="password" name="password"
+                                                required>
+                                        </div>
+                                    </div>
+
                                     <div class="row align-items-start justify-content-between">
                                         <div class="col-12 d-flex flex-row-reverse">
                                             <div class="form-group">
