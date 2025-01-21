@@ -119,19 +119,18 @@
                                                 required pattern="\d{10}" title="NPI should be exactly 10 digits">
                                         </div>
 
-                                        <!-- Clinic Name -->
+                                        <!-- Facility -->
                                         <div class="form-group col-3">
-                                            <label for="clinicName">Clinic Name</label>
-                                            <input type="text" class="form-control" id="clinicName"
-                                                name="clinic_name" placeholder="ex. Glow Smile" required>
+                                            <label for="facilityName">Facility</label>
+                                            <input type="text" class="form-control" id="facilityName"
+                                                name="facility_name" placeholder="ex. Glow Smile" required>
                                         </div>
 
-                                        <!-- Clinic Address -->
+                                        <!-- Street -->
                                         <div class="form-group col-3">
-                                            <label for="clinicAddress">Clinic Address</label>
-                                            <input type="text" class="form-control" id="clinicAddress"
-                                                name="clinic_address" placeholder="ex. 142 J. Marzan St. Sampaloc Manila"
-                                                required>
+                                            <label for="street">Street</label>
+                                            <input type="text" class="form-control" id="street" name="street"
+                                                placeholder="ex. 142 J. Marzan St." required>
                                         </div>
 
                                         <!-- City -->

@@ -24,8 +24,8 @@ class Provider extends Model
         'specialization',
         'npi',
         'license_number',
-        'clinic_name',
-        'clinic_address',  // changed from street_address to clinic_address
+        'facility_name',
+        'street',  // changed from street_address to clinic_address
         'city',
         'state',
         'postal_code',

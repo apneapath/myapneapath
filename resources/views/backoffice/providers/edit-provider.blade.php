@@ -162,22 +162,22 @@
                                             </div>
                                         </div>
 
-                                        <!-- Clinic Name -->
+                                        <!-- Facility -->
                                         <div class="row form-group col-12">
-                                            <label class="col-sm-2" for="clinicName">Clinic Name</label>
+                                            <label class="col-sm-2" for="facilityName">Facility</label>
                                             <div class="col-10">
-                                                <input type="text" class="form-control" id="clinicName"
-                                                    name="clinic_name" value="{{ $provider->clinic_name }}"
+                                                <input type="text" class="form-control" id="facilityName"
+                                                    name="clinic_name" value="{{ $provider->facility_name }}"
                                                     placeholder="ex. Glow Smile">
                                             </div>
                                         </div>
 
-                                        <!-- Clinic Address -->
+                                        <!-- Street -->
                                         <div class="row form-group col-12">
-                                            <label class="col-sm-2" for="clinicAddress">Clinic Address</label>
+                                            <label class="col-sm-2" for="clinicAddress">Street</label>
                                             <div class="col-10">
                                                 <input type="text" class="form-control" id="clinicAddress"
-                                                    name="clinic_address" value="{{ $provider->clinic_address }}"
+                                                    name="clinic_address" value="{{ $provider->street }}"
                                                     placeholder="ex. 142 J. Marzan St. Sampaloc Manila" required>
                                             </div>
                                         </div>
