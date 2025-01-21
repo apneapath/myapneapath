@@ -165,6 +165,11 @@
 
     <!-- Nav Item - Facilities -->
     <li class="nav-item {{ request()->is('facilities-list') ? 'active' : '' }}">
+        {{-- <a href="{{ url('/facilities-list') }}" class="nav-link">
+            <i class="fa-solid fa-house-medical"></i>
+            <span>Facilities</span>
+        </a> --}}
+
         <a href="{{ url('/facilities-list') }}" class="nav-link">
             <i class="fa-solid fa-house-medical"></i>
             <span>Facilities</span>

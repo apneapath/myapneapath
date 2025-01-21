@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\PatientController;
 use App\Http\Controllers\Admin\ProviderController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\ReferralController;
+use App\Http\Controllers\Admin\FacilityController;
 use App\Models\Role;  // Import the Role model
 
 Route::get('/', function () {
@@ -110,6 +111,29 @@ Route::put('/roles/{role}', [RoleController::class, 'update'])->name('roles.upda
 
 // Delete a role
 Route::delete('/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
+
+
+
+// //FACILITY----------------------------------------------------------------------------------------------------------------------------------
+// Show all facilities (AJAX)
+Route::get('/facilities', [FacilityController::class, 'index'])->name('facilities.index');
+
+// // Show the form to create a new facility
+Route::get('/add-facility', [FacilityController::class, 'showForm'])->name('facility.showForm');
+
+// // Store a new facility (AJAX request for the facilities list)
+Route::post('/facilities-list', [FacilityController::class, 'add'])->name('facilities-list');
+
+
+
+
+
+
+
+
+
+
+
 
 
 //PATIENTS--------------------------------------------------------------------------------------------------------------------------------
