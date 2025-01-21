@@ -80,14 +80,14 @@
                                         </div>
 
                                         <!-- Street Address -->
-                                        <div class="form-group col-4">
+                                        <div class="form-group col-3">
                                             <label for="street">Street Address</label>
                                             <input type="text" class="form-control" id="street" name="street"
                                                 placeholder="e.g. 123 Main St" required>
                                         </div>
 
                                         <!-- City -->
-                                        <div class="form-group col-2">
+                                        <div class="form-group col-3">
                                             <label for="city">City</label>
                                             <input type="text" class="form-control @error('city') is-invalid @enderror"
                                                 id="city" name="city" placeholder="e.g. New York"
