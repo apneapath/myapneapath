@@ -27,6 +27,7 @@ class User extends Authenticatable
         'address',
         'phoneNumber',
         'role',
+        'facility_name',
         'status',
         'userName',
         'password',

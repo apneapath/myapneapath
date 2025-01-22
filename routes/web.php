@@ -70,6 +70,10 @@ Route::get('/users-list', function () {
 
 
 //USER----------------------------------------------------------------------------------------------------------------------------------
+// Route to search for facilities
+Route::get('/search-facilities', [UserController::class, 'search']);
+
+
 //route for user AJAX
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
 

@@ -25,6 +25,7 @@
                                         @endif
                                     @endforeach
                                 </p>
+                                <p>Facility: {{ $user->facility_name }}</p>
                                 <p>Status: {{ $user->status }}</p>
                                 <p>Phone: {{ $user->phone_number }}</p>
                                 <p>Address: {{ $user->address }}</p>

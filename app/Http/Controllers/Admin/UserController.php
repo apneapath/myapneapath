@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Facility;
 use App\Models\Role;
 use App\Models\ActivityLog;
 use Illuminate\Support\Facades\Validator;
@@ -22,6 +23,62 @@ class UserController extends Controller
         return view('backoffice.admin.add-user', compact('roles'));  // Pass roles to the view
     }
 
+    // public function add(Request $request)
+    // {
+    //     // Validate the incoming request data
+    //     $validated = $request->validate([
+    //         'firstName' => 'required|string|max:255',
+    //         'lastName' => 'required|string|max:255',
+    //         'gender' => 'required|string',
+    //         'email' => 'required|email|unique:users,email',
+    //         'address' => 'required|string',
+    //         'phoneNumber' => 'required|string',
+    //         'role' => 'required|string|exists:roles,name', // Ensure the role exists in the roles table
+    //         'status' => 'required|string|in:Active,Inactive',
+    //         'username' => 'nullable|string|max:255|unique:users,username',
+    //         'password' => 'required|string|min:8|confirmed', // Ensure password confirmation
+    //         'photo' => 'nullable|image|mimes:jpg,png,jpeg,gif|max:2048', // Handle photo upload validation
+    //     ]);
+
+    //     // Create the user
+    //     $user = new User();
+    //     $user->first_name = $request->firstName;
+    //     $user->last_name = $request->lastName;
+    //     $user->gender = $request->gender;
+    //     $user->email = $request->email;
+    //     $user->address = $request->address;
+    //     $user->phone_number = $request->phoneNumber;
+    //     $user->status = $request->status;
+    //     $user->username = $request->userName;
+    //     $user->password = bcrypt($request->password); // Hash the password
+
+    //     // Handle the photo upload
+    //     if ($request->hasFile('photo')) {
+    //         // Get the current timestamp
+    //         $timestamp = time();
+    //         // Create a filename based on first name, last name, and timestamp
+    //         $filename = strtolower($user->first_name . '_' . $user->last_name . '_' . $timestamp . '.' . $request->file('photo')->getClientOriginalExtension());
+    //         // Store the photo
+    //         $photoPath = $request->file('photo')->storeAs('photos', $filename, 'public');
+    //         $user->photo = $photoPath; // Store the path in the database
+    //     }
+
+    //     // Save the user
+    //     $user->name = trim($user->first_name . ' ' . $user->last_name); // Set the name by combining first and last names
+    //     $user->save();
+
+    //     // Assign the role to the user via the pivot table
+    //     $role = Role::where('name', $request->role)->first(); // Find the role by name
+    //     if ($role) {
+    //         $user->roles()->attach($role); // Attach the role to the user (many-to-many relationship)
+    //     } else {
+    //         return redirect()->route('users.add')->with('error', 'Role not found.');
+    //     }
+
+    //     // Redirect to the user list with a success message
+    //     return redirect()->route('users-list')->with('success', 'User registered successfully!');
+    // }
+
     public function add(Request $request)
     {
         // Validate the incoming request data
@@ -37,6 +94,7 @@ class UserController extends Controller
             'username' => 'nullable|string|max:255|unique:users,username',
             'password' => 'required|string|min:8|confirmed', // Ensure password confirmation
             'photo' => 'nullable|image|mimes:jpg,png,jpeg,gif|max:2048', // Handle photo upload validation
+            'facility_name' => 'nullable|string|max:255', // Facility name is optional, but can be manually entered
         ]);
 
         // Create the user
@@ -64,6 +122,10 @@ class UserController extends Controller
 
         // Save the user
         $user->name = trim($user->first_name . ' ' . $user->last_name); // Set the name by combining first and last names
+
+        // Save the facility_name (whether it's selected or manually entered)
+        $user->facility_name = $request->facility_name;
+
         $user->save();
 
         // Assign the role to the user via the pivot table
@@ -77,6 +139,7 @@ class UserController extends Controller
         // Redirect to the user list with a success message
         return redirect()->route('users-list')->with('success', 'User registered successfully!');
     }
+
 
     // public function index()
     // {
@@ -283,4 +346,17 @@ class UserController extends Controller
         return view('backoffice.admin.activity-logs', compact('logs'));
     }
 
+    // Suggest facilities based on user input
+    // This method will handle the search request from the frontend
+    public function search(Request $request)
+    {
+        // Get the search query from the input
+        $query = $request->input('query');
+
+        // Perform a search query on the facilities table to find matching names
+        $facilities = Facility::where('facility_name', 'like', '%' . $query . '%')->get();
+
+        // Return the result as a JSON response
+        return response()->json($facilities);
+    }
 }
