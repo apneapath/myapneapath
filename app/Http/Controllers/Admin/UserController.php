@@ -112,8 +112,9 @@ class UserController extends Controller
                 return [
                     'id' => $user->id,
                     'name' => $user->name,
-                    'email' => $user->email,
                     'role' => $roles, // Display roles as a comma-separated string
+                    'facility_name' => $user->facility_name,
+                    'email' => $user->email,
                     'status' => $user->status,
                     'photo' => $user->photo ? asset('storage/' . $user->photo) : asset('img/backoffice/avatar/user-default-photo.png'), // Photo URL
                 ];
