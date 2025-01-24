@@ -93,67 +93,6 @@ class ProviderController extends Controller
     }
 
     // Store a newly created provider in the database
-    // public function add(Request $request)
-    // {
-    //     // Validate the incoming data
-    //     $validatedData = $request->validate([
-    //         'first_name' => 'required|string|max:255',
-    //         'last_name' => 'required|string|max:255',
-    //         'gender' => 'required|string|max:10',
-    //         'dob' => 'required|date',
-    //         'email' => 'required|email|max:255|unique:providers,email',
-    //         'contact_number' => 'required|string|max:255',
-    //         'emergency_contact_name' => 'required|string|max:255',
-    //         'emergency_contact_phone' => 'required|string|max:255',
-    //         'specialization' => 'nullable|string|max:255',
-    //         'license_number' => 'nullable|string|max:255',
-    //         'clinic_name' => 'nullable|string|max:255',
-    //         'clinic_address' => 'required|string|max:255',
-    //         'city' => 'required|string|max:255',
-    //         'state' => 'required|string|max:255',
-    //         'postal_code' => 'required|string|max:20',
-    //         'country' => 'nullable|string|max:255',
-    //         'work_hours' => 'nullable|string',  // Adjust validation for work_hours
-    //         'account_status' => 'nullable|in:Active,Suspended,Retired',
-    //     ]);
-
-    //     try {
-    //         // Create the provider record
-    //         $provider = Provider::create($validatedData);
-
-    //         // Check if the provider was created successfully
-    //         if ($provider) {
-    //             if ($request->ajax()) {
-    //                 return response()->json([
-    //                     'success' => true,
-    //                     'message' => 'Provider added successfully!',
-    //                     'provider' => $provider
-    //                 ]);
-    //             }
-
-    //             // If it's not an AJAX request, redirect back to the provider list
-    //             return redirect()->route('providers-list')->with('success', 'Provider added successfully!');
-    //         }
-
-    //         // If creation failed
-    //         if ($request->ajax()) {
-    //             return response()->json([
-    //                 'success' => false,
-    //                 'message' => 'Failed to create provider.'
-    //             ], 500);
-    //         }
-
-    //         return back()->with('error', 'Failed to create provider.');
-
-    //     } catch (\Exception $e) {
-    //         // Log the error for debugging purposes
-    //         \Log::error('Error creating provider: ' . $e->getMessage());
-
-    //         // Handle the error properly
-    //         return back()->with('error', 'An error occurred while saving the provider.');
-    //     }
-    // }
-
     public function add(Request $request)
     {
         // Validate the incoming data
@@ -167,8 +106,8 @@ class ProviderController extends Controller
             'emergency_contact_name' => 'required|string|max:255',
             'emergency_contact_phone' => 'required|string|max:255',
             'specialization' => 'nullable|string|max:255',
-            // 'license_number' => 'nullable|string|max:255',
-            'facility_name' => 'nullable|string|max:255',
+            'license_number' => 'nullable|string|max:255',
+            'facility_name' => 'nullable|string|max:255', // Validate facility_name
             'street' => 'required|string|max:255',
             'city' => 'required|string|max:255',
             'state' => 'required|string|max:255',
@@ -181,6 +120,15 @@ class ProviderController extends Controller
         ]);
 
         try {
+            // Check if facility name is provided
+            $facilityName = $request->input('facility_name');
+            if ($facilityName) {
+                // Check if the facility already exists
+                $facility = Facility::firstOrCreate(['facility_name' => $facilityName]);
+                // Assign the facility_id to the provider record
+                $validatedData['facility_name'] = $facility->facility_name; // Save the correct facility name in the provider table
+            }
+
             // Create the provider record
             $provider = Provider::create($validatedData);
 
@@ -224,6 +172,7 @@ class ProviderController extends Controller
             return back()->with('error', 'An error occurred while saving the provider.');
         }
     }
+
 
 
     // Display the specified provider details
