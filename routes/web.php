@@ -167,6 +167,10 @@ Route::get('/patient-dashboard/{id}', [PatientController::class, 'show'])->name(
 
 
 //PROVIDER------------------------------------------------------------------------------------------------------------------------------
+// Route for searching facilities
+Route::get('/search-facilities', [ProviderController::class, 'search']);
+
+
 // Show all providers (AJAX)
 Route::get('/providers', [ProviderController::class, 'index'])->name('providers.index');
 

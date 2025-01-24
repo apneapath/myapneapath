@@ -33,8 +33,9 @@
                     <th>Account ID</th>
                     <th>Provider Name</th>
                     <th>Specialization</th>
-                    <th>License</th>
+                    {{-- <th>License</th> --}}
                     <th>NPI</th>
+                    <th>Facility</th>
                     {{-- <th>Location</th> --}}
                     {{-- <th>Contact Number</th> --}}
                     {{-- <th>Status</th> --}}
@@ -100,8 +101,9 @@
                         <td>${provider.provider_code}</td>
                         <td>${provider.name}</td>
                         <td>${provider.specialization}</td> <!-- Add specialization here -->
-                        <td>${provider.license_number}</td>
+                        <!--<td>${provider.license_number}</td>-->
                         <td>${provider.npi}</td>
+                        <td>${provider.facility_name}</td>
                         <!-- <td>${provider.address}</td>-->
                         <!-- <td>${provider.contact_number}</td>-->
                         <!--<td>${provider.account_status}</td>-->

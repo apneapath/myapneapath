@@ -56,6 +56,21 @@
                                             <input type="date" class="form-control" id="dob" name="dob"
                                                 required>
                                         </div>
+                                    </div>
+
+                                    <div class="row mb-5 align-items-start justify-content-start">
+
+                                        <div>
+                                            <h5 class="mb-3 text-gray-800">Contact Information</h5>
+                                        </div>
+
+                                        <!-- Fax -->
+                                        <div class="form-group col-3">
+                                            <label for="fax_number">Fax Number</label>
+                                            <input type="text" id="fax_number" name="fax_number" class="form-control"
+                                                pattern="\d{10}" title="Fax number should be exactly 10 digits"
+                                                placeholder="Fax number 10 digits">
+                                        </div>
 
                                         <!-- Email -->
                                         <div class="form-group col-3">
@@ -84,13 +99,6 @@
                                             <input type="text" class="form-control" id="emergencyContactPhone"
                                                 name="emergency_contact_phone" placeholder="ex. (00)0-0000-0000" required>
                                         </div>
-
-                                        <!-- Fax -->
-                                        <div class="form-group col-3">
-                                            <label for="fax_number">Fax Number</label>
-                                            <input type="text" id="fax_number" name="fax_number" class="form-control"
-                                                pattern="\d{10}" title="Fax number should be exactly 10 digits">
-                                        </div>
                                     </div>
 
                                     <div class="row mb-5 align-items-start justify-content-start">
@@ -105,25 +113,31 @@
                                                 name="specialization" placeholder="ex. Dermatology" required>
                                         </div>
 
-                                        <!-- License Number -->
+                                        {{-- <!-- License Number -->
                                         <div class="form-group col-3">
                                             <label for="licenseNumber">License Number</label>
                                             <input type="text" class="form-control" id="licenseNumber"
-                                                name="license_number" placeholder="ex. n089" required>
-                                        </div>
+                                                name="license_number" placeholder="ex. n089" required
+                                                title="License Number should be exactly 9 digits">
+                                        </div> --}}
 
                                         <!-- NPI -->
                                         <div class="form-group col-3">
                                             <label for="npi">NPI (National Provider Identifier)</label>
                                             <input type="text" id="npi" name="npi" class="form-control"
-                                                required pattern="\d{10}" title="NPI should be exactly 10 digits">
+                                                required pattern="\d{10}" title="NPI should be exactly 10 digits"
+                                                placeholder="NPI 10 digits">
                                         </div>
 
-                                        <!-- Facility -->
-                                        <div class="form-group col-3">
+                                        <!-- Facility Name Input (Autocomplete) -->
+                                        <div class="form-group col-3" style="position: relative;">
                                             <label for="facilityName">Facility</label>
                                             <input type="text" class="form-control" id="facilityName"
-                                                name="facility_name" placeholder="ex. Glow Smile" required>
+                                                name="facility_name" placeholder="Start typing to search..." required
+                                                autocomplete="off">
+                                            <ul id="suggestions-list" class="list-group"
+                                                style="display:none; position: absolute; width: 100%; z-index: 1; background-color: white; border: 1px solid #ddd;">
+                                            </ul>
                                         </div>
 
                                         <!-- Street -->
@@ -205,4 +219,36 @@
             </div>
         </div>
     </div>
+    <script>
+        document.getElementById('facilityName').addEventListener('input', function() {
+            let query = this.value;
+
+            if (query.length > 1) {
+                // Perform an AJAX request to fetch facility suggestions
+                fetch(`/search-facilities?query=${query}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        let suggestionsList = document.getElementById('suggestions-list');
+                        suggestionsList.innerHTML = ''; // Clear existing suggestions
+
+                        data.forEach(facility => {
+                            let li = document.createElement('li');
+                            li.classList.add('list-group-item');
+                            li.textContent = facility.facility_name;
+                            li.onclick = function() {
+                                document.getElementById('facilityName').value = facility
+                                    .facility_name;
+                                suggestionsList.style.display = 'none'; // Hide suggestions
+                            };
+                            suggestionsList.appendChild(li);
+                        });
+
+                        suggestionsList.style.display = data.length ? 'block' :
+                            'none'; // Show suggestions if any
+                    });
+            } else {
+                document.getElementById('suggestions-list').style.display = 'none';
+            }
+        });
+    </script>
 @endsection

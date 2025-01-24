@@ -74,13 +74,12 @@
                                             <h5 class="mb-3 text-gray-800">Contact Information</h5>
                                         </div>
 
-                                        <!-- Contact Number -->
+                                        <!-- Fax Number -->
                                         <div class="row form-group col-12">
-                                            <label class="col-sm-2" for="contactNumber">Contact Number</label>
+                                            <label class="col-sm-2" for="fax_number">Fax Number</label>
                                             <div class="col-10">
-                                                <input type="text" class="form-control" id="contactNumber"
-                                                    name="contact_number" value="{{ $provider->contact_number }}"
-                                                    placeholder="ex. (00)0-0000-0000" required>
+                                                <input type="text" name="fax_number" id="fax_number" class="form-control"
+                                                    value="{{ old('fax_number', $provider->fax_number ?? 'N/A') }}">
                                             </div>
                                         </div>
 
@@ -90,6 +89,16 @@
                                             <div class="col-10">
                                                 <input type="email" class="form-control" id="email" name="email"
                                                     value="{{ $provider->email }}" placeholder="name@example.com" required>
+                                            </div>
+                                        </div>
+
+                                        <!-- Contact Number -->
+                                        <div class="row form-group col-12">
+                                            <label class="col-sm-2" for="contactNumber">Contact Number</label>
+                                            <div class="col-10">
+                                                <input type="text" class="form-control" id="contactNumber"
+                                                    name="contact_number" value="{{ $provider->contact_number }}"
+                                                    placeholder="ex. (00)0-0000-0000" required>
                                             </div>
                                         </div>
 
@@ -116,16 +125,6 @@
                                                     placeholder="ex. (00)0-0000-0000" required>
                                             </div>
                                         </div>
-
-                                        <!-- Fax Number -->
-                                        <div class="row form-group col-12">
-                                            <label class="col-sm-2" for="fax_number">Fax Number</label>
-                                            <div class="col-10">
-                                                <input type="text" name="fax_number" id="fax_number"
-                                                    class="form-control"
-                                                    value="{{ old('fax_number', $provider->fax_number ?? 'N/A') }}">
-                                            </div>
-                                        </div>
                                     </div>
 
                                     <div class="row col-12 mb-5 align-items-start justify-content-start">
@@ -143,7 +142,7 @@
                                             </div>
                                         </div>
 
-                                        <!-- License Number -->
+                                        {{-- <!-- License Number -->
                                         <div class="row form-group col-12">
                                             <label class="col-sm-2" for="licenseNumber">License Number</label>
                                             <div class="col-10">
@@ -151,7 +150,7 @@
                                                     name="license_number" value="{{ $provider->license_number }}"
                                                     placeholder="ex. n089">
                                             </div>
-                                        </div>
+                                        </div> --}}
 
                                         <!-- NPI -->
                                         <div class="row form-group col-12">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Models\Provider;
+use App\Models\Facility;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
@@ -31,6 +32,7 @@ class ProviderController extends Controller
                 'postal_code',
                 'specialization',
                 'npi',
+                'facility_name',
                 'license_number', // Include clinic_name
                 'account_status' // Include account_status
             )
@@ -54,6 +56,7 @@ class ProviderController extends Controller
                         'address' => $provider->address,
                         'specialization' => $provider->specialization,
                         'npi' => $provider->npi,
+                        'facility_name' => $provider->facility_name,
                         'license_number' => $provider->license_number, // Include clinic_name
                         'account_status' => $provider->account_status, // Include account_status
                     ];
@@ -164,7 +167,7 @@ class ProviderController extends Controller
             'emergency_contact_name' => 'required|string|max:255',
             'emergency_contact_phone' => 'required|string|max:255',
             'specialization' => 'nullable|string|max:255',
-            'license_number' => 'nullable|string|max:255',
+            // 'license_number' => 'nullable|string|max:255',
             'facility_name' => 'nullable|string|max:255',
             'street' => 'required|string|max:255',
             'city' => 'required|string|max:255',
@@ -229,7 +232,7 @@ class ProviderController extends Controller
         return view('providers.show', compact('provider'));
     }
 
-    // Show the form for editing a provider
+    // Show the form for editing a provider 
     public function edit($provider_code)
     {
         // Find the provider by provider_code instead of id
@@ -306,4 +309,13 @@ class ProviderController extends Controller
         $provider->delete();
         return redirect()->route('providers-list')->with('success', 'Provider deleted successfully!');
     }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $facilities = Facility::where('facility_name', 'like', '%' . $query . '%')->get();
+
+        return response()->json($facilities);
+    }
+
 }
