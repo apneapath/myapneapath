@@ -162,12 +162,23 @@
                                         </div>
 
                                         <!-- Facility -->
-                                        <div class="row form-group col-12">
+                                        {{-- <div class="row form-group col-12">
                                             <label class="col-sm-2" for="facilityName">Facility</label>
                                             <div class="col-10">
                                                 <input type="text" class="form-control" id="facilityName"
-                                                    name="clinic_name" value="{{ $provider->facility_name }}"
+                                                    name="facility_name" value="{{ $provider->facility_name }}"
                                                     placeholder="ex. Glow Smile">
+                                            </div>
+                                        </div> --}}
+
+                                        <!-- Facility Name Input (Autocomplete) -->
+                                        <div class="row form-group col-12">
+                                            <label class="col-sm-2"for="facilityName">Facility</label>
+                                            <div class="col-10">
+                                                <input type="text" class="form-control" id="facilityName"
+                                                    name="facility_name"
+                                                    value="{{ old('facility_name', $provider->facility_name) }}"
+                                                    placeholder="ex. Glow Smile" required>
                                             </div>
                                         </div>
 
@@ -176,7 +187,7 @@
                                             <label class="col-sm-2" for="clinicAddress">Street</label>
                                             <div class="col-10">
                                                 <input type="text" class="form-control" id="clinicAddress"
-                                                    name="clinic_address" value="{{ $provider->street }}"
+                                                    name="street" value="{{ $provider->street }}"
                                                     placeholder="ex. 142 J. Marzan St. Sampaloc Manila" required>
                                             </div>
                                         </div>

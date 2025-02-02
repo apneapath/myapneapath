@@ -110,7 +110,7 @@ class ReferralController extends Controller
             'referred_provider_id' => $request->referred_provider_id,
             'reason' => $request->reason,
             'urgency' => $request->urgency,
-            'status' => 'pending',
+            'status' => 'Pending',
             'notes' => $request->notes,  // Make sure the notes are being passed here
         ]);
 

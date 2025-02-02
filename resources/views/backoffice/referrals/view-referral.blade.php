@@ -31,10 +31,27 @@
                                     </div>
 
                                     <div class="col">
-                                        <ul class="list-unstyled">
+                                        {{-- <ul class="list-unstyled">
                                             <li><strong>Status</strong></li>
                                             <li><span class="badge badge-warning">{{ $referral->status }}</span></li>
-                                        </ul>
+                                        </ul> --}}
+                                        <!-- Role -->
+
+                                        <label for="role"><strong>Status</strong></label>
+                                        <select id="role" class="form-control" name="role" required>
+                                            <option width="20px" value="" disabled selected><span
+                                                    class="badge badge-warning">{{ $referral->status }}</span></option>
+                                            {{-- @foreach ($roles as $role)
+                                                    <option value="{{ $role->name }}">{{ $role->name }}</option>
+                                                @endforeach --}}
+
+                                            <option>Reviewed</option>
+                                            <option>Accepted</option>
+                                            <option>Decline</option>
+                                            <option>Scheduled</option>
+
+                                        </select>
+
                                     </div>
 
                                     <div class="col">
@@ -49,15 +66,17 @@
                                     <div class="col">
                                         <ul class="list-unstyled">
                                             <li><strong>Referring Provider</strong></li>
-                                            <li>{{ $referral->referringProvider->name }}</li>
+                                            <li>{{ $referral->referringProvider->facility_name }}</li>
                                         </ul>
                                     </div>
-                                    <div class="col">
+                                    {{-- <div class="col">
                                         <ul class="list-unstyled">
-                                            <li><strong>Role</strong></li>
+                                            <li><strong>Created By</strong></li>
                                             <li>{{ $referral->referringProvider->role ?? 'N/A' }}</li>
                                         </ul>
-                                    </div>
+                                    </div> --}}
+
+
                                     <div class="col">
                                         <ul class="list-unstyled">
                                             <li><strong>Email</strong></li>
@@ -187,16 +206,16 @@
                                 <table class="table table-bordered table-hover">
                                     <tbody>
                                         <tr>
-                                            <td>Name:</td>
+                                            <td>Provider:</td>
                                             <td class="text-end"><strong>{{ $referral->referredProvider->name }}</strong>
                                             </td>
                                         </tr>
-                                        <tr>
+                                        {{-- <tr>
                                             <td>Role:</td>
                                             <td class="text-end">
                                                 <strong>{{ $referral->referredProvider->role ?? 'N/A' }}</strong>
                                             </td>
-                                        </tr>
+                                        </tr> --}}
                                         <tr>
                                             <td>Contact:</td>
                                             <td class="text-end">
@@ -215,16 +234,16 @@
                                                 <strong>{{ $referral->referredProvider->specialization }}</strong>
                                             </td>
                                         </tr>
-                                        <tr>
+                                        {{-- <tr>
                                             <td>License Number:</td>
                                             <td class="text-end">
                                                 <strong>{{ $referral->referredProvider->license_number ?? 'N/A' }}</strong>
                                             </td>
-                                        </tr>
+                                        </tr> --}}
                                         <tr>
-                                            <td>Clinic Name:</td>
+                                            <td>Facility:</td>
                                             <td class="text-end">
-                                                <strong>{{ $referral->referredProvider->clinic_name }}</strong>
+                                                <strong>{{ $referral->referredProvider->facility_name }}</strong>
                                             </td>
                                         </tr>
                                         <tr>
