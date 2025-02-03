@@ -32,7 +32,7 @@
                 <tr>
                     <th>Account ID</th>
                     <th>Provider Name</th>
-                    <th>Specialization</th>
+                    <th>Specialty</th>
                     {{-- <th>License</th> --}}
                     {{-- <th>NPI</th> --}}
                     <th>Facility</th>

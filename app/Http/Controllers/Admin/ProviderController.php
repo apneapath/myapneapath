@@ -222,22 +222,26 @@ class ProviderController extends Controller
             'last_name' => 'required|string|max:255',
             'gender' => 'required|string|max:10',
             'dob' => 'required|date',
+
+            'fax_number' => 'nullable|string|max:10',
             'contact_number' => 'required|string|max:255',
-            'emergency_contact_name' => 'required|string|max:255',
-            'emergency_contact_phone' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'specialization' => 'nullable|string|max:255',
-            'license_number' => 'nullable|string|max:255',
-            'facility_name' => 'nullable|string|max:255', // Facility name validation
+            // 'emergency_contact_name' => 'required|string|max:255',
+            // 'emergency_contact_phone' => 'required|string|max:255',
+
             'street' => 'required|string|max:255',
             'city' => 'required|string|max:255',
             'state' => 'required|string|max:255',
             'postal_code' => 'required|string|max:20',
-            'country' => 'nullable|string|max:255',
-            'work_hours' => 'nullable|string',
+            // 'country' => 'nullable|string|max:255',
+
+            'specialization' => 'nullable|string|max:255',
+            'facility_name' => 'nullable|string|max:255', // Facility name validation
+            // 'license_number' => 'nullable|string|max:255',
+            // 'npi' => 'nullable|string|max:10',
+
+            // 'work_hours' => 'nullable|string',
             'account_status' => 'nullable|in:Active,Suspended,Retired',
-            'npi' => 'nullable|string|max:10',
-            'fax_number' => 'nullable|string|max:10',
         ]);
 
         // Check if the facility name is provided

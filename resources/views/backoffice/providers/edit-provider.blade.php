@@ -103,7 +103,7 @@
                                         </div>
 
                                         <!-- Emergency Contact Name -->
-                                        <div class="row form-group col-12">
+                                        {{-- <div class="row form-group col-12">
                                             <label class="col-sm-2" for="emergencyContactName">Emergency Contact
                                                 Name</label>
                                             <div class="col-10">
@@ -112,10 +112,10 @@
                                                     value="{{ $provider->emergency_contact_name }}" placeholder="ex. Danilo"
                                                     required>
                                             </div>
-                                        </div>
+                                        </div> --}}
 
                                         <!-- Emergency Contact Phone -->
-                                        <div class="row form-group col-12">
+                                        {{-- <div class="row form-group col-12">
                                             <label class="col-sm-2" for="emergencyContactPhone">Emergency Contact
                                                 Phone</label>
                                             <div class="col-10">
@@ -124,70 +124,20 @@
                                                     value="{{ $provider->emergency_contact_phone }}"
                                                     placeholder="ex. (00)0-0000-0000" required>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
 
                                     <div class="row col-12 mb-5 align-items-start justify-content-start">
                                         <div>
-                                            <h5 class=" mb-3 text-gray-800">Healthcare Information</h5>
-                                        </div>
-
-                                        <!-- Specialization -->
-                                        <div class="row form-group col-12">
-                                            <label class="col-sm-2" for="specialization">Specialization</label>
-                                            <div class="col-10">
-                                                <input type="text" class="form-control" id="specialization"
-                                                    name="specialization" value="{{ $provider->specialization }}"
-                                                    placeholder="ex. Dermatology">
-                                            </div>
-                                        </div>
-
-                                        {{-- <!-- License Number -->
-                                        <div class="row form-group col-12">
-                                            <label class="col-sm-2" for="licenseNumber">License Number</label>
-                                            <div class="col-10">
-                                                <input type="text" class="form-control" id="licenseNumber"
-                                                    name="license_number" value="{{ $provider->license_number }}"
-                                                    placeholder="ex. n089">
-                                            </div>
-                                        </div> --}}
-
-                                        <!-- NPI -->
-                                        <div class="row form-group col-12">
-                                            <label class="col-sm-2" for="npi">NPI</label>
-                                            <div class="col-10">
-                                                <input type="text" name="npi" id="npi" class="form-control"
-                                                    value="{{ old('npi', $provider->npi) }}">
-                                            </div>
-                                        </div>
-
-                                        <!-- Facility -->
-                                        {{-- <div class="row form-group col-12">
-                                            <label class="col-sm-2" for="facilityName">Facility</label>
-                                            <div class="col-10">
-                                                <input type="text" class="form-control" id="facilityName"
-                                                    name="facility_name" value="{{ $provider->facility_name }}"
-                                                    placeholder="ex. Glow Smile">
-                                            </div>
-                                        </div> --}}
-
-                                        <!-- Facility Name Input (Autocomplete) -->
-                                        <div class="row form-group col-12">
-                                            <label class="col-sm-2"for="facilityName">Facility</label>
-                                            <div class="col-10">
-                                                <input type="text" class="form-control" id="facilityName"
-                                                    name="facility_name"
-                                                    value="{{ old('facility_name', $provider->facility_name) }}"
-                                                    placeholder="ex. Glow Smile" required>
-                                            </div>
+                                            <h5 class=" mb-3 text-gray-800">Address</h5>
                                         </div>
 
                                         <!-- Street -->
                                         <div class="row form-group col-12">
                                             <label class="col-sm-2" for="clinicAddress">Street</label>
                                             <div class="col-10">
-                                                <input type="text" class="form-control" id="clinicAddress"
-                                                    name="street" value="{{ $provider->street }}"
+                                                <input type="text" class="form-control" id="clinicAddress" name="street"
+                                                    value="{{ $provider->street }}"
                                                     placeholder="ex. 142 J. Marzan St. Sampaloc Manila" required>
                                             </div>
                                         </div>
@@ -221,28 +171,74 @@
                                         </div>
 
                                         <!-- Country -->
-                                        <div class="row form-group col-12">
+                                        {{-- <div class="row form-group col-12">
                                             <label class="col-sm-2" for="country">Country</label>
                                             <div class="col-10">
                                                 <input type="text" class="form-control" id="country" name="country"
                                                     value="{{ $provider->country }}" placeholder="ex. Philippines">
                                             </div>
+                                        </div> --}}
+                                    </div>
+
+                                    <div class="row col-12 mb-5 align-items-start justify-content-start">
+                                        <div>
+                                            <h5 class=" mb-3 text-gray-800">Healthcare Information</h5>
+                                        </div>
+
+                                        <!-- Specialization -->
+                                        <div class="row form-group col-12">
+                                            <label class="col-sm-2" for="specialization">Specialty</label>
+                                            <div class="col-10">
+                                                <input type="text" class="form-control" id="specialization"
+                                                    name="specialization" value="{{ $provider->specialization }}"
+                                                    placeholder="ex. Dermatology">
+                                            </div>
+                                        </div>
+
+                                        {{-- <!-- License Number -->
+                                        <div class="row form-group col-12">
+                                            <label class="col-sm-2" for="licenseNumber">License Number</label>
+                                            <div class="col-10">
+                                                <input type="text" class="form-control" id="licenseNumber"
+                                                    name="license_number" value="{{ $provider->license_number }}"
+                                                    placeholder="ex. n089">
+                                            </div>
+                                        </div> --}}
+
+                                        <!-- NPI -->
+                                        {{-- <div class="row form-group col-12">
+                                            <label class="col-sm-2" for="npi">NPI</label>
+                                            <div class="col-10">
+                                                <input type="text" name="npi" id="npi" class="form-control"
+                                                    value="{{ old('npi', $provider->npi) }}">
+                                            </div>
+                                        </div> --}}
+
+                                        <!-- Facility Name Input (Autocomplete) -->
+                                        <div class="row form-group col-12">
+                                            <label class="col-sm-2"for="facilityName">Facility</label>
+                                            <div class="col-10">
+                                                <input type="text" class="form-control" id="facilityName"
+                                                    name="facility_name"
+                                                    value="{{ old('facility_name', $provider->facility_name) }}"
+                                                    placeholder="ex. Glow Smile" required>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div class="row col-12 mb-5 align-content-start justify-content-center">
+                                    <div class="row col-12 mb-5 align-items-start justify-content-start">
                                         <div>
-                                            <h5 class="text-gray-800">Availability</h5>
+                                            <h5 class="text-gray-800">Account Setting</h5>
                                         </div>
 
                                         <!-- Working Hours -->
-                                        <div class="row form-group col-12">
+                                        {{-- <div class="row form-group col-12">
                                             <label class="col-sm-2" for="workingHours">Working Hours</label>
                                             <div class="col-10">
                                                 <textarea class="form-control" id="workingHours" name="work_hours" placeholder="ex. Mon. - Fri.: 9:00 AM - 5:00 PM"
                                                     rows="2" required>{{ $provider->work_hours }}</textarea>
                                             </div>
-                                        </div>
+                                        </div> --}}
 
                                         <!-- Account Status -->
                                         <div class="row form-group col-12">
