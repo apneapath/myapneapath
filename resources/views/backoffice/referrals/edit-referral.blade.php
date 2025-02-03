@@ -63,7 +63,7 @@
                 <input type="file" id="attachments" name="attachments[]" class="form-control" multiple>
             </div>
 
-            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <button type="submit" class="btn btn-sm btn-primary">Save Changes</button>
         </form>
     </div>
 @endsection
