@@ -68,8 +68,9 @@
                                         <div class="form-group col-3">
                                             <label for="fax_number">Fax Number</label>
                                             <input type="text" id="fax_number" name="fax_number" class="form-control"
-                                                pattern="\d{10}" title="Fax number should be exactly 10 digits"
-                                                placeholder="Fax number 10 digits">
+                                                pattern="\d{10}">
+                                            <small class="form-text text-muted font-italic">Fax number should be exactly 10
+                                                digits</small>
                                         </div>
 
                                         <!-- Email -->
@@ -77,6 +78,8 @@
                                             <label for="email">Email address</label>
                                             <input type="email" class="form-control" id="email" name="email"
                                                 placeholder="name@example.com" required>
+                                            <small class="form-text text-muted font-italic">Enter valid email
+                                                address.</small>
                                         </div>
 
                                         <!-- Contact Number -->
@@ -87,62 +90,28 @@
                                         </div>
 
                                         <!-- Emergency Contact Name -->
-                                        <div class="form-group col-3">
+                                        {{-- <div class="form-group col-3">
                                             <label for="emergencyContactName">Emergency Contact Name</label>
                                             <input type="text" class="form-control" id="emergencyContactName"
                                                 name="emergency_contact_name" placeholder="ex. Danilo" required>
-                                        </div>
+                                        </div> --}}
 
                                         <!-- Emergency Contact Number -->
-                                        <div class="form-group col-3">
+                                        {{-- <div class="form-group col-3">
                                             <label for="emergencyContactPhone">Emergency Contact Phone</label>
                                             <input type="text" class="form-control" id="emergencyContactPhone"
                                                 name="emergency_contact_phone" placeholder="ex. (00)0-0000-0000" required>
-                                        </div>
+                                        </div> --}}
                                     </div>
 
                                     <div class="row mb-5 align-items-start justify-content-start">
                                         <div>
-                                            <h5 class=" mb-3 text-gray-800">Healthcare Information</h5>
-                                        </div>
-
-                                        <!-- Specialization -->
-                                        <div class="form-group col-3">
-                                            <label for="specialization">Specialization</label>
-                                            <input type="text" class="form-control" id="specialization"
-                                                name="specialization" placeholder="ex. Dermatology" required>
-                                        </div>
-
-                                        {{-- <!-- License Number -->
-                                        <div class="form-group col-3">
-                                            <label for="licenseNumber">License Number</label>
-                                            <input type="text" class="form-control" id="licenseNumber"
-                                                name="license_number" placeholder="ex. n089" required
-                                                title="License Number should be exactly 9 digits">
-                                        </div> --}}
-
-                                        <!-- NPI -->
-                                        <div class="form-group col-3">
-                                            <label for="npi">NPI (National Provider Identifier)</label>
-                                            <input type="text" id="npi" name="npi" class="form-control"
-                                                required pattern="\d{10}" title="NPI should be exactly 10 digits"
-                                                placeholder="NPI 10 digits">
-                                        </div>
-
-                                        <!-- Facility Name Input (Autocomplete) -->
-                                        <div class="form-group col-3" style="position: relative;">
-                                            <label for="facilityName">Facility</label>
-                                            <input type="text" class="form-control" id="facilityName"
-                                                name="facility_name" placeholder="Start typing to search..." required
-                                                autocomplete="off">
-                                            <ul id="suggestions-list" class="list-group"
-                                                style="display:none; position: absolute; width: 100%; z-index: 1; background-color: white; border: 1px solid #ddd;">
-                                            </ul>
+                                            <h5 class=" mb-3 text-gray-800">Address</h5>
                                         </div>
 
                                         <!-- Street -->
                                         <div class="form-group col-3">
-                                            <label for="street">Street</label>
+                                            <label for="street">Street Address</label>
                                             <input type="text" class="form-control" id="street" name="street"
                                                 placeholder="ex. 142 J. Marzan St." required>
                                         </div>
@@ -165,19 +134,61 @@
                                         <!-- Postal -->
                                         <div class="form-group col-3">
                                             <label for="postalCode">Postal Code</label>
-                                            <input type="text" class="form-control" id="postalCode"
-                                                name="postal_code" placeholder="ex. 1008" required>
+                                            <input type="text" class="form-control" id="postalCode" name="postal_code"
+                                                placeholder="ex. 1008" required>
                                         </div>
 
                                         <!-- Country -->
-                                        <div class="form-group col-3">
+                                        {{-- <div class="form-group col-3">
                                             <label for="country">Country</label>
                                             <input type="text" class="form-control" id="country" name="country"
                                                 placeholder="ex. Philippines" required>
-                                        </div>
+                                        </div> --}}
                                     </div>
 
                                     <div class="row mb-5 align-items-start justify-content-start">
+                                        <div>
+                                            <h5 class=" mb-3 text-gray-800">Healthcare Information</h5>
+                                        </div>
+
+                                        <!-- Specialization -->
+                                        <div class="form-group col-3">
+                                            <label for="specialization">Specialty</label>
+                                            <input type="text" class="form-control" id="specialization"
+                                                name="specialization" placeholder="ex. Dermatology" required>
+                                        </div>
+
+                                        {{-- <!-- License Number -->
+                                        <div class="form-group col-3">
+                                            <label for="licenseNumber">License Number</label>
+                                            <input type="text" class="form-control" id="licenseNumber"
+                                                name="license_number" placeholder="ex. n089" required
+                                                title="License Number should be exactly 9 digits">
+                                        </div> --}}
+
+                                        <!-- NPI -->
+                                        {{-- <div class="form-group col-3">
+                                            <label for="npi">NPI (National Provider Identifier)</label>
+                                            <input type="text" id="npi" name="npi" class="form-control"
+                                                required pattern="\d{10}" title="NPI should be exactly 10 digits"
+                                                placeholder="NPI 10 digits">
+                                        </div> --}}
+
+                                        <!-- Facility Name Input (Autocomplete) -->
+                                        <div class="form-group col-3" style="position: relative;">
+                                            <label for="facilityName">Facility</label>
+                                            <input type="text" class="form-control" id="facilityName"
+                                                name="facility_name" placeholder="Start typing to search..." required
+                                                autocomplete="off">
+                                            <ul id="suggestions-list" class="list-group"
+                                                style="display:none; position: absolute; width: 100%; z-index: 1; background-color: white; border: 1px solid #ddd;">
+                                            </ul>
+                                            <small class="form-text text-muted font-italic">Type or select
+                                                facility.</small>
+                                        </div>
+                                    </div>
+
+                                    {{-- <div class="row mb-5 align-items-start justify-content-start">
                                         <div>
                                             <h5 class="mb-3 text-gray-800">Availability</h5>
                                         </div>
@@ -188,15 +199,20 @@
                                             <textarea class="form-control" id="workingHours" name="work_hours" placeholder="ex. Mon. - Fri.: 9:00 AM - 5:00 PM"
                                                 rows="2" required></textarea>
                                         </div>
+                                    </div> --}}
 
+                                    <div class="row mb-5 align-items-start justify-content-start">
+                                        <div>
+                                            <h5 class="mb-3 text-gray-800">Account Setting</h5>
+                                        </div>
 
                                         <!-- Account Status -->
                                         <div class="form-group col-3">
                                             <label for="accountStatus">Account Status</label>
                                             <select id="accountStatus" class="form-control" name="account_status"
                                                 required>
-                                                <option value="" disabled selected>Choose...</option>
-                                                <option value="Active">Active</option>
+                                                {{-- <option value="" disabled selected>Choose...</option> --}}
+                                                <option value="Active" selected>Active</option>
                                                 <option value="Inactive">Inactive</option>
                                             </select>
                                         </div>

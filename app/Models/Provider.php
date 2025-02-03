@@ -12,25 +12,31 @@ class Provider extends Model
     // Define which attributes are mass assignable
     protected $fillable = [
         'provider_code',
+
         'first_name',
         'last_name',
         'gender',
         'dob',
+
+        'fax_number',
         'email',
         'contact_number',
-        'emergency_contact_name',
-        'emergency_contact_phone',
-        'fax_number',
-        'specialization',
-        'npi',
-        'license_number',
-        'facility_name',
+        // 'emergency_contact_name',
+        // 'emergency_contact_phone',
+
         'street',  // changed from street_address to clinic_address
         'city',
         'state',
         'postal_code',
-        'country',
-        'work_hours',
+        // 'country',
+
+        'specialization',
+        'facility_name',
+        // 'npi',
+        // 'license_number',
+
+        // 'work_hours',
+
         'account_status',
     ];
 
@@ -50,7 +56,7 @@ class Provider extends Model
             $provider->name = $provider->first_name . ' ' . $provider->last_name;
 
             // Concatenate address fields to generate full address
-            $provider->address = $provider->clinic_address . ', ' . $provider->city . ', ' . $provider->state . ' ' . $provider->postal_code . ', ' . $provider->country;
+            $provider->address = $provider->clinic_address . ', ' . $provider->city . ', ' . $provider->state . ' ' . $provider->postal_code;
         });
     }
 

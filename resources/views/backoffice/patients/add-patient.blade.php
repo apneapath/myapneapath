@@ -74,8 +74,8 @@
                                             <label for="email">Email address</label>
                                             <input type="email" class="form-control" id="email" name="email"
                                                 placeholder="name@example.com" required>
-                                            <small class="form-text text-muted font-italic">Enter valid email address
-                                                number.</small>
+                                            <small class="form-text text-muted font-italic">Enter valid email
+                                                address.</small>
                                         </div>
 
                                         <!-- Emergency Contact Name -->
@@ -102,28 +102,28 @@
                                         </div>
 
                                         <!-- Address -->
-                                        <div class="form-group col-4">
+                                        <div class="form-group col-3">
                                             <label for="streetAddress">Street Address</label>
                                             <input type="text" class="form-control" id="streetAddress"
                                                 name="street_address" placeholder="ex. 123 Main St" required>
                                         </div>
 
                                         <!-- City -->
-                                        <div class="form-group col-2">
+                                        <div class="form-group col-3">
                                             <label for="city">City</label>
                                             <input type="text" class="form-control" id="city" name="city"
                                                 placeholder="ex. New York" required>
                                         </div>
 
                                         <!-- State -->
-                                        <div class="form-group col-2">
+                                        <div class="form-group col-3">
                                             <label for="state">State</label>
                                             <input type="text" class="form-control" id="state" name="state"
                                                 placeholder="ex. NY" required>
                                         </div>
 
                                         <!-- Postal COde -->
-                                        <div class="form-group col-2">
+                                        <div class="form-group col-3">
                                             <label for="postalCode">Postal Code</label>
                                             <input type="text" class="form-control" id="postalCode" name="postal_code"
                                                 placeholder="ex. 10001" required>

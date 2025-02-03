@@ -101,22 +101,27 @@ class ProviderController extends Controller
             'last_name' => 'required|string|max:255',
             'gender' => 'required|string|max:10',
             'dob' => 'required|date',
+
+            'fax_number' => 'nullable|digits:10',  // Ensure fax number is 10 digits long (optional)
             'email' => 'required|email|max:255|unique:providers,email',
             'contact_number' => 'required|string|max:255',
-            'emergency_contact_name' => 'required|string|max:255',
-            'emergency_contact_phone' => 'required|string|max:255',
-            'specialization' => 'nullable|string|max:255',
-            'license_number' => 'nullable|string|max:255',
-            'facility_name' => 'nullable|string|max:255', // Validate facility_name
+            // 'emergency_contact_name' => 'required|string|max:255',
+            // 'emergency_contact_phone' => 'required|string|max:255',
+
             'street' => 'required|string|max:255',
             'city' => 'required|string|max:255',
             'state' => 'required|string|max:255',
             'postal_code' => 'required|string|max:20',
-            'country' => 'nullable|string|max:255',
-            'work_hours' => 'nullable|string',  // Adjust validation for work_hours
+            // 'country' => 'nullable|string|max:255',
+
+            'specialization' => 'nullable|string|max:255',
+            'facility_name' => 'nullable|string|max:255', // Validate facility_name
+            // 'license_number' => 'nullable|string|max:255',
+            // 'npi' => 'required|digits:10|unique:providers,npi',  // Ensure it's 10 digits and unique
+
+            // 'work_hours' => 'nullable|string',  // Adjust validation for work_hours
+
             'account_status' => 'nullable|in:Active,Suspended,Retired',
-            'npi' => 'required|digits:10|unique:providers,npi',  // Ensure it's 10 digits and unique
-            'fax_number' => 'nullable|digits:10',  // Ensure fax number is 10 digits long (optional)
         ]);
 
         try {
