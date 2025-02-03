@@ -11,23 +11,32 @@ class Provider extends Model
 
     // Define which attributes are mass assignable
     protected $fillable = [
+        'provider_code',
+
         'first_name',
         'last_name',
         'gender',
         'dob',
+
+        'fax_number',
         'email',
         'contact_number',
-        'emergency_contact_name',
-        'emergency_contact_phone',
-        'specialization',
-        'license_number',
-        'clinic_name',
-        'clinic_address',  // changed from street_address to clinic_address
+        // 'emergency_contact_name',
+        // 'emergency_contact_phone',
+
+        'street',  // changed from street_address to clinic_address
         'city',
         'state',
         'postal_code',
-        'country',
-        'work_hours',
+        // 'country',
+
+        'specialization',
+        'facility_name',
+        // 'npi',
+        // 'license_number',
+
+        // 'work_hours',
+
         'account_status',
     ];
 
@@ -47,7 +56,7 @@ class Provider extends Model
             $provider->name = $provider->first_name . ' ' . $provider->last_name;
 
             // Concatenate address fields to generate full address
-            $provider->address = $provider->clinic_address . ', ' . $provider->city . ', ' . $provider->state . ' ' . $provider->postal_code . ', ' . $provider->country;
+            $provider->address = $provider->clinic_address . ', ' . $provider->city . ', ' . $provider->state . ', ' . $provider->postal_code;
         });
     }
 
@@ -62,4 +71,10 @@ class Provider extends Model
     {
         return $this->hasMany(Patient::class);
     }
+
+    public function referrals()
+    {
+        return $this->hasMany(Referral::class, 'referring_provider_id');
+    }
+
 }

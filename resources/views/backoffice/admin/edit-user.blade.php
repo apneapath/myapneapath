@@ -123,6 +123,22 @@
                                                 </div>
                                             </div>
 
+                                            <!-- Facility Name Input (Autocomplete) -->
+                                            <div class="row form-group col-12" style="position: relative;">
+                                                <label class="col-2" for="facilityName">Facility</label>
+                                                <div class="col-10">
+                                                    <input type="text" class="form-control" name="facility_name"
+                                                        id="facilityName" autocomplete="off"
+                                                        value="{{ old('facility_name', $user->facility_name) }}"
+                                                        placeholder="Start typing to search...">
+                                                    <ul id="suggestions-list" class="list-group"
+                                                        style="display:none; position: absolute; width: 100%; z-index: 1; background-color: white; border: 1px solid #ddd;">
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+
+
                                             <!-- Status -->
                                             <div class="row form-group col-12">
                                                 <label class="col-sm-2" for="status">Status</label>

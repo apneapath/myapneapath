@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Models\Provider;
+use App\Models\Facility;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class ProviderController extends Controller
 {
@@ -18,17 +20,20 @@ class ProviderController extends Controller
             // Fetch providers with specific columns, including 'clinic_name' and 'account_status'
             $providers = Provider::select(
                 'id',
+                'provider_code',
                 'first_name',
                 'last_name',
                 'contact_number',
                 'dob',
                 'email',
-                'clinic_address',
+                'street',
                 'city',
                 'state',
                 'postal_code',
                 'specialization',
-                'clinic_name', // Include clinic_name
+                'npi',
+                'facility_name',
+                'license_number', // Include clinic_name
                 'account_status' // Include account_status
             )
                 ->orderBy('created_at', 'desc')
@@ -39,17 +44,20 @@ class ProviderController extends Controller
 
                     // Combine name and address into the expected structure
                     $provider->name = $provider->first_name . ' ' . $provider->last_name;
-                    $provider->address = $provider->clinic_address . ', ' . $provider->city . ', ' . $provider->state . ' ' . $provider->postal_code;
+                    $provider->address = $provider->street . ', ' . $provider->city . ', ' . $provider->state . ' ' . $provider->postal_code;
 
                     return [
                         'id' => $provider->id,
+                        'provider_code' => $provider->provider_code,
                         'name' => $provider->name,
                         'contact_number' => $provider->contact_number,
                         'dob' => $provider->dob,
                         'email' => $provider->email,
                         'address' => $provider->address,
                         'specialization' => $provider->specialization,
-                        'clinic_name' => $provider->clinic_name, // Include clinic_name
+                        'npi' => $provider->npi,
+                        'facility_name' => $provider->facility_name,
+                        'license_number' => $provider->license_number, // Include clinic_name
                         'account_status' => $provider->account_status, // Include account_status
                     ];
                 });
@@ -93,25 +101,49 @@ class ProviderController extends Controller
             'last_name' => 'required|string|max:255',
             'gender' => 'required|string|max:10',
             'dob' => 'required|date',
+
+            'fax_number' => 'nullable|digits:10',  // Ensure fax number is 10 digits long (optional)
             'email' => 'required|email|max:255|unique:providers,email',
             'contact_number' => 'required|string|max:255',
-            'emergency_contact_name' => 'required|string|max:255',
-            'emergency_contact_phone' => 'required|string|max:255',
-            'specialization' => 'nullable|string|max:255',
-            'license_number' => 'nullable|string|max:255',
-            'clinic_name' => 'nullable|string|max:255',
-            'clinic_address' => 'required|string|max:255',
+            // 'emergency_contact_name' => 'required|string|max:255',
+            // 'emergency_contact_phone' => 'required|string|max:255',
+
+            'street' => 'required|string|max:255',
             'city' => 'required|string|max:255',
             'state' => 'required|string|max:255',
             'postal_code' => 'required|string|max:20',
-            'country' => 'nullable|string|max:255',
-            'work_hours' => 'nullable|string',  // Adjust validation for work_hours
+            // 'country' => 'nullable|string|max:255',
+
+            'specialization' => 'nullable|string|max:255',
+            'facility_name' => 'nullable|string|max:255', // Validate facility_name
+            // 'license_number' => 'nullable|string|max:255',
+            // 'npi' => 'required|digits:10|unique:providers,npi',  // Ensure it's 10 digits and unique
+
+            // 'work_hours' => 'nullable|string',  // Adjust validation for work_hours
+
             'account_status' => 'nullable|in:Active,Suspended,Retired',
         ]);
 
         try {
+            // Check if facility name is provided
+            $facilityName = $request->input('facility_name');
+            if ($facilityName) {
+                // Check if the facility already exists
+                $facility = Facility::firstOrCreate(['facility_name' => $facilityName]);
+                // Assign the facility_id to the provider record
+                $validatedData['facility_name'] = $facility->facility_name; // Save the correct facility name in the provider table
+            }
+
             // Create the provider record
             $provider = Provider::create($validatedData);
+
+            // Generate the provider code in the format 'PROV-<ID>-<3 random characters>'
+            $randomCharacters = strtoupper(Str::random(2)); // 3 random characters in uppercase
+            $providerCode = 'MAP-PROV' . $provider->id . $randomCharacters;
+
+            // Assign the generated provider code to the provider
+            $provider->provider_code = $providerCode;
+            $provider->save(); // Save the provider with the generated provider code
 
             // Check if the provider was created successfully
             if ($provider) {
@@ -146,56 +178,89 @@ class ProviderController extends Controller
         }
     }
 
+
+
     // Display the specified provider details
     public function show(Provider $provider)
     {
         return view('providers.show', compact('provider'));
     }
 
-    // Show the form for editing a provider
-    public function edit($id)
+    // Show the form for editing a provider 
+    public function edit($provider_code)
     {
-        // Find the patient by id
-        $provider = Provider::findOrFail($id);
-        // Return the edit view with the patient's data
+        // Find the provider by provider_code instead of id
+        $provider = Provider::where('provider_code', $provider_code)->first();
+
+        // If provider not found, redirect with an error message
+        if (!$provider) {
+            return redirect()->route('providers-list')->with('error', 'Provider not found.');
+        }
+
+        // Return the edit view with the provider's data
         return view('backoffice.providers.edit-provider', compact('provider'));
     }
 
+
     // Update the specified provider in the database
-    public function update(Request $request, $id)
+    // 
+
+    public function update(Request $request, $provider_code)
     {
-        // Find the provider by ID
-        $provider = Provider::find($id);
+        // Find the provider by provider_code
+        $provider = Provider::where('provider_code', $provider_code)->first();
+
+        // If provider not found, return an error response
         if (!$provider) {
-            return redirect()->route('providers.index')->with('error', 'Provider not found.');
+            return redirect()->route('providers-list')->with('error', 'Provider not found.');
         }
 
         // Validate the data
         $validatedData = $request->validate([
+            // Your validation rules
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'gender' => 'required|string|max:10',
             'dob' => 'required|date',
+
+            'fax_number' => 'nullable|string|max:10',
             'contact_number' => 'required|string|max:255',
-            'emergency_contact_name' => 'required|string|max:255',
-            'emergency_contact_phone' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'specialization' => 'nullable|string|max:255',
-            'license_number' => 'nullable|string|max:255',
-            'clinic_name' => 'nullable|string|max:255',
-            'clinic_address' => 'required|string|max:255',
+            // 'emergency_contact_name' => 'required|string|max:255',
+            // 'emergency_contact_phone' => 'required|string|max:255',
+
+            'street' => 'required|string|max:255',
             'city' => 'required|string|max:255',
             'state' => 'required|string|max:255',
             'postal_code' => 'required|string|max:20',
-            'country' => 'nullable|string|max:255',
-            'work_hours' => 'nullable|string',
+            // 'country' => 'nullable|string|max:255',
+
+            'specialization' => 'nullable|string|max:255',
+            'facility_name' => 'nullable|string|max:255', // Facility name validation
+            // 'license_number' => 'nullable|string|max:255',
+            // 'npi' => 'nullable|string|max:10',
+
+            // 'work_hours' => 'nullable|string',
             'account_status' => 'nullable|in:Active,Suspended,Retired',
         ]);
 
-        // Update provider data
-        $provider->update($validatedData);
+        // Check if the facility name is provided
+        $facilityName = $request->input('facility_name');
+        if ($facilityName) {
+            // Find the facility or create a new one
+            $facility = Facility::firstOrCreate(['facility_name' => $facilityName]);
 
-        // Respond to AJAX request (if applicable)
+            // Assign the facility_id to the provider
+            $validatedData['facility_id'] = $facility->id;
+        }
+
+        // Update the provider data
+        $updateResult = $provider->update($validatedData);
+
+        // Check if the update was successful
+        \Log::debug('Updated provider: ' . json_encode($provider));
+
+        // If update was successful, return the response
         if ($request->ajax()) {
             return response()->json([
                 'success' => true,
@@ -211,7 +276,6 @@ class ProviderController extends Controller
 
 
 
-
     // Remove the specified provider from the database
     public function destroy($id)
     {
@@ -222,4 +286,13 @@ class ProviderController extends Controller
         $provider->delete();
         return redirect()->route('providers-list')->with('success', 'Provider deleted successfully!');
     }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $facilities = Facility::where('facility_name', 'like', '%' . $query . '%')->get();
+
+        return response()->json($facilities);
+    }
+
 }

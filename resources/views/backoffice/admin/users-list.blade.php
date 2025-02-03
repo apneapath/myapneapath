@@ -31,8 +31,9 @@
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Email</th>
                     <th>Role</th>
+                    <th>Facility</th>
+                    <th>Email</th>
                     <th>Status</th>
                     <th>Action</th>
                 </tr>
@@ -88,8 +89,9 @@
                         $('#user-list').append(
                             `<tr>
                                 <td><img style="border-radius: 100%; width: 35px; height: 35px" src="${user.photo}" alt="${user.name}'s Photo" style="max-width: 33px; max-height: 33px;"> ${user.name}</td>
-                                <td>${user.email}</td>
                                 <td>${user.role}</td> <!-- Display roles -->
+                                <td>${user.facility_name}</td>
+                                <td>${user.email}</td>
                                 <td>${user.status}</td>
                                 <td>
                                     ${canEdit ? `<a title="Edit" href="/edit-user/${user.id}" class="d-none d-sm-inline-block btn btn-sm"><span style="color: Dodgerblue;"><i class="fa-solid fa-file-pen"></i></span></a>` : ''}

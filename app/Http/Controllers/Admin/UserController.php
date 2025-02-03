@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Facility;
 use App\Models\Role;
 use App\Models\ActivityLog;
 use Illuminate\Support\Facades\Validator;
@@ -37,6 +38,7 @@ class UserController extends Controller
             'username' => 'nullable|string|max:255|unique:users,username',
             'password' => 'required|string|min:8|confirmed', // Ensure password confirmation
             'photo' => 'nullable|image|mimes:jpg,png,jpeg,gif|max:2048', // Handle photo upload validation
+            'facility_name' => 'nullable|string|max:255', // Facility name can be entered manually
         ]);
 
         // Create the user
@@ -64,6 +66,24 @@ class UserController extends Controller
 
         // Save the user
         $user->name = trim($user->first_name . ' ' . $user->last_name); // Set the name by combining first and last names
+
+        // Check if facility_name is entered manually
+        if ($request->facility_name) {
+            // Check if the facility already exists in the `facilities` table
+            $facility = Facility::where('facility_name', $request->facility_name)->first();
+
+            // If the facility doesn't exist, create a new one
+            if (!$facility) {
+                $facility = new Facility();
+                $facility->facility_name = $request->facility_name;
+                $facility->save(); // Save the new facility to the `facilities` table
+            }
+
+            // Save the facility_name directly to the users table
+            $user->facility_name = $request->facility_name;
+        }
+
+        // Save the user
         $user->save();
 
         // Assign the role to the user via the pivot table
@@ -77,30 +97,6 @@ class UserController extends Controller
         // Redirect to the user list with a success message
         return redirect()->route('users-list')->with('success', 'User registered successfully!');
     }
-
-    // public function index()
-    // {
-    //     // Fetch users with their associated roles
-    //     $users = User::with('roles') // Eager load roles
-    //         ->orderBy('created_at', 'desc')
-    //         ->get()
-    //         ->map(function ($user) {
-    //             // Get the roles associated with the user (if any)
-    //             $roles = $user->roles->pluck('name')->join(', '); // Join multiple roles with a comma
-
-    //             return [
-    //                 'id' => $user->id,
-    //                 'name' => $user->name,
-    //                 'email' => $user->email,
-    //                 'role' => $roles, // Display roles as a comma-separated string
-    //                 'status' => $user->status,
-    //                 'photo' => $user->photo ? asset('storage/' . $user->photo) : asset('img/backoffice/avatar/user-default-photo.png'), // Photo URL
-    //             ];
-    //         });
-
-    //     return response()->json($users);
-    // }
-
 
     public function index()
     {
@@ -116,8 +112,9 @@ class UserController extends Controller
                 return [
                     'id' => $user->id,
                     'name' => $user->name,
-                    'email' => $user->email,
                     'role' => $roles, // Display roles as a comma-separated string
+                    'facility_name' => $user->facility_name,
+                    'email' => $user->email,
                     'status' => $user->status,
                     'photo' => $user->photo ? asset('storage/' . $user->photo) : asset('img/backoffice/avatar/user-default-photo.png'), // Photo URL
                 ];
@@ -144,6 +141,135 @@ class UserController extends Controller
         return view('backoffice.admin.edit-user', compact('user', 'roles'));
     }
 
+    // public function update(Request $request, $id)
+    // {
+    //     // Validate the request
+    //     $request->validate([
+    //         'firstName' => 'required|string|max:255',
+    //         'lastName' => 'required|string|max:255',
+    //         'email' => 'required|email|unique:users,email,' . $id,
+    //         'phoneNumber' => 'nullable|string|max:15',
+    //         'gender' => 'required|string',
+    //         'status' => 'required|string',
+    //         'role' => 'required|array', // Role should be an array (multiple roles can be selected)
+    //         'address' => 'nullable|string',
+    //         'username' => 'nullable|string|max:255',
+    //         'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    //         'current_password' => 'nullable|string',
+    //         'new_password' => 'nullable|string|min:8|confirmed',
+    //         'facility_name' => 'nullable|string|max:255', // Added validation for facility_name
+    //     ]);
+
+    //     // Retrieve the user
+    //     $user = User::findOrFail($id);
+
+    //     // Store old values for comparison
+    //     $oldValues = [
+    //         'email' => $user->email,
+    //         'name' => $user->name,
+    //         'phone_number' => $user->phone_number,
+    //         'gender' => $user->gender,
+    //         'status' => $user->status,
+    //         'role' => $user->roles->pluck('name')->toArray(), // Fetch current roles
+    //         'address' => $user->address,
+    //         'username' => $user->username,
+    //         'facility_name' => $user->facility_name, // Store old facility_name for comparison
+    //     ];
+
+    //     // Check if current password is provided and valid
+    //     if ($request->filled('current_password') && Hash::check($request->current_password, $user->password)) {
+    //         if ($request->filled('new_password')) {
+    //             $user->password = Hash::make($request->new_password); // Hash the new password
+    //         }
+    //     } elseif ($request->filled('current_password')) {
+    //         return back()->withErrors(['current_password' => 'Current password is incorrect.']);
+    //     }
+
+    //     // Store the old photo path for comparison
+    //     $oldPhoto = $user->photo;
+
+    //     // Update user properties
+    //     $user->first_name = $request->firstName;
+    //     $user->last_name = $request->lastName;
+    //     $user->gender = $request->gender;
+    //     $user->status = $request->status;
+    //     $user->email = $request->email;
+    //     $user->phone_number = $request->phoneNumber;
+    //     $user->address = $request->address;
+    //     $user->username = $request->username;
+
+    //     // Handle the facility_name field (new logic)
+    //     if ($request->filled('facility_name')) {
+    //         $facilityName = $request->facility_name;
+
+    //         // Check if the facility already exists in the `facilities` table
+    //         $facility = Facility::where('facility_name', $facilityName)->first();
+
+    //         // If the facility doesn't exist, create a new one
+    //         if (!$facility) {
+    //             $facility = new Facility();
+    //             $facility->facility_name = $facilityName;
+    //             $facility->save(); // Save the new facility
+    //         }
+
+    //         // Update the user's facility_name field
+    //         $user->facility_name = $facilityName;
+    //     }
+
+    //     // Update the name by combining first and last names
+    //     $user->name = trim($user->first_name . ' ' . $user->last_name);
+
+    //     // Prepare action details
+    //     $actionDetails = [];
+
+    //     // Handle the photo upload
+    //     if ($request->hasFile('photo')) {
+    //         // Delete the old photo if it exists
+    //         if ($oldPhoto && Storage::disk('public')->exists($oldPhoto)) {
+    //             Storage::disk('public')->delete($oldPhoto);
+    //         }
+
+    //         // Store the new photo
+    //         $timestamp = time();
+    //         $filename = strtolower($user->first_name . '_' . $user->last_name . '_' . $timestamp . '.' . $request->file('photo')->getClientOriginalExtension());
+    //         $photoPath = $request->file('photo')->storeAs('photos', $filename, 'public');
+    //         $user->photo = $photoPath; // Store the path in the database
+
+    //         // Log photo update
+    //         $actionDetails[] = "Updated profile photo.";
+    //     }
+
+    //     // Save the user
+    //     $user->save();
+
+    //     // Sync roles (syncs the role_user pivot table)
+    //     $user->roles()->sync($request->role); // Pass the role IDs as an array to sync the roles
+
+    //     // Sync the permissions for the user based on their new roles
+    //     // Ensure the user inherits all permissions of the assigned roles
+    //     $permissions = $user->roles->pluck('permissions')->flatten();
+    //     $user->permissions()->sync($permissions->pluck('id'));
+
+    //     // Check for changes and log them
+    //     foreach ($oldValues as $key => $oldValue) {
+    //         $newValue = $user->$key; // Dynamic property access
+    //         if ($oldValue != $newValue) {
+    //             // Add each change as a list item
+    //             $actionDetails[] = "<li>Changed {$key} from " . implode(', ', (array) $oldValue) . " to " . implode(', ', (array) $newValue) . ".</li>";
+    //         }
+    //     }
+
+    //     // Log activity with detailed action
+    //     ActivityLog::create([
+    //         'user_id' => $user->id,
+    //         'user_name' => $user->name,
+    //         'action' => 'Profile Update',
+    //         'action_detail' => '<ul>' . implode('', $actionDetails) . '</ul>', // Combine changes into a list
+    //     ]);
+
+    //     return redirect()->route('users-list')->with('success', 'User updated successfully!');
+    // }
+
     public function update(Request $request, $id)
     {
         // Validate the request
@@ -160,6 +286,7 @@ class UserController extends Controller
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'current_password' => 'nullable|string',
             'new_password' => 'nullable|string|min:8|confirmed',
+            'facility_name' => 'nullable|string|max:255', // Added validation for facility_name
         ]);
 
         // Retrieve the user
@@ -175,6 +302,7 @@ class UserController extends Controller
             'role' => $user->roles->pluck('name')->toArray(), // Fetch current roles
             'address' => $user->address,
             'username' => $user->username,
+            'facility_name' => $user->facility_name, // Store old facility_name for comparison
         ];
 
         // Check if current password is provided and valid
@@ -198,6 +326,28 @@ class UserController extends Controller
         $user->phone_number = $request->phoneNumber;
         $user->address = $request->address;
         $user->username = $request->username;
+
+        // Handle the facility_name field (new logic)
+        if ($request->filled('facility_name')) {
+            $facilityName = $request->facility_name;
+
+            // Check if the facility already exists in the `facilities` table
+            $facility = Facility::where('facility_name', $facilityName)->first();
+
+            // If the facility exists, link the user to the existing facility
+            if ($facility) {
+                // No need to create a new facility, just use the existing one
+                $user->facility_name = $facilityName;
+            } else {
+                // If the facility doesn't exist, create a new one
+                $facility = new Facility();
+                $facility->facility_name = $facilityName;
+                $facility->save(); // Save the new facility
+
+                // Update the user's facility_name field with the facility name (not facility_id)
+                $user->facility_name = $facilityName;
+            }
+        }
 
         // Update the name by combining first and last names
         $user->name = trim($user->first_name . ' ' . $user->last_name);
@@ -253,6 +403,8 @@ class UserController extends Controller
         return redirect()->route('users-list')->with('success', 'User updated successfully!');
     }
 
+
+
     public function delete($id)
     {
         // Find the user by ID
@@ -283,4 +435,17 @@ class UserController extends Controller
         return view('backoffice.admin.activity-logs', compact('logs'));
     }
 
+    // Suggest facilities based on user input
+    // This method will handle the search request from the frontend
+    public function search(Request $request)
+    {
+        // Get the search query from the input
+        $query = $request->input('query');
+
+        // Perform a search query on the facilities table to find matching names
+        $facilities = Facility::where('facility_name', 'like', '%' . $query . '%')->get();
+
+        // Return the result as a JSON response
+        return response()->json($facilities);
+    }
 }

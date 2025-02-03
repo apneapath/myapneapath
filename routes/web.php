@@ -5,6 +5,8 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PatientController;
 use App\Http\Controllers\Admin\ProviderController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\ReferralController;
+use App\Http\Controllers\Admin\FacilityController;
 use App\Models\Role;  // Import the Role model
 
 Route::get('/', function () {
@@ -68,6 +70,10 @@ Route::get('/users-list', function () {
 
 
 //USER----------------------------------------------------------------------------------------------------------------------------------
+// Route to search for facilities
+Route::get('/search-facilities', [UserController::class, 'search']);
+
+
 //route for user AJAX
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
 
@@ -111,6 +117,29 @@ Route::put('/roles/{role}', [RoleController::class, 'update'])->name('roles.upda
 Route::delete('/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
 
 
+
+// //FACILITY----------------------------------------------------------------------------------------------------------------------------------
+// Show all facilities (AJAX)
+Route::get('/facilities', [FacilityController::class, 'index'])->name('facilities.index');
+
+// // Show the form to create a new facility
+Route::get('/add-facility', [FacilityController::class, 'showForm'])->name('facility.showForm');
+
+// // Store a new facility (AJAX request for the facilities list)
+Route::post('/facilities-list', [FacilityController::class, 'add'])->name('facilities-list');
+
+
+
+
+
+
+
+
+
+
+
+
+
 //PATIENTS--------------------------------------------------------------------------------------------------------------------------------
 // Show all patients (AJAX)
 Route::get('/patients', [PatientController::class, 'index'])->name('patients.index');
@@ -122,10 +151,10 @@ Route::get('/add-patient', [PatientController::class, 'showForm'])->name('patien
 Route::post('/patients-list', [PatientController::class, 'add'])->name('patients-list');
 
 // // Show the form to edit an existing patient
-Route::get('/edit-patient/{id}', [PatientController::class, 'edit'])->name('patients.edit');
+Route::get('/edit-patient/{patient_code}', [PatientController::class, 'edit'])->name('patients.edit');
 
 // // Update the patient
-Route::post('/update-patient/{id}', [PatientController::class, 'update'])->name('patients.update');
+Route::post('/update-patient/{patient_code}', [PatientController::class, 'update'])->name('patients.update');
 
 // // Delete the patient
 Route::delete('/delete-patient/{id}', [PatientController::class, 'destroy'])->name('patients.destroy');
@@ -138,6 +167,10 @@ Route::get('/patient-dashboard/{id}', [PatientController::class, 'show'])->name(
 
 
 //PROVIDER------------------------------------------------------------------------------------------------------------------------------
+// Route for searching facilities
+Route::get('/search-facilities', [ProviderController::class, 'search']);
+
+
 // Show all providers (AJAX)
 Route::get('/providers', [ProviderController::class, 'index'])->name('providers.index');
 
@@ -148,16 +181,47 @@ Route::get('/add-provider', [ProviderController::class, 'showForm'])->name('prov
 Route::post('/providers-list', [ProviderController::class, 'add'])->name('providers-list');
 
 // Show the form to edit an existing provider
-Route::get('/edit-provider/{id}', [ProviderController::class, 'edit'])->name('provider.edit');
+Route::get('/edit-provider/{provider_code}', [ProviderController::class, 'edit'])->name('provider.edit');
 
 // Update the provider
-Route::post('/update-provider/{id}', [ProviderController::class, 'update'])->name('providers.update');
+Route::post('/update-provider/{provider_code}', [ProviderController::class, 'update'])->name('providers.update');
 
 // // Delete the provider
 Route::delete('/delete-provider/{id}', [ProviderController::class, 'destroy'])->name('providers.destroy');
 
 
+//REFERRAL------------------------------------------------------------------------------------------------------------------------------
+// Show all referrals (AJAX)
+Route::get('/referrals', [ReferralController::class, 'index'])->name('referrals.index');
 
+// Route to show the create referral form
+Route::get('/create-referral', [ReferralController::class, 'showForm'])->name('referrals.showForm');
+
+// Route to handle the form submission for adding a new referral
+Route::post('/referrals-list', [ReferralController::class, 'add'])->name('referrals-list');
+
+//View referral
+Route::get('/view-referral/{referral_code}', [ReferralController::class, 'view'])->name('view-referral');
+
+// Edit referral by referral code
+Route::get('/edit-referral/{referral_code}', [ReferralController::class, 'edit'])->name('edit-referral');
+Route::post('/update-referral/{referral_code}', [ReferralController::class, 'update'])->name('update-referral');
+
+
+
+
+
+// Route to handle the form submission for adding a new provider
+// Route::post('/providers-list', [ProviderController::class, 'add'])->name('providers-list');
+
+// Show the form to edit an existing provider
+// Route::get('/edit-provider/{id}', [ProviderController::class, 'edit'])->name('provider.edit');
+
+// Update the provider
+// Route::post('/update-provider/{id}', [ProviderController::class, 'update'])->name('providers.update');
+
+// // Delete the provider
+// Route::delete('/delete-provider/{id}', [ProviderController::class, 'destroy'])->name('providers.destroy');
 
 
 

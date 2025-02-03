@@ -30,12 +30,15 @@
         <table id="providers-table" class="row-border stripe hover">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Specialization</th>
-                    <th>Clinic Name</th>
-                    <th>Location</th>
-                    <th>Contact Number</th>
-                    <th>Account Status</th>
+                    <th>Account ID</th>
+                    <th>Provider Name</th>
+                    <th>Specialty</th>
+                    {{-- <th>License</th> --}}
+                    {{-- <th>NPI</th> --}}
+                    <th>Facility</th>
+                    {{-- <th>Location</th> --}}
+                    {{-- <th>Contact Number</th> --}}
+                    {{-- <th>Status</th> --}}
                     <th>Action</th>
                 </tr>
             </thead>
@@ -95,16 +98,19 @@
                     providers.forEach(function(provider) {
                         $('#provider-list').append(`
                     <tr>
+                        <td>${provider.provider_code}</td>
                         <td>${provider.name}</td>
                         <td>${provider.specialization}</td> <!-- Add specialization here -->
-                        <td>${provider.clinic_name}</td>
-                        <td>${provider.address}</td>
-                        <td>${provider.contact_number}</td>
-                        <td>${provider.account_status}</td>
+                        <!--<td>${provider.license_number}</td>-->
+                        <!--<td>${provider.npi}</td>-->
+                        <td>${provider.facility_name}</td>
+                        <!-- <td>${provider.address}</td>-->
+                        <!-- <td>${provider.contact_number}</td>-->
+                        <!--<td>${provider.account_status}</td>-->
                         <td>
-                            ${canEdit ? `<a title="Edit provider details" href="/edit-provider/${provider.id}" class="btn btn-sm"><span style="color: Dodgerblue;"><i class="fa-solid fa-file-pen"></i></span></a>` : ''}
+                            ${canEdit ? `<a title="Edit provider details" href="/edit-provider/${provider.provider_code}" class="btn btn-sm"><span style="color: Dodgerblue;"><i class="fa-solid fa-file-pen"></i></span></a>` : ''}
                             ${canView ? `<a title="View provider details" href="/provider-dashboard/${provider.id}" class="btn btn-sm"><span style="color: Dodgerblue;"><i class="fa-solid fa-eye"></i></span></a>` : ''}
-                            ${canDelete ? `<button type="button" class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="setDeleteProviderId(${provider.id});"><span style="color: Dodgerblue;"><i class="fa-solid fa-trash"></i></span></button>` : ''}
+                           <!-- ${canDelete ? `<button type="button" class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="setDeleteProviderId(${provider.id});"><span style="color: Dodgerblue;"><i class="fa-solid fa-trash"></i></span></button>` : ''}-->
                         </td>
                     </tr>
                 `);
