@@ -31,9 +31,10 @@
             <thead>
                 <tr>
                     <th>Account ID</th>
-                    <th>Patient Name</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
                     <th>DOB</th>
-                    <th>PCP</th>
+                    {{-- <th>PCP</th> --}}
                     <th>Insurance</th>
                     {{-- <th>Address</th> --}}
                     <th>Action</th>
@@ -96,9 +97,10 @@
                         $('#patient-list').append(`
                 <tr>
                     <td>${patient.patient_code}</td>
-                    <td>${patient.first_name} ${patient.last_name}</td>
+                    <td>${patient.first_name}</td>
+                    <td>${patient.last_name}</td>
                     <td>${patient.dob}</td> <!-- dob is formatted in the backend -->
-                    <td>${patient.pcp}</td>
+                    <!--<td>${patient.pcp}</td>-->
                     <td>${patient.insurance_provider ?? 'N/A'}</td>
                     
                     <td>

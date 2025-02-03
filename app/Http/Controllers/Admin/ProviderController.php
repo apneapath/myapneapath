@@ -198,55 +198,7 @@ class ProviderController extends Controller
 
 
     // Update the specified provider in the database
-    // public function update(Request $request, $provider_code)
-    // {
-    //     // Find the provider by provider_code
-    //     $provider = Provider::where('provider_code', $provider_code)->first();
-
-    //     // If provider not found, return an error response
-    //     if (!$provider) {
-    //         return redirect()->route('providers-list')->with('error', 'Provider not found.');
-    //     }
-
-    //     // Validate the data
-    //     $validatedData = $request->validate([
-    //         'first_name' => 'required|string|max:255',
-    //         'last_name' => 'required|string|max:255',
-    //         'gender' => 'required|string|max:10',
-    //         'dob' => 'required|date',
-    //         'contact_number' => 'required|string|max:255',
-    //         'emergency_contact_name' => 'required|string|max:255',
-    //         'emergency_contact_phone' => 'required|string|max:255',
-    //         'email' => 'required|email|max:255',
-    //         'specialization' => 'nullable|string|max:255',
-    //         'license_number' => 'nullable|string|max:255',
-    //         'facility_name' => 'nullable|string|max:255',
-    //         'street' => 'required|string|max:255',
-    //         'city' => 'required|string|max:255',
-    //         'state' => 'required|string|max:255',
-    //         'postal_code' => 'required|string|max:20',
-    //         'country' => 'nullable|string|max:255',
-    //         'work_hours' => 'nullable|string',
-    //         'account_status' => 'nullable|in:Active,Suspended,Retired',
-    //         'npi' => 'nullable|string|max:10',
-    //         'fax_number' => 'nullable|string|max:10',
-    //     ]);
-
-    //     // Update provider data
-    //     $provider->update($validatedData);
-
-    //     // Respond to AJAX request (if applicable)
-    //     if ($request->ajax()) {
-    //         return response()->json([
-    //             'success' => true,
-    //             'message' => 'Provider updated successfully!',
-    //             'provider' => $provider
-    //         ]);
-    //     }
-
-    //     // If not an AJAX request, redirect back
-    //     return redirect()->route('providers-list')->with('success', 'Provider updated successfully!');
-    // }
+    // 
 
     public function update(Request $request, $provider_code)
     {

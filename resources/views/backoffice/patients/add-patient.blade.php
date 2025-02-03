@@ -74,21 +74,23 @@
                                             <label for="email">Email address</label>
                                             <input type="email" class="form-control" id="email" name="email"
                                                 placeholder="name@example.com" required>
+                                            <small class="form-text text-muted font-italic">Enter valid email address
+                                                number.</small>
                                         </div>
 
                                         <!-- Emergency Contact Name -->
-                                        <div class="form-group col-3">
+                                        {{-- <div class="form-group col-3">
                                             <label for="emergencyContactName">Emergency Contact Name</label>
                                             <input type="text" class="form-control" id="emergencyContactName"
                                                 name="emergency_contact_name" placeholder="ex. Jane Doe" required>
-                                        </div>
+                                        </div> --}}
 
                                         <!-- Emergency Contact Number -->
-                                        <div class="form-group col-3">
+                                        {{-- <div class="form-group col-3">
                                             <label for="emergencyContactPhone">Emergency Contact Phone</label>
                                             <input type="text" class="form-control" id="emergencyContactPhone"
                                                 name="emergency_contact_phone" placeholder="ex. (00)0-0000-0000" required>
-                                        </div>
+                                        </div> --}}
 
 
                                     </div>
@@ -123,19 +125,19 @@
                                         <!-- Postal COde -->
                                         <div class="form-group col-2">
                                             <label for="postalCode">Postal Code</label>
-                                            <input type="text" class="form-control" id="postalCode"
-                                                name="postal_code" placeholder="ex. 10001" required>
+                                            <input type="text" class="form-control" id="postalCode" name="postal_code"
+                                                placeholder="ex. 10001" required>
                                         </div>
 
                                         <!-- Country -->
-                                        <div class="form-group col-2">
+                                        {{-- <div class="form-group col-2">
                                             <label for="country">Country</label>
                                             <input type="text" class="form-control" id="country" name="country"
                                                 placeholder="ex. United State" required>
-                                        </div>
+                                        </div> --}}
                                     </div>
 
-                                    <div class="row mb-5 align-items-start justify-content-start">
+                                    {{-- <div class="row mb-5 align-items-start justify-content-start">
                                         <div>
                                             <h5 class="mb-3 text-gray-800">Medical Information</h5>
                                         </div>
@@ -159,7 +161,7 @@
                                             <input type="text" name="pcp" id="pcp" class="form-control">
                                         </div>
 
-                                    </div>
+                                    </div> --}}
 
                                     <div class="row mb-5 align-items-start justify-content-start">
                                         <div>
@@ -178,16 +180,19 @@
                                             <label for="policyNumber">Policy Number</label>
                                             <input type="text" class="form-control" id="policyNumber"
                                                 name="policy_number" placeholder="ex. 12345XYZ" required>
+                                            <small class="form-text text-muted font-italic">Enter valid policy
+                                                number.</small>
                                         </div>
 
                                         <!-- SSN -->
                                         <div class="form-group col-3">
                                             <label for="ssn">SSN</label>
                                             <input type="text" name="ssn" id="ssn" class="form-control">
+                                            <small class="form-text text-muted font-italic">Enter 9 digit number.</small>
                                         </div>
                                     </div>
 
-                                    <div class="row mb-5 align-items-start justify-content-start">
+                                    {{-- <div class="row mb-5 align-items-start justify-content-start">
                                         <div>
                                             <h5 class="mb-3 text-gray-800">Password</h5>
                                         </div>
@@ -198,7 +203,7 @@
                                             <input type="password" class="form-control" id="password" name="password"
                                                 required>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     <div class="row align-items-start justify-content-between">
                                         <div class="col-12 d-flex flex-row-reverse">
