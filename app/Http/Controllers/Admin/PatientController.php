@@ -248,20 +248,24 @@ class PatientController extends Controller
             'last_name' => 'required|string|max:255',
             'gender' => 'required|string|max:10',
             'dob' => 'required|date',
+
             'contact_number' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'medical_history' => 'nullable|string',
-            'allergies' => 'nullable|string',
-            'insurance_provider' => 'nullable|string|max:255',
-            'policy_number' => 'nullable|string|max:255',
+            // 'emergency_contact_name' => 'required|string|max:255',
+            // 'emergency_contact_phone' => 'required|string|max:255',
+
             'street_address' => 'required|string|max:255',
             'city' => 'required|string|max:255',
             'state' => 'required|string|max:255',
             'postal_code' => 'required|string|max:20',
-            'country' => 'nullable|string|max:255',
-            'emergency_contact_name' => 'required|string|max:255',
-            'emergency_contact_phone' => 'required|string|max:255',
-            'pcp' => 'nullable|string|max:255', // Validate PCP
+            // 'country' => 'nullable|string|max:255',
+
+            // 'medical_history' => 'nullable|string',
+            // 'allergies' => 'nullable|string',
+            // 'pcp' => 'nullable|string|max:255', // Validate PCP
+
+            'insurance_provider' => 'nullable|string|max:255',
+            'policy_number' => 'nullable|string|max:255',
             'ssn' => 'nullable|string|max:09',  // Validate SSN
         ]);
 

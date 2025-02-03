@@ -129,7 +129,7 @@
                                             </div>
 
                                             <!-- Emergency Contact Name -->
-                                            <div class="row form-group col-12">
+                                            {{-- <div class="row form-group col-12">
                                                 <label class="col-sm-2" for="emergency_contact_name">Emergency Contact
                                                     Name</label>
                                                 <div class="col-10">
@@ -138,10 +138,10 @@
                                                         value="{{ old('emergency_contact_name', $patient->emergency_contact_name) }}"
                                                         required>
                                                 </div>
-                                            </div>
+                                            </div> --}}
 
                                             <!-- Emergency Contact Number -->
-                                            <div class="row form-group col-12">
+                                            {{-- <div class="row form-group col-12">
                                                 <label class="col-sm-2" for="emergency_contact_phone">Emergency Contact
                                                     Phone</label>
                                                 <div class="col-10">
@@ -150,7 +150,7 @@
                                                         value="{{ old('emergency_contact_phone', $patient->emergency_contact_phone) }}"
                                                         required>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </div>
 
                                         <div class="row mb-5">
@@ -173,9 +173,8 @@
                                             <div class="row form-group col-12">
                                                 <label class="col-sm-2" for="city">City</label>
                                                 <div class="col-10">
-                                                    <input type="text" class="form-control" id="city"
-                                                        name="city" value="{{ old('city', $patient->city) }}"
-                                                        required>
+                                                    <input type="text" class="form-control" id="city" name="city"
+                                                        value="{{ old('city', $patient->city) }}" required>
                                                 </div>
                                             </div>
 
@@ -200,16 +199,16 @@
                                             </div>
 
                                             <!-- Country -->
-                                            <div class="row form-group col-12">
+                                            {{-- <div class="row form-group col-12">
                                                 <label class="col-sm-2" for="country">Country</label>
                                                 <div class="col-10">
                                                     <input type="text" class="form-control" id="country"
                                                         name="country" value="{{ old('country', $patient->country) }}">
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </div>
 
-                                        <div class="row mb-5">
+                                        {{-- <div class="row mb-5">
                                             <div>
                                                 <h5 class="mb-3 text-gray-800">Medical Information</h5>
                                             </div>
@@ -238,7 +237,7 @@
                                                         class="form-control" value="{{ old('pcp', $patient->pcp) }}">
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
 
                                         <div class="row mb-5">
                                             <div>
@@ -258,7 +257,7 @@
 
                                             <!-- Insurance Number -->
                                             <div class="row form-group col-12">
-                                                <label class="col-sm-2" for="policyNumber">Insurance
+                                                <label class="col-sm-2" for="policyNumber">Policy
                                                     Number</label>
                                                 <div class="col-10">
                                                     <input type="text" class="form-control" id="policyNumber"
