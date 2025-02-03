@@ -4,14 +4,14 @@
     <div class="container-fluid">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <div>
-                <h4 class="mb-0 text-gray-800">Referrals List</h4>
+                <h4 class="mb-0 text-gray-800">Orders List</h4>
             </div>
 
             <!-- Check if the user has permission to create a new referral -->
             @if (auth()->user()->can('create posts'))
                 <a href="/create-referral" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                     <i class="fa-solid fa-user-plus"></i>
-                    Create New Referral
+                    Create New Order
                 </a>
             @endif
         </div>
@@ -30,7 +30,7 @@
         <table id="referrals-table" class="row-border stripe hover">
             <thead>
                 <tr>
-                    <th>Referral ID</th>
+                    <th>Order ID</th>
                     <th>Patient Name</th>
                     {{-- <th>Referring Provider</th> --}}
                     <th>Referred Provider</th>

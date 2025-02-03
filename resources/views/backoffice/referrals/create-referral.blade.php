@@ -65,7 +65,7 @@
                                         multiple>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary">Create Referral</button>
+                                <button type="submit" class="btn btn-primary">Create Order</button>
                             </form>
                         </div>
                     </div>

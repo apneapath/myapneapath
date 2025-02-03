@@ -186,7 +186,7 @@
 
                                         <!-- SSN -->
                                         <div class="form-group col-3">
-                                            <label for="ssn">SSN</label>
+                                            <label for="ssn">Social Security Number (SSN)</label>
                                             <input type="text" name="ssn" id="ssn" class="form-control">
                                             <small class="form-text text-muted font-italic">Enter 9 digit number.</small>
                                         </div>

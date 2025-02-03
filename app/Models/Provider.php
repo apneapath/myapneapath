@@ -56,7 +56,7 @@ class Provider extends Model
             $provider->name = $provider->first_name . ' ' . $provider->last_name;
 
             // Concatenate address fields to generate full address
-            $provider->address = $provider->clinic_address . ', ' . $provider->city . ', ' . $provider->state . ' ' . $provider->postal_code;
+            $provider->address = $provider->clinic_address . ', ' . $provider->city . ', ' . $provider->state . ', ' . $provider->postal_code;
         });
     }
 

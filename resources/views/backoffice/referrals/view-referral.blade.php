@@ -3,7 +3,12 @@
 @section('content')
     <div class="container-fluid">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h4 class="mb-0 text-gray-800">Referral ID: {{ $referral->referral_code ?? 'N/A' }} </h4>
+            <div>
+                <h4 class="mb-0 text-gray-800">Order ID: {{ $referral->referral_code ?? 'N/A' }} </h4>
+            </div>
+            <a href="/referrals-list" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                <i class="fa-solid fa-list"></i> View Order List
+            </a>
         </div>
 
         <div class="row justify-content-center align-items-center h-100">
@@ -13,10 +18,10 @@
                         <!-- Referral Information (Full width row) -->
                         <div class="row">
                             <div class="col-12">
-                                <h5>Referral Information</h5>
+                                <h5>Order Information</h5>
                                 <br>
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-4">
                                         <ul class="list-unstyled">
                                             <li><strong>Reason</strong></li>
                                             <li>{{ $referral->reason }}</li>
@@ -31,12 +36,13 @@
                                     </div>
 
                                     <div class="col">
-                                        {{-- <ul class="list-unstyled">
-                                            <li><strong>Status</strong></li>
-                                            <li><span class="badge badge-warning">{{ $referral->status }}</span></li>
-                                        </ul> --}}
-                                        <!-- Role -->
+                                        <ul class="list-unstyled">
+                                            <li><strong>Date Created</strong></li>
+                                            <li>{{ $referral->created_at }}</li>
+                                        </ul>
+                                    </div>
 
+                                    <div class="col">
                                         <label for="role"><strong>Status</strong></label>
                                         <select id="role" class="form-control" name="role" required>
                                             <option width="20px" value="" disabled selected><span
@@ -45,25 +51,19 @@
                                                     <option value="{{ $role->name }}">{{ $role->name }}</option>
                                                 @endforeach --}}
 
+                                            <option>Scheduled</option>
                                             <option>Reviewed</option>
                                             <option>Accepted</option>
-                                            <option>Decline</option>
-                                            <option>Scheduled</option>
-
+                                            <option>Not Accepted</option>
+                                            <option>Patient Declined</option>
+                                            <option>Completed</option>
+                                            <option>Cancelled</option>
                                         </select>
-
-                                    </div>
-
-                                    <div class="col">
-                                        <ul class="list-unstyled">
-                                            <li><strong>Date Created</strong></li>
-                                            <li>{{ $referral->created_at }}</li>
-                                        </ul>
                                     </div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-4">
                                         <ul class="list-unstyled">
                                             <li><strong>Referring Provider</strong></li>
                                             <li>{{ $referral->referringProvider->facility_name }}</li>
@@ -77,7 +77,7 @@
                                     </div> --}}
 
 
-                                    <div class="col">
+                                    <div class="col-3">
                                         <ul class="list-unstyled">
                                             <li><strong>Email</strong></li>
                                             <li><a title="Email {{ $referral->referringProvider->email }}"
@@ -85,9 +85,9 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-5">
                                         <ul class="list-unstyled">
-                                            <li><strong>Phone #</strong></li>
+                                            <li><strong>Phone Number</strong></li>
                                             <li>{{ $referral->referringProvider->phone_number ?? 'N/A' }}</li>
                                         </ul>
                                     </div>
@@ -127,9 +127,12 @@
                                 <table class="table table-bordered table-hover">
                                     <tbody>
                                         <tr>
-                                            <td>Name:</td>
-                                            <td class="text-end"><strong>{{ $referral->patient->first_name }}
-                                                    {{ $referral->patient->last_name }}</strong></td>
+                                            <td>First Name:</td>
+                                            <td class="text-end"><strong>{{ $referral->patient->first_name }}</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Last Name:</td>
+                                            <td class="text-end"><strong>{{ $referral->patient->last_name }}</strong></td>
                                         </tr>
                                         <tr>
                                             <td>Gender:</td>
@@ -140,7 +143,7 @@
                                             <td class="text-end"><strong>{{ $referral->patient->dob }}</strong></td>
                                         </tr>
                                         <tr>
-                                            <td>Contact:</td>
+                                            <td>Contact Number:</td>
                                             <td class="text-end">
                                                 <strong>{{ $referral->patient->contact_number }}</strong>
                                             </td>
@@ -151,6 +154,12 @@
                                             </td>
                                         </tr>
                                         <tr>
+                                            <td>Address:</td>
+                                            <td class="text-end">
+                                                <strong>{{ $referral->patient->address }}</strong>
+                                            </td>
+                                        </tr>
+                                        {{-- <tr>
                                             <td>Medical History:</td>
                                             <td class="text-end">
                                                 <strong>{{ $referral->patient->medical_history ?? 'N/A' }}</strong>
@@ -161,7 +170,7 @@
                                             <td class="text-end">
                                                 <strong>{{ $referral->patient->allergies ?? 'N/A' }}</strong>
                                             </td>
-                                        </tr>
+                                        </tr> --}}
                                         <tr>
                                             <td>Insurance Provider:</td>
                                             <td class="text-end">
@@ -175,12 +184,13 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>Address:</td>
+                                            <td>Social Security Number (SSN):</td>
                                             <td class="text-end">
-                                                <strong>{{ $referral->patient->address }}</strong>
+                                                <strong>{{ $referral->patient->ssn ?? 'N/A' }}</strong>
                                             </td>
                                         </tr>
-                                        <tr>
+
+                                        {{-- <tr>
                                             <td>Emergency Contact Name:</td>
                                             <td class="text-end">
                                                 <strong>{{ $referral->patient->emergency_contact_name ?? 'N/A' }}</strong>
@@ -191,7 +201,7 @@
                                             <td class="text-end">
                                                 <strong>{{ $referral->patient->emergency_contact_phone ?? 'N/A' }}</strong>
                                             </td>
-                                        </tr>
+                                        </tr> --}}
                                     </tbody>
                                 </table>
                             </div>
@@ -201,10 +211,16 @@
 
                             <!-- Referred Provider Information -->
                             <div class="col-md-6">
-                                <h5>Referred Provider</h5>
+                                <h5>Provider Information</h5>
                                 <br>
                                 <table class="table table-bordered table-hover">
                                     <tbody>
+                                        <tr>
+                                            <td>Facility:</td>
+                                            <td class="text-end">
+                                                <strong>{{ $referral->referredProvider->facility_name }}</strong>
+                                            </td>
+                                        </tr>
                                         <tr>
                                             <td>Provider:</td>
                                             <td class="text-end"><strong>{{ $referral->referredProvider->name }}</strong>
@@ -217,9 +233,9 @@
                                             </td>
                                         </tr> --}}
                                         <tr>
-                                            <td>Contact:</td>
+                                            <td>Fax Number:</td>
                                             <td class="text-end">
-                                                <strong>{{ $referral->referredProvider->contact_number }}</strong>
+                                                <strong>{{ $referral->referredProvider->fax_number }}</strong>
                                             </td>
                                         </tr>
                                         <tr>
@@ -229,7 +245,14 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>Specialization:</td>
+                                            <td>Contact Number:</td>
+                                            <td class="text-end">
+                                                <strong>{{ $referral->referredProvider->contact_number }}</strong>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Specialty:</td>
                                             <td class="text-end">
                                                 <strong>{{ $referral->referredProvider->specialization }}</strong>
                                             </td>
@@ -241,23 +264,35 @@
                                             </td>
                                         </tr> --}}
                                         <tr>
-                                            <td>Facility:</td>
+                                            <td>Street Address:</td>
                                             <td class="text-end">
-                                                <strong>{{ $referral->referredProvider->facility_name }}</strong>
+                                                <strong>{{ $referral->referredProvider->street }}</strong>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>Address:</td>
+                                            <td>City:</td>
                                             <td class="text-end">
-                                                <strong>{{ $referral->referredProvider->address }}</strong>
+                                                <strong>{{ $referral->referredProvider->city }}</strong>
                                             </td>
                                         </tr>
                                         <tr>
+                                            <td>State:</td>
+                                            <td class="text-end">
+                                                <strong>{{ $referral->referredProvider->state }}</strong>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Postal Code::</td>
+                                            <td class="text-end">
+                                                <strong>{{ $referral->referredProvider->postal_code }}</strong>
+                                            </td>
+                                        </tr>
+                                        {{-- <tr>
                                             <td>Working Hours:</td>
                                             <td class="text-end">
                                                 <strong>{{ $referral->referredProvider->work_hours }}</strong>
                                             </td>
-                                        </tr>
+                                        </tr> --}}
                                     </tbody>
                                 </table>
                             </div>
@@ -305,14 +340,18 @@
                         <hr>
 
                         <!-- Actions Section -->
-                        <div class="mt-4">
-                            <a href="{{ route('referrals-list') }}" class="btn btn-sm btn-secondary">Back to Referrals
-                                List</a>
-                            @if (auth()->user()->can('edit posts'))
-                                <a href="{{ route('edit-referral', $referral->referral_code) }}"
-                                    class="btn btn-sm btn-primary">Edit
-                                    Referral</a>
-                            @endif
+                        <div class="row align-items-start justify-content-between">
+                            <div class="col-12 d-flex flex-row-reverse">
+                                <div class="form-group">
+                                    @if (auth()->user()->can('edit posts'))
+                                        <a href="{{ route('edit-referral', $referral->referral_code) }}"
+                                            class="btn btn-sm btn-secondary">Edit
+                                            Referral</a>
+                                    @endif
+                                    <button type="submit" id="submit" name="submit"
+                                        class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Save</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
