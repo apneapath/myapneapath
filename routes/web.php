@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\ProviderController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\ReferralController;
 use App\Http\Controllers\Admin\FacilityController;
+use App\Http\Controllers\Admin\OrderTypeController;
 use App\Models\Role;  // Import the Role model
 
 Route::get('/', function () {
@@ -207,6 +208,17 @@ Route::get('/view-referral/{referral_code}', [ReferralController::class, 'view']
 Route::get('/edit-referral/{referral_code}', [ReferralController::class, 'edit'])->name('edit-referral');
 Route::post('/update-referral/{referral_code}', [ReferralController::class, 'update'])->name('update-referral');
 
+
+//ORDER TYPES------------------------------------------------------------------------------------------------------------------------------
+// Route::resource('ordertypes', OrderTypeController::class);
+// Show all Order Types (AJAX)
+Route::get('/orderTypes', [OrderTypeController::class, 'index'])->name('orderTypes.index');
+
+// Show form to create a new order type
+Route::get('/create-referral-types', action: [OrderTypeController::class, 'create'])->name('orderTypes.create');
+
+// Store new role
+Route::post('/referral-types-list', [OrderTypeController::class, 'store'])->name('orderTypes.store');
 
 
 
