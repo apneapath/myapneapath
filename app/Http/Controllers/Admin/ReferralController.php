@@ -242,6 +242,19 @@ class ReferralController extends Controller
     }
 
 
+    // public function edit($referral_code)
+    // {
+    //     // Find the referral by referral_code
+    //     $referral = Referral::where('referral_code', $referral_code)->firstOrFail();
+
+    //     // Retrieve patients and providers to populate the select options
+    //     $patients = Patient::all(); // Fetch all patients
+    //     $providers = Provider::all(); // Fetch all providers
+
+    //     // Return the edit form with the referral data and the list of patients and providers
+    //     return view('backoffice.referrals.edit-referral', compact('referral', 'patients', 'providers'));
+    // }
+
     public function edit($referral_code)
     {
         // Find the referral by referral_code
@@ -251,9 +264,63 @@ class ReferralController extends Controller
         $patients = Patient::all(); // Fetch all patients
         $providers = Provider::all(); // Fetch all providers
 
-        // Return the edit form with the referral data and the list of patients and providers
-        return view('backoffice.referrals.edit-referral', compact('referral', 'patients', 'providers'));
+        // Retrieve all available order types
+        $orderTypes = OrderType::all(); // Fetch all order types
+
+        // Return the edit form with the referral data, patients, providers, and orderTypes
+        return view('backoffice.referrals.edit-referral', compact('referral', 'patients', 'providers', 'orderTypes'));
     }
+
+
+
+    // public function update(Request $request, $referral_code)
+    // {
+    //     // Validate the incoming request data
+    //     $request->validate([
+    //         'patient_id' => 'required|exists:patients,id',
+    //         'referred_provider_id' => 'required|exists:providers,id', // Ensure referred_provider_id is valid
+    //         'reason' => 'required|string',
+    //         'urgency' => 'required|in:routine,urgent',
+    //         'status' => 'required|string',  // Assuming 'status' is a string, adjust if it's an enum
+    //         'notes' => 'nullable|string',
+    //         'attachments' => 'nullable|array', // Ensure attachments are an array
+    //         'attachments.*' => 'file|mimes:jpg,jpeg,png,pdf,docx,txt|max:2048' // Validate file types and sizes
+    //     ]);
+
+    //     // Find the referral by referral_code
+    //     $referral = Referral::where('referral_code', $referral_code)->firstOrFail();
+
+    //     // Update the referral with the new data
+    //     $referral->update([
+    //         'patient_id' => $request->patient_id,
+    //         'referred_provider_id' => $request->referred_provider_id,
+    //         'reason' => $request->reason,
+    //         'urgency' => $request->urgency,
+    //         'status' => $request->status,
+    //         'notes' => $request->notes,
+    //     ]);
+
+    //     // Handling file upload for attachments
+    //     if ($request->hasFile('attachments')) {
+    //         foreach ($request->file('attachments') as $file) {
+    //             // Store the file and get the stored path
+    //             $path = $file->store('attachments', 'public');  // Store in public disk
+
+    //             // Get the original filename
+    //             $filename = $file->getClientOriginalName();
+
+    //             // Save the attachment in the database
+    //             Attachment::create([
+    //                 'referral_id' => $referral->id,
+    //                 'file_path' => $path,
+    //                 'filename' => $filename,  // Save the original filename
+    //             ]);
+    //         }
+    //     }
+
+    //     // Redirect to the referrals list with a success message
+    //     return redirect()->route('referrals-list')->with('success', 'Referral updated successfully!');
+    // }
 
 
     public function update(Request $request, $referral_code)
@@ -267,13 +334,14 @@ class ReferralController extends Controller
             'status' => 'required|string',  // Assuming 'status' is a string, adjust if it's an enum
             'notes' => 'nullable|string',
             'attachments' => 'nullable|array', // Ensure attachments are an array
-            'attachments.*' => 'file|mimes:jpg,jpeg,png,pdf,docx,txt|max:2048' // Validate file types and sizes
+            'attachments.*' => 'file|mimes:jpg,jpeg,png,pdf,docx,txt|max:2048', // Validate file types and sizes
+            'order_type_id' => 'nullable|exists:order_types,id', // Validate order_type_id
         ]);
 
         // Find the referral by referral_code
         $referral = Referral::where('referral_code', $referral_code)->firstOrFail();
 
-        // Update the referral with the new data
+        // Update the referral with the new data, including the order_type_id
         $referral->update([
             'patient_id' => $request->patient_id,
             'referred_provider_id' => $request->referred_provider_id,
@@ -281,6 +349,7 @@ class ReferralController extends Controller
             'urgency' => $request->urgency,
             'status' => $request->status,
             'notes' => $request->notes,
+            'order_type_id' => $request->order_type_id, // Adding order_type_id to the update
         ]);
 
         // Handling file upload for attachments
@@ -304,6 +373,7 @@ class ReferralController extends Controller
         // Redirect to the referrals list with a success message
         return redirect()->route('referrals-list')->with('success', 'Referral updated successfully!');
     }
+
 
 
 

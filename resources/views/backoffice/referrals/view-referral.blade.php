@@ -22,7 +22,7 @@
                                 <br>
                                 <div class="row">
 
-                                    <div class="col-2">
+                                    <div class="col">
                                         <ul class="list-unstyled">
                                             <li><strong>Order Type</strong></li>
                                             <!-- Display the name or description of the order type -->
@@ -30,22 +30,21 @@
                                         </ul>
                                     </div>
 
-
-                                    <div class="col-3">
+                                    <div class="col">
                                         <ul class="list-unstyled">
                                             <li><strong>Reason</strong></li>
                                             <li>{{ $referral->reason }}</li>
                                         </ul>
                                     </div>
 
-                                    <div class="col-2">
+                                    <div class="col">
                                         <ul class="list-unstyled">
-                                            <li><strong>Urgency</strong></li>
-                                            <li>{{ $referral->urgency }}</li>
+                                            <li><strong>Date Created</strong></li>
+                                            <li>{{ $referral->created_at }}</li>
                                         </ul>
                                     </div>
 
-                                    <div class="col-3">
+                                    <div class="col">
                                         <label for="role"><strong>Status</strong></label>
                                         <select id="role" class="form-control" name="role" required>
                                             <option width="20px" value="" disabled selected><span
@@ -63,31 +62,15 @@
                                             <option>Cancelled</option>
                                         </select>
                                     </div>
-
-                                    <div class="col-2">
-                                        <ul class="list-unstyled">
-                                            <li><strong>Date Created</strong></li>
-                                            <li>{{ $referral->created_at }}</li>
-                                        </ul>
-                                    </div>
-
-
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-2">
+                                    <div class="col-3">
                                         <ul class="list-unstyled">
                                             <li><strong>Referring Provider</strong></li>
                                             <li>{{ $referral->referringProvider->facility_name }}</li>
                                         </ul>
                                     </div>
-                                    {{-- <div class="col">
-                                        <ul class="list-unstyled">
-                                            <li><strong>Created By</strong></li>
-                                            <li>{{ $referral->referringProvider->role ?? 'N/A' }}</li>
-                                        </ul>
-                                    </div> --}}
-
 
                                     <div class="col-3">
                                         <ul class="list-unstyled">
@@ -97,17 +80,20 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="col-2">
+
+                                    <div class="col-3">
                                         <ul class="list-unstyled">
                                             <li><strong>Phone Number</strong></li>
                                             <li>{{ $referral->referringProvider->phone_number ?? 'N/A' }}</li>
                                         </ul>
                                     </div>
+
                                 </div>
 
                             </div>
                         </div>
                         <hr>
+
                         <!-- Second Row: Referring Provider Information + Referred Provider Information -->
                         {{-- <div class="row mt-4">
                             <!-- Referring Provider Information (Full Width Row) -->
@@ -171,18 +157,6 @@
                                                 <strong>{{ $referral->patient->address }}</strong>
                                             </td>
                                         </tr>
-                                        {{-- <tr>
-                                            <td>Medical History:</td>
-                                            <td class="text-end">
-                                                <strong>{{ $referral->patient->medical_history ?? 'N/A' }}</strong>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Allergies:</td>
-                                            <td class="text-end">
-                                                <strong>{{ $referral->patient->allergies ?? 'N/A' }}</strong>
-                                            </td>
-                                        </tr> --}}
                                         <tr>
                                             <td>Insurance Provider:</td>
                                             <td class="text-end">
@@ -201,25 +175,9 @@
                                                 <strong>{{ $referral->patient->ssn ?? 'N/A' }}</strong>
                                             </td>
                                         </tr>
-
-                                        {{-- <tr>
-                                            <td>Emergency Contact Name:</td>
-                                            <td class="text-end">
-                                                <strong>{{ $referral->patient->emergency_contact_name ?? 'N/A' }}</strong>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Emergency Contact Number:</td>
-                                            <td class="text-end">
-                                                <strong>{{ $referral->patient->emergency_contact_phone ?? 'N/A' }}</strong>
-                                            </td>
-                                        </tr> --}}
                                     </tbody>
                                 </table>
                             </div>
-
-
-
 
                             <!-- Referred Provider Information -->
                             <div class="col-md-6">
@@ -238,12 +196,6 @@
                                             <td class="text-end"><strong>{{ $referral->referredProvider->name }}</strong>
                                             </td>
                                         </tr>
-                                        {{-- <tr>
-                                            <td>Role:</td>
-                                            <td class="text-end">
-                                                <strong>{{ $referral->referredProvider->role ?? 'N/A' }}</strong>
-                                            </td>
-                                        </tr> --}}
                                         <tr>
                                             <td>Fax Number:</td>
                                             <td class="text-end">
@@ -269,12 +221,6 @@
                                                 <strong>{{ $referral->referredProvider->specialization }}</strong>
                                             </td>
                                         </tr>
-                                        {{-- <tr>
-                                            <td>License Number:</td>
-                                            <td class="text-end">
-                                                <strong>{{ $referral->referredProvider->license_number ?? 'N/A' }}</strong>
-                                            </td>
-                                        </tr> --}}
                                         <tr>
                                             <td>Street Address:</td>
                                             <td class="text-end">
@@ -299,19 +245,12 @@
                                                 <strong>{{ $referral->referredProvider->postal_code }}</strong>
                                             </td>
                                         </tr>
-                                        {{-- <tr>
-                                            <td>Working Hours:</td>
-                                            <td class="text-end">
-                                                <strong>{{ $referral->referredProvider->work_hours }}</strong>
-                                            </td>
-                                        </tr> --}}
                                     </tbody>
                                 </table>
                             </div>
-
-
                         </div>
                         <hr>
+
                         <!-- Fourth Row: Referral Notes Section + Attachments Section -->
                         <div class="row mt-4">
                             <!-- Referral Notes Section -->
