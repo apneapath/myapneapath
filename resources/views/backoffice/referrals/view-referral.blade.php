@@ -21,28 +21,31 @@
                                 <h5>Order Information</h5>
                                 <br>
                                 <div class="row">
-                                    <div class="col-4">
+
+                                    <div class="col-2">
+                                        <ul class="list-unstyled">
+                                            <li><strong>Order Type</strong></li>
+                                            <!-- Display the name or description of the order type -->
+                                            <li>{{ $referral->orderType->name ?? 'N/A' }}</li>
+                                        </ul>
+                                    </div>
+
+
+                                    <div class="col-3">
                                         <ul class="list-unstyled">
                                             <li><strong>Reason</strong></li>
                                             <li>{{ $referral->reason }}</li>
                                         </ul>
                                     </div>
 
-                                    <div class="col">
+                                    <div class="col-2">
                                         <ul class="list-unstyled">
                                             <li><strong>Urgency</strong></li>
                                             <li>{{ $referral->urgency }}</li>
                                         </ul>
                                     </div>
 
-                                    <div class="col">
-                                        <ul class="list-unstyled">
-                                            <li><strong>Date Created</strong></li>
-                                            <li>{{ $referral->created_at }}</li>
-                                        </ul>
-                                    </div>
-
-                                    <div class="col">
+                                    <div class="col-3">
                                         <label for="role"><strong>Status</strong></label>
                                         <select id="role" class="form-control" name="role" required>
                                             <option width="20px" value="" disabled selected><span
@@ -60,10 +63,19 @@
                                             <option>Cancelled</option>
                                         </select>
                                     </div>
+
+                                    <div class="col-2">
+                                        <ul class="list-unstyled">
+                                            <li><strong>Date Created</strong></li>
+                                            <li>{{ $referral->created_at }}</li>
+                                        </ul>
+                                    </div>
+
+
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-4">
+                                    <div class="col-2">
                                         <ul class="list-unstyled">
                                             <li><strong>Referring Provider</strong></li>
                                             <li>{{ $referral->referringProvider->facility_name }}</li>
@@ -85,7 +97,7 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="col-5">
+                                    <div class="col-2">
                                         <ul class="list-unstyled">
                                             <li><strong>Phone Number</strong></li>
                                             <li>{{ $referral->referringProvider->phone_number ?? 'N/A' }}</li>

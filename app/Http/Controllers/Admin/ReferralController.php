@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Role;
 use App\Models\Patient;
 use App\Models\Provider;
+use App\Models\OrderType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;  // <-- Add this import
@@ -78,32 +79,104 @@ class ReferralController extends Controller
 
 
     // Show the referral creation form
+    // public function showForm()
+    // {
+    //     // $patients = Patient::all(); // Get all patients
+    //     // $providers = User::where('role', 'provider')->get(); // Get all providers
+    //     // return view('referrals.create', compact('patients', 'providers'));
+
+
+    //     $patients = Patient::all(); // Get all patients
+    //     $providers = Provider::all(); // Get all providers
+
+    //     return view('backoffice.referrals.create-referral', compact('patients', 'providers'));
+    // }
+
+
     public function showForm()
     {
-        // $patients = Patient::all(); // Get all patients
-        // $providers = User::where('role', 'provider')->get(); // Get all providers
-        // return view('referrals.create', compact('patients', 'providers'));
+        // Get all patients
+        $patients = Patient::all();
 
+        // Get all providers
+        $providers = Provider::all();
 
-        $patients = Patient::all(); // Get all patients
-        $providers = Provider::all(); // Get all providers
+        // Get all order types
+        $orderTypes = OrderType::all(); // Fetch all order types
 
-        return view('backoffice.referrals.create-referral', compact('patients', 'providers'));
+        // Pass patients, providers, and order types to the view
+        return view('backoffice.referrals.create-referral', compact('patients', 'providers', 'orderTypes'));
     }
+
+
+    // public function add(Request $request)
+    // {
+    //     $request->validate([
+    //         'patient_id' => 'required|exists:patients,id',
+    //         'referred_provider_id' => 'required|exists:providers,id', // Ensure referred_provider_id is valid
+    //         'reason' => 'required|string',
+    //         'urgency' => 'required|in:routine,urgent',
+    //         'notes' => 'nullable|string',  // Make sure notes is nullable and validated
+    //         'attachments' => 'nullable|array', // Ensure attachments are an array
+    //         'attachments.*' => 'file|mimes:jpg,jpeg,png,pdf,docx,txt|max:2048' // Validate file types and sizes
+    //     ]);
+
+    //     // Create referral and store the notes
+    //     $referral = Referral::create([
+    //         'patient_id' => $request->patient_id,
+    //         'referring_provider_id' => Auth::id(),
+    //         'referred_provider_id' => $request->referred_provider_id,
+    //         'reason' => $request->reason,
+    //         'urgency' => $request->urgency,
+    //         'status' => 'Pending',
+    //         'notes' => $request->notes,  // Make sure the notes are being passed here
+    //     ]);
+
+    //     // Generate the referral code: 'MAP-<ID>-<3 random characters>'
+    //     $randomCharacters = strtoupper(Str::random(3)); // 3 random characters in uppercase
+    //     $referralCode = 'MAP-REF' . $referral->id . $randomCharacters;
+
+    //     // Assign the generated referral code
+    //     $referral->referral_code = $referralCode;
+    //     $referral->save(); // Save the referral with the referral code
+
+    //     // Handling file upload for attachments
+    //     if ($request->hasFile('attachments')) {
+    //         foreach ($request->file('attachments') as $file) {
+    //             // Store the file and get the stored path
+    //             $path = $file->store('attachments', 'public');  // Store in public disk
+
+    //             // Get the original filename
+    //             $filename = $file->getClientOriginalName();
+
+    //             // Save the attachment in the database
+    //             Attachment::create([
+    //                 'referral_id' => $referral->id,
+    //                 'file_path' => $path,
+    //                 'filename' => $filename,  // Save the original filename
+    //             ]);
+    //         }
+    //     }
+
+    //     return redirect()->route('referrals-list')->with('success', 'Referral created successfully!');
+    // }
+
 
     public function add(Request $request)
     {
+        // Add 'order_type_id' to the validation rules
         $request->validate([
             'patient_id' => 'required|exists:patients,id',
             'referred_provider_id' => 'required|exists:providers,id', // Ensure referred_provider_id is valid
             'reason' => 'required|string',
             'urgency' => 'required|in:routine,urgent',
             'notes' => 'nullable|string',  // Make sure notes is nullable and validated
+            'order_type_id' => 'required|exists:order_types,id', // Validate that order_type_id exists in order_types table
             'attachments' => 'nullable|array', // Ensure attachments are an array
             'attachments.*' => 'file|mimes:jpg,jpeg,png,pdf,docx,txt|max:2048' // Validate file types and sizes
         ]);
 
-        // Create referral and store the notes
+        // Create referral and store the notes, also include order_type_id
         $referral = Referral::create([
             'patient_id' => $request->patient_id,
             'referring_provider_id' => Auth::id(),
@@ -111,7 +184,8 @@ class ReferralController extends Controller
             'reason' => $request->reason,
             'urgency' => $request->urgency,
             'status' => 'Pending',
-            'notes' => $request->notes,  // Make sure the notes are being passed here
+            'notes' => $request->notes,
+            'order_type_id' => $request->order_type_id, // Save the order_type_id
         ]);
 
         // Generate the referral code: 'MAP-<ID>-<3 random characters>'
@@ -143,16 +217,30 @@ class ReferralController extends Controller
         return redirect()->route('referrals-list')->with('success', 'Referral created successfully!');
     }
 
+
+    // public function view($referral_code)
+    // {
+    //     // Retrieve the referral with related data using referral_code instead of id
+    //     $referral = Referral::with(['patient', 'referringProvider', 'referredProvider', 'attachments'])
+    //         ->where('referral_code', $referral_code)
+    //         ->firstOrFail();
+
+    //     // Return the view with referral data
+    //     return view('backoffice.referrals.view-referral', compact('referral'));
+    // }
+
+
     public function view($referral_code)
     {
-        // Retrieve the referral with related data using referral_code instead of id
-        $referral = Referral::with(['patient', 'referringProvider', 'referredProvider', 'attachments'])
+        // Retrieve the referral with related data including orderType
+        $referral = Referral::with(['patient', 'referringProvider', 'referredProvider', 'attachments', 'orderType'])
             ->where('referral_code', $referral_code)
             ->firstOrFail();
 
         // Return the view with referral data
         return view('backoffice.referrals.view-referral', compact('referral'));
     }
+
 
     public function edit($referral_code)
     {
