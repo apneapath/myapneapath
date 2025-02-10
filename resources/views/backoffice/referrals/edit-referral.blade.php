@@ -135,12 +135,12 @@
                 </select>
             </div>
 
-            <!-- Status Input -->
+            {{-- <!-- Status Input -->
             <div class="form-group">
                 <label for="status">Status</label>
                 <input type="text" id="status" name="status" class="form-control"
                     value="{{ old('status', $referral->status) }}" required>
-            </div>
+            </div> --}}
 
             <!-- Referral Notes -->
             <div class="form-group">

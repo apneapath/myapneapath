@@ -331,7 +331,7 @@ class ReferralController extends Controller
             'referred_provider_id' => 'required|exists:providers,id', // Ensure referred_provider_id is valid
             'reason' => 'required|string',
             'urgency' => 'required|in:routine,urgent',
-            'status' => 'required|string',  // Assuming 'status' is a string, adjust if it's an enum
+            // 'status' => 'required|string',  // Assuming 'status' is a string, adjust if it's an enum
             'notes' => 'nullable|string',
             'attachments' => 'nullable|array', // Ensure attachments are an array
             'attachments.*' => 'file|mimes:jpg,jpeg,png,pdf,docx,txt|max:2048', // Validate file types and sizes
@@ -347,7 +347,7 @@ class ReferralController extends Controller
             'referred_provider_id' => $request->referred_provider_id,
             'reason' => $request->reason,
             'urgency' => $request->urgency,
-            'status' => $request->status,
+            // 'status' => $request->status,
             'notes' => $request->notes,
             'order_type_id' => $request->order_type_id, // Adding order_type_id to the update
         ]);
