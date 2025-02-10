@@ -104,7 +104,7 @@
 
         function setDeleteOrderTypeId(id) {
             const form = document.getElementById('deleteOrderTypeForm');
-            form.action = `/orderTypes/${id}`;
+            form.action = `/delete-referral-types/${id}`;
         }
     </script>
 @endsection

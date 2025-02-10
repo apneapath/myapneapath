@@ -10,6 +10,9 @@ use App\Http\Controllers\Admin\FacilityController;
 use App\Http\Controllers\Admin\OrderTypeController;
 use App\Models\Role;  // Import the Role model
 
+
+// Main Routes Used for Sidenavbar --------------------------------------------------------------------------------------------------------------------------------------
+
 Route::get('/', function () {
     return view('storefront.index');
 });
@@ -70,14 +73,15 @@ Route::get('/users-list', function () {
 });
 
 
-//USER----------------------------------------------------------------------------------------------------------------------------------
-// Route to search for facilities
-Route::get('/search-facilities', [UserController::class, 'search']);
+// USERS --------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+// Route to search for facilities to assign for user
+Route::get('/search-facilities', [UserController::class, 'search']);
 
 //route for user AJAX
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
 
+//route for showing form to user
 Route::get('/add-user', [UserController::class, 'showForm'])->name('users.showForm');
 
 //post users-list
@@ -98,7 +102,8 @@ Route::get('/view-user/{id}', [UserController::class, 'view'])->name('view-user'
 //activity logs view
 Route::get('/activity-logs', [UserController::class, 'viewActivityLogs'])->name('activity-logs');
 
-//ROLES--------------------------------------------------------------------------------------------------------------------------------
+
+// ROLES --------------------------------------------------------------------------------------------------------------------------------
 //roles-list
 Route::get('/roles-list', [RoleController::class, 'index'])->name('roles.index');
 
@@ -118,8 +123,7 @@ Route::put('/roles/{role}', [RoleController::class, 'update'])->name('roles.upda
 Route::delete('/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
 
 
-
-// //FACILITY----------------------------------------------------------------------------------------------------------------------------------
+// FACILITIES ----------------------------------------------------------------------------------------------------------------------------------
 // Show all facilities (AJAX)
 Route::get('/facilities', [FacilityController::class, 'index'])->name('facilities.index');
 
@@ -128,17 +132,6 @@ Route::get('/add-facility', [FacilityController::class, 'showForm'])->name('faci
 
 // // Store a new facility (AJAX request for the facilities list)
 Route::post('/facilities-list', [FacilityController::class, 'add'])->name('facilities-list');
-
-
-
-
-
-
-
-
-
-
-
 
 
 //PATIENTS--------------------------------------------------------------------------------------------------------------------------------
@@ -161,16 +154,9 @@ Route::post('/update-patient/{patient_code}', [PatientController::class, 'update
 Route::delete('/delete-patient/{id}', [PatientController::class, 'destroy'])->name('patients.destroy');
 
 
-
-// TO BE CONTINUE PATIENT DASHBOARD-----------------------------------------------------------------------------------------------------
-// //Patient dashboard
-Route::get('/patient-dashboard/{id}', [PatientController::class, 'show'])->name('patient-dashboard');
-
-
 //PROVIDER------------------------------------------------------------------------------------------------------------------------------
 // Route for searching facilities
 Route::get('/search-facilities', [ProviderController::class, 'search']);
-
 
 // Show all providers (AJAX)
 Route::get('/providers', [ProviderController::class, 'index'])->name('providers.index');
@@ -206,11 +192,12 @@ Route::get('/view-referral/{referral_code}', [ReferralController::class, 'view']
 
 // Edit referral by referral code
 Route::get('/edit-referral/{referral_code}', [ReferralController::class, 'edit'])->name('edit-referral');
+
+// Update referral 
 Route::post('/update-referral/{referral_code}', [ReferralController::class, 'update'])->name('update-referral');
 
 
 //ORDER TYPES------------------------------------------------------------------------------------------------------------------------------
-// Route::resource('ordertypes', OrderTypeController::class);
 // Show all Order Types (AJAX)
 Route::get('/orderTypes', [OrderTypeController::class, 'index'])->name('orderTypes.index');
 
@@ -220,20 +207,8 @@ Route::get('/create-referral-types', action: [OrderTypeController::class, 'creat
 // Store new role
 Route::post('/referral-types-list', [OrderTypeController::class, 'store'])->name('orderTypes.store');
 
-
-
-
-// Route to handle the form submission for adding a new provider
-// Route::post('/providers-list', [ProviderController::class, 'add'])->name('providers-list');
-
-// Show the form to edit an existing provider
-// Route::get('/edit-provider/{id}', [ProviderController::class, 'edit'])->name('provider.edit');
-
-// Update the provider
-// Route::post('/update-provider/{id}', [ProviderController::class, 'update'])->name('providers.update');
-
 // // Delete the provider
-// Route::delete('/delete-provider/{id}', [ProviderController::class, 'destroy'])->name('providers.destroy');
+Route::delete('/delete-referral-types/{id}', [OrderTypeController::class, 'destroy'])->name('orderTypes.destroy');
 
 
 

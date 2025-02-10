@@ -24,7 +24,6 @@ class OrderTypeController extends Controller
         ]);
     }
 
-
     public function create()
     {
         return view('backoffice.referrals.create-referral-types');  // Return the view for the create provider form
@@ -67,10 +66,18 @@ class OrderTypeController extends Controller
         return redirect()->route('order_types.index');
     }
 
-    public function destroy(OrderType $orderType)
+    public function destroy($id)
     {
+        // Find the order type by its ID
+        $orderType = OrderType::findOrFail($id);
+
+        // Delete the order type
         $orderType->delete();
 
-        return redirect()->route('order_types.index');
+        // Redirect with success message
+        return redirect()->route('orderTypes.store')->with('success', 'Order Type deleted successfully!');
     }
+
+
+
 }
