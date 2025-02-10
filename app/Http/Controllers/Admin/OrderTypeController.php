@@ -49,22 +49,22 @@ class OrderTypeController extends Controller
     }
 
 
-    public function edit(OrderType $orderType)
-    {
-        return view('order_types.edit', compact('orderType'));
-    }
+    // public function edit(OrderType $orderType)
+    // {
+    //     return view('order_types.edit', compact('orderType'));
+    // }
 
-    public function update(Request $request, OrderType $orderType)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-        ]);
+    // public function update(Request $request, OrderType $orderType)
+    // {
+    //     $request->validate([
+    //         'name' => 'required|string|max:255',
+    //         'description' => 'nullable|string',
+    //     ]);
 
-        $orderType->update($request->all());
+    //     $orderType->update($request->all());
 
-        return redirect()->route('order_types.index');
-    }
+    //     return redirect()->route('order_types.index');
+    // }
 
     public function destroy($id)
     {
@@ -76,6 +76,36 @@ class OrderTypeController extends Controller
 
         // Redirect with success message
         return redirect()->route('orderTypes.store')->with('success', 'Order Type deleted successfully!');
+    }
+
+    public function edit($id)
+    {
+        // Find the order type by its ID
+        $orderType = OrderType::findOrFail($id);
+
+        // Return the edit view with the order type data
+        return view('backoffice.referrals.edit-referral-type', compact('orderType'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Validate the incoming data
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:1000',
+        ]);
+
+        // Find the order type by its ID
+        $orderType = OrderType::findOrFail($id);
+
+        // Update the order type with the new data
+        $orderType->update([
+            'name' => $request->name,
+            'description' => $request->description,
+        ]);
+
+        // Redirect back to the list with a success message
+        return redirect()->route('orderTypes.store')->with('success', 'Order Type updated successfully!');
     }
 
 

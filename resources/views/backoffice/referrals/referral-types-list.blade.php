@@ -86,7 +86,7 @@
                             <td>${orderType.name}</td>
                             <td>${orderType.description || 'No description available'}</td>
                             <td>
-                                ${canEdit ? `<a title="Edit" href="/orderTypes/${orderType.id}/edit" class="d-none d-sm-inline-block btn btn-sm"><span style="color: Dodgerblue;"><i class="fa-solid fa-file-pen"></i></span></a>` : ''}
+                                ${canEdit ? `<a title="Edit" href="/edit-referral-type/${orderType.id}" class="d-none d-sm-inline-block btn btn-sm"><span style="color: Dodgerblue;"><i class="fa-solid fa-file-pen"></i></span></a>` : ''}
                                 ${canDelete ? `<button title="Delete" type="button" class="d-none d-sm-inline-block btn btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="setDeleteOrderTypeId(${orderType.id});"><span style="color: Dodgerblue;"><i class="fa-solid fa-trash"></i></span></button>` : ''}
                             </td>
                         </tr>`

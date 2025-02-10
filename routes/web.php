@@ -207,8 +207,14 @@ Route::get('/create-referral-types', action: [OrderTypeController::class, 'creat
 // Store new role
 Route::post('/referral-types-list', [OrderTypeController::class, 'store'])->name('orderTypes.store');
 
-// // Delete the provider
+// // Delete the order type
 Route::delete('/delete-referral-types/{id}', [OrderTypeController::class, 'destroy'])->name('orderTypes.destroy');
+
+// Edit Order Type
+Route::get('/edit-referral-type/{id}', [OrderTypeController::class, 'edit'])->name('orderTypes.edit');
+
+// Update Order Type
+Route::put('/orderTypes/{id}', [OrderTypeController::class, 'update'])->name('orderTypes.update');
 
 
 
