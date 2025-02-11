@@ -44,15 +44,11 @@
                                         </ul>
                                     </div>
 
-                                    <div class="col">
+                                    {{-- <div class="col">
                                         <label for="role"><strong>Status</strong></label>
                                         <select id="role" class="form-control" name="role" required>
                                             <option width="20px" value="" disabled selected><span
                                                     class="badge badge-warning">{{ $referral->status }}</span></option>
-                                            {{-- @foreach ($roles as $role)
-                                                    <option value="{{ $role->name }}">{{ $role->name }}</option>
-                                                @endforeach --}}
-
                                             <option>Scheduled</option>
                                             <option>Reviewed</option>
                                             <option>Accepted</option>
@@ -61,7 +57,21 @@
                                             <option>Completed</option>
                                             <option>Cancelled</option>
                                         </select>
+                                    </div> --}}
+
+                                    <div class="col">
+                                        <label for="status"><strong>Status</strong></label>
+                                        <select id="status" name="status" class="form-control" required>
+
+                                            @foreach ($statuses as $status)
+                                                <option value="{{ $status->name }}"
+                                                    {{ $referral->status == $status->name ? 'selected' : '' }}>
+                                                    {{ $status->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
+
                                 </div>
 
                                 <div class="row">

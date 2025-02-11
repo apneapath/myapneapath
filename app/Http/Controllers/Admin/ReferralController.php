@@ -9,6 +9,7 @@ use App\Models\Role;
 use App\Models\Patient;
 use App\Models\Provider;
 use App\Models\OrderType;
+use App\Models\Status;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;  // <-- Add this import
@@ -230,16 +231,31 @@ class ReferralController extends Controller
     // }
 
 
+    // public function view($referral_code)
+    // {
+    //     // Retrieve the referral with related data including orderType
+    //     $referral = Referral::with(['patient', 'referringProvider', 'referredProvider', 'attachments', 'orderType'])
+    //         ->where('referral_code', $referral_code)
+    //         ->firstOrFail();
+
+    //     // Return the view with referral data
+    //     return view('backoffice.referrals.view-referral', compact('referral'));
+    // }
+
     public function view($referral_code)
     {
-        // Retrieve the referral with related data including orderType
-        $referral = Referral::with(['patient', 'referringProvider', 'referredProvider', 'attachments', 'orderType'])
+        // Retrieve the referral with related data using referral_code instead of id
+        $referral = Referral::with(['patient', 'referringProvider', 'referredProvider', 'attachments'])
             ->where('referral_code', $referral_code)
             ->firstOrFail();
 
-        // Return the view with referral data
-        return view('backoffice.referrals.view-referral', compact('referral'));
+        // Retrieve all status options from the 'statuses' table
+        $statuses = Status::all(); // Get all statuses
+
+        // Return the view with referral data and the statuses
+        return view('backoffice.referrals.view-referral', compact('referral', 'statuses'));
     }
+
 
 
     // public function edit($referral_code)
@@ -255,20 +271,35 @@ class ReferralController extends Controller
     //     return view('backoffice.referrals.edit-referral', compact('referral', 'patients', 'providers'));
     // }
 
+    // public function edit($referral_code)
+    // {
+    //     // Find the referral by referral_code
+    //     $referral = Referral::where('referral_code', $referral_code)->firstOrFail();
+
+    //     // Retrieve patients and providers to populate the select options
+    //     $patients = Patient::all(); // Fetch all patients
+    //     $providers = Provider::all(); // Fetch all providers
+
+    //     // Retrieve all available order types
+    //     $orderTypes = OrderType::all(); // Fetch all order types
+
+    //     // Return the edit form with the referral data, patients, providers, and orderTypes
+    //     return view('backoffice.referrals.edit-referral', compact('referral', 'patients', 'providers', 'orderTypes'));
+    // }
+
     public function edit($referral_code)
     {
         // Find the referral by referral_code
         $referral = Referral::where('referral_code', $referral_code)->firstOrFail();
 
-        // Retrieve patients and providers to populate the select options
+        // Retrieve patients, providers, order types, and statuses
         $patients = Patient::all(); // Fetch all patients
         $providers = Provider::all(); // Fetch all providers
-
-        // Retrieve all available order types
         $orderTypes = OrderType::all(); // Fetch all order types
+        $statuses = Status::all(); // Fetch all statuses
 
-        // Return the edit form with the referral data, patients, providers, and orderTypes
-        return view('backoffice.referrals.edit-referral', compact('referral', 'patients', 'providers', 'orderTypes'));
+        // Return the edit form with the referral data, list of patients, providers, order types, and statuses
+        return view('backoffice.referrals.edit-referral', compact('referral', 'patients', 'providers', 'orderTypes', 'statuses'));
     }
 
 
