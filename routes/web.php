@@ -197,6 +197,11 @@ Route::get('/edit-referral/{referral_code}', [ReferralController::class, 'edit']
 Route::post('/update-referral/{referral_code}', [ReferralController::class, 'update'])->name('update-referral');
 
 
+// Route for updating the referral status
+Route::put('/referrals/{referral_code}/update-status', [ReferralController::class, 'updateStatus'])->name('update-referral-status');
+
+
+
 //ORDER TYPES------------------------------------------------------------------------------------------------------------------------------
 // Show all Order Types (AJAX)
 Route::get('/orderTypes', [OrderTypeController::class, 'index'])->name('orderTypes.index');

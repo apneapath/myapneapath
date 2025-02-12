@@ -44,34 +44,21 @@
                                         </ul>
                                     </div>
 
-                                    {{-- <div class="col">
-                                        <label for="role"><strong>Status</strong></label>
-                                        <select id="role" class="form-control" name="role" required>
-                                            <option width="20px" value="" disabled selected><span
-                                                    class="badge badge-warning">{{ $referral->status }}</span></option>
-                                            <option>Scheduled</option>
-                                            <option>Reviewed</option>
-                                            <option>Accepted</option>
-                                            <option>Not Accepted</option>
-                                            <option>Patient Declined</option>
-                                            <option>Completed</option>
-                                            <option>Cancelled</option>
-                                        </select>
-                                    </div> --}}
-
+                                    <!-- Status Section -->
                                     <div class="col">
                                         <label for="status"><strong>Status</strong></label>
                                         <select id="status" name="status" class="form-control" required>
-
                                             @foreach ($statuses as $status)
                                                 <option value="{{ $status->name }}"
-                                                    {{ $referral->status == $status->name ? 'selected' : '' }}>
+                                                    {{ $referral->status->name == $status->name ? 'selected' : '' }}>
                                                     {{ $status->name }}
                                                 </option>
                                             @endforeach
                                         </select>
                                     </div>
 
+                                    <!-- Debugging: Display the current status -->
+                                    {{-- <p>Current Status: {{ $referral->status }}</p> --}}
                                 </div>
 
                                 <div class="row">
