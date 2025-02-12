@@ -48,10 +48,41 @@ class ReferralController extends Controller
     //     ]);
     // }
 
+    // public function index()
+    // {
+    //     // Get all referrals with eager loading, ordered by created_at in descending order
+    //     $referrals = Referral::with(['patient', 'referringProvider', 'referredProvider'])
+    //         ->orderBy('created_at', 'desc')  // Sorting by created_at (most recent first)
+    //         ->get();
+
+    //     // Log each referral with referring and referred provider
+    //     \Log::info('Referrals:', $referrals->toArray());
+    //     $referrals->each(function ($referral) {
+    //         \Log::info('Referral', [
+    //             'Referring Provider' => $referral->referringProvider,
+    //             'Referred Provider' => $referral->referredProvider
+    //         ]);
+    //     });
+
+    //     // Check permissions for edit, view, and delete
+    //     $canEdit = auth()->user()->can('edit posts');
+    //     $canView = auth()->user()->can('view posts');
+    //     $canDelete = auth()->user()->can('delete posts');
+
+    //     // Return the response with the ordered referrals and other data
+    //     return response()->json([
+    //         'canEdit' => $canEdit,
+    //         'canView' => $canView,
+    //         'canDelete' => $canDelete,
+    //         'referrals' => $referrals
+    //     ]);
+    // }
+
+
     public function index()
     {
-        // Get all referrals with eager loading, ordered by created_at in descending order
-        $referrals = Referral::with(['patient', 'referringProvider', 'referredProvider'])
+        // Get all referrals with eager loading for patient, providers, and status
+        $referrals = Referral::with(['patient', 'referringProvider', 'referredProvider', 'status'])
             ->orderBy('created_at', 'desc')  // Sorting by created_at (most recent first)
             ->get();
 
@@ -60,7 +91,8 @@ class ReferralController extends Controller
         $referrals->each(function ($referral) {
             \Log::info('Referral', [
                 'Referring Provider' => $referral->referringProvider,
-                'Referred Provider' => $referral->referredProvider
+                'Referred Provider' => $referral->referredProvider,
+                'Status' => $referral->status // Log the status too
             ]);
         });
 
@@ -77,6 +109,7 @@ class ReferralController extends Controller
             'referrals' => $referrals
         ]);
     }
+
 
 
     // Show the referral creation form

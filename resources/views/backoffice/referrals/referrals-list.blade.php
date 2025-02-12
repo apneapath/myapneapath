@@ -117,7 +117,8 @@
                                 <td>${referral.referred_provider ? referral.referred_provider.name : 'N/A'}</td>
                                 <!-- <td>${referral.reason}</td>-->
                                 <td>${referral.urgency}</td>
-                                <td><span class="badge badge-warning">${referral.status}</span></td>
+                                <td><span class="badge badge-warning">${referral.status ? referral.status.name : 'No Status'}</span></td>
+
                                 <td>
                                     <!--${canEdit ? `<a title="Edit referral" href="/edit-referral/${referral.referral_code}" class="btn btn-sm"><span style="color: Dodgerblue;"><i class="fa-solid fa-file-pen"></i></span></a>` : ''}-->
                                     ${canView ? `<a title="View referral details" href="/view-referral/${referral.referral_code}" class="btn btn-sm"><span style="color: Dodgerblue;"><i class="fa-solid fa-eye"></i></span></a>` : ''}
