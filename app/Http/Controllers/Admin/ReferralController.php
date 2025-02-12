@@ -164,6 +164,20 @@ class ReferralController extends Controller
     }
 
 
+    // public function view($referral_code)
+    // {
+    //     // Retrieve the referral with related data using referral_code instead of id
+    //     $referral = Referral::with(['patient', 'referringProvider', 'referredProvider', 'attachments'])
+    //         ->where('referral_code', $referral_code)
+    //         ->firstOrFail();
+
+    //     // Retrieve all status options from the 'statuses' table
+    //     $statuses = Status::all(); // Get all statuses
+
+    //     // Return the view with referral data and the statuses
+    //     return view('backoffice.referrals.view-referral', compact('referral', 'statuses'));
+    // }
+
     public function view($referral_code)
     {
         // Retrieve the referral with related data using referral_code instead of id
@@ -174,9 +188,22 @@ class ReferralController extends Controller
         // Retrieve all status options from the 'statuses' table
         $statuses = Status::all(); // Get all statuses
 
-        // Return the view with referral data and the statuses
-        return view('backoffice.referrals.view-referral', compact('referral', 'statuses'));
+        // Statuses with background color styles for the dropdown
+        $statusesWithColors = [
+            'Pending' => 'background-color: #f6c23e;',    // Yellow for pending
+            'Scheduled' => 'background-color: #36b9cc;', // Orange for scheduled
+            'Reviewed' => 'background-color: #4e73df;',   // Light Blue for reviewed
+            'Accepted' => 'background-color: #1cc88a;',   // Green for accepted
+            'Not Accepted' => 'background-color: #e74a3b;', // Red for not accepted
+            'Patient Declined' => 'background-color: #5a5c69;', // Dark Red for patient declined
+            'Completed' => 'background-color: #5a5c69;',      // Dark Green for completed
+            'Cancelled' => 'background-color: #858796;', // Gray for cancelled
+        ];
+
+        // Return the view with referral data, statuses, and status color mappings
+        return view('backoffice.referrals.view-referral', compact('referral', 'statuses', 'statusesWithColors'));
     }
+
 
     public function edit($referral_code)
     {
