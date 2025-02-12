@@ -31,11 +31,12 @@
             <thead>
                 <tr>
                     <th>Order ID</th>
+                    <th>Order Type</th>
                     <th>Patient Name</th>
                     {{-- <th>Referring Provider</th> --}}
                     <th>Referred Provider</th>
                     {{-- <th>Reason</th> --}}
-                    <th>Urgency</th>
+
                     <th>Status</th>
                     <th>Action</th>
                 </tr>
@@ -135,9 +136,9 @@
                         $('#referral-list').append(`
                     <tr>
                         <td>${referral.referral_code}</td>
+                        <td>${referral.order_type ? referral.order_type.name : 'N/A'}</td>  <!-- Change to order type -->
                         <td>${referral.patient.first_name} ${referral.patient.last_name}</td>
                         <td>${referral.referred_provider ? referral.referred_provider.name : 'N/A'}</td>
-                        <td>${referral.urgency}</td>
                         <td><span class="badge ${statusClass}">${statusText}</span></td>
                         <td>
                             ${canView ? `<a title="View referral details" href="/view-referral/${referral.referral_code}" class="btn btn-sm"><span style="color: Dodgerblue;"><i class="fa-solid fa-eye"></i></span></a>` : ''}
