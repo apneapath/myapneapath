@@ -159,7 +159,8 @@
                                         multiple>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary">Create Order</button>
+                                <button type="submit"
+                                    class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Create Order</button>
                             </form>
                         </div>
                     </div>
