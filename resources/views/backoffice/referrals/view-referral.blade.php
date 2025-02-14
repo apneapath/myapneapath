@@ -361,6 +361,15 @@
         </div>
     </div>
 
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner"
+        style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9999;">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+
     <script>
         $(document).ready(function() {
             $('#status').change(function() {
@@ -371,13 +380,11 @@
                 // Show the confirmation modal when status changes
                 $('#confirmationModal').modal('show');
 
-                // Update the modal message to include the referral code
-                $('#confirmationModal .modal-body').html(
-                    'Confirm status change for Order ID: <strong>' + referralCode +
-                    '</strong> ?');
-
                 // If the user confirms the change, proceed with the update
                 $('#confirmUpdate').click(function() {
+                    // Show the loading spinner before sending the request
+                    $('#loadingSpinner').show();
+
                     // Send the AJAX request to update the status
                     $.ajax({
                         url: "{{ route('referral.updateStatus', ['referral' => $referral->id]) }}",
@@ -387,14 +394,8 @@
                             status: status
                         },
                         success: function(response) {
-                            // After the status update is successful, show a success message in the modal
-                            $('#confirmationModal .modal-body').html('Referral ' +
-                                referralCode + ' status is updated successfully!');
-
-                            // Refresh the page after a short delay (to allow the modal to show the message)
-                            setTimeout(function() {
-                                location.reload(); // Refresh the page
-                            }, 1000); // Wait 1 second before refreshing
+                            // Refresh the page after status is updated
+                            location.reload(); // Refresh the page
                         },
                         error: function(xhr) {
                             alert('Something went wrong!');
