@@ -340,60 +340,65 @@
         </div>
     </div>
 
-    <div class="modal fade" id="statusUpdateModal" tabindex="-1" aria-labelledby="statusUpdateModalLabel"
+    <!-- Confirmation Modal -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="statusUpdateModalLabel">Status Update</h5>
+                    <h5 class="modal-title" id="confirmationModalLabel">Confirm Status Update</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p id="modalMessage">Referral status with the ID <strong id="referralCode"></strong> is updated
-                        successfully!</p>
+                    Are you sure you want to update the status? This action cannot be undone.
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-sm btn-primary" id="confirmUpdate">Confirm</button>
                 </div>
             </div>
         </div>
     </div>
 
-
-
     <script>
         $(document).ready(function() {
             $('#status').change(function() {
                 var status = $(this).val();
-                var referralId = "{{ $referral->id }}"; // Ensure this is the referral ID
-                var referralCode = "{{ $referral->referral_code }}"; // Get the referral code
+                var referralId = "{{ $referral->id }}"; // Referral ID
+                var referralCode = "{{ $referral->referral_code }}"; // Referral Code
 
-                // Construct the URL
-                var url = "{{ route('referral.updateStatus', ['referral' => $referral->id]) }}";
+                // Show the confirmation modal when status changes
+                $('#confirmationModal').modal('show');
 
-                // Log the URL to the console
-                console.log("Request URL: " + url);
+                // If the user confirms the change, proceed with the update
+                $('#confirmUpdate').click(function() {
+                    // Send the AJAX request to update the status
+                    $.ajax({
+                        url: "{{ route('referral.updateStatus', ['referral' => $referral->id]) }}",
+                        method: "PUT",
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            status: status
+                        },
+                        success: function(response) {
+                            // Refresh the page after status is updated
+                            location.reload(); // Refresh the page
+                        },
+                        error: function(xhr) {
+                            alert('Something went wrong!');
+                            console.log(xhr.responseText); // Print the error response
+                        }
+                    });
 
-                $.ajax({
-                    url: url,
-                    method: "PUT",
-                    data: {
-                        _token: "{{ csrf_token() }}", // CSRF token
-                        status: status
-                    },
-                    success: function(response) {
-                        // Update the modal content with referral code
-                        $('#referralCode').text(referralCode);
-                        $('#statusUpdateModal').modal('show'); // Show the modal on success
-                    },
-                    error: function(xhr) {
-                        alert('Something went wrong!');
-                        console.log(xhr.responseText); // Print the error response
-                    }
+                    // Close the confirmation modal after confirming
+                    $('#confirmationModal').modal('hide');
+                });
+
+                // If the user cancels, do nothing (just close the modal)
+                $('#confirmationModal').on('hidden.bs.modal', function() {
+                    // You can add any additional logic here if necessary
                 });
             });
         });
     </script>
-
-
 @endsection
