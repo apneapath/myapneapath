@@ -339,7 +339,7 @@
     </div>
 
     <!-- Confirmation Modal -->
-    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
+    {{-- <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -350,6 +350,31 @@
                 <div class="modal-body">
                     <!-- This content will be dynamically updated with the referral code and confirmation message -->
                     Are you sure you want to update the status?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-sm btn-primary" id="confirmUpdate">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div> --}}
+
+
+    <!-- Confirmation Modal -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmationModalLabel">Confirm Status Update</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to update the status?
+                    <div id="reasonDiv" class="mt-3" style="display: none;">
+                        <label for="reason"><strong>Reason (Required for certain statuses):</strong></label>
+                        <textarea id="reason" class="form-control" rows="4" placeholder="Enter reason..."></textarea>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -371,9 +396,15 @@
     <script>
         $(document).ready(function() {
             $('#status').change(function() {
-                var status = $(this).val();
-                var referralId = "{{ $referral->id }}"; // Referral ID
-                var referralCode = "{{ $referral->referral_code }}"; // Referral Code
+                var statusId = $(this).val();
+
+                // Show the reason field if the status is 5 or 6
+                if (statusId == 5 || statusId == 6) {
+                    $('#reasonDiv').show(); // Show reason input
+                } else {
+                    $('#reasonDiv').hide(); // Hide reason input
+                    $('#reason').val(''); // Clear any previously entered reason
+                }
 
                 // Show the confirmation modal when status changes
                 $('#confirmationModal').modal('show');
@@ -382,14 +413,15 @@
                 $('#confirmUpdate').click(function() {
                     // Show the loading spinner before sending the request
                     $('#loadingSpinner').show();
-
+                    var reason = $('#reason').val(); // Get the reason value (if any)
                     // Send the AJAX request to update the status
                     $.ajax({
                         url: "{{ route('referral.updateStatus', ['referral' => $referral->id]) }}",
                         method: "PUT",
                         data: {
                             _token: "{{ csrf_token() }}",
-                            status: status
+                            status: statusId,
+                            reason: reason // Include the reason (if any)
                         },
                         success: function(response) {
                             // Refresh the page after status is updated
@@ -407,7 +439,8 @@
 
                 // If the user cancels, do nothing (just close the modal)
                 $('#confirmationModal').on('hidden.bs.modal', function() {
-                    // You can add any additional logic here if necessary
+                    // Clear the reason input if modal is closed
+                    $('#reason').val('');
                 });
             });
         });
