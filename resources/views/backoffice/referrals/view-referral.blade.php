@@ -350,7 +350,9 @@
                 <div class="modal-body">
                     Are you sure you want to update the status?
                     <div id="statusReasonDiv" class="mt-3" style="display: none;">
-                        <label for="status_reason"><strong>Reason (Required for certain statuses):</strong></label>
+                        <label for="status_reason"><strong>Reason:</strong></label>
+                        <!-- Insert Error message here -->
+                        <div id="errorMessage" style="color: red; font-size: 14px;"></div>
                         <textarea id="status_reason" class="form-control" rows="4" placeholder="Enter reason..." required></textarea>
                     </div>
                 </div>
@@ -387,13 +389,18 @@
                 // Show the confirmation modal when status changes
                 $('#confirmationModal').modal('show');
 
+                // Clear any previous error message
+                $('#errorMessage').text('');
+
                 // If the user confirms the change, proceed with the update
                 $('#confirmUpdate').click(function() {
                     var reason = $('#status_reason').val(); // Get the reason value (if any)
 
                     // Check if reason is required for status 5 or 6
                     if ((statusId == 5 || statusId == 6) && !reason) {
-                        alert('Please provide a reason before confirming.');
+                        // Display error message in red inside the modal
+                        $('#errorMessage').text('Please provide a reason before confirming.').css(
+                            'color', 'red');
                         return; // Stop the form submission if reason is not provided
                     }
 
@@ -425,11 +432,13 @@
 
                 // If the user cancels, do nothing (just close the modal)
                 $('#confirmationModal').on('hidden.bs.modal', function() {
-                    // Clear the reason input if modal is closed
+                    // Clear the reason input and any error message if modal is closed
                     $('#status_reason').val('');
+                    $('#errorMessage').text('');
                 });
             });
         });
     </script>
+
 
 @endsection
