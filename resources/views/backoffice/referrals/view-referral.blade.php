@@ -340,11 +340,33 @@
         </div>
     </div>
 
+    <div class="modal fade" id="statusUpdateModal" tabindex="-1" aria-labelledby="statusUpdateModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="statusUpdateModalLabel">Status Update</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="modalMessage">Referral status with the ID <strong id="referralCode"></strong> is updated
+                        successfully!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <script>
         $(document).ready(function() {
             $('#status').change(function() {
-                var statusId = $(this).val(); // Get the status ID (not name)
-                var referralId = "{{ $referral->id }}"; // Make sure the referral ID is passed here
+                var status = $(this).val();
+                var referralId = "{{ $referral->id }}"; // Ensure this is the referral ID
+                var referralCode = "{{ $referral->referral_code }}"; // Get the referral code
 
                 // Construct the URL
                 var url = "{{ route('referral.updateStatus', ['referral' => $referral->id]) }}";
@@ -356,11 +378,13 @@
                     url: url,
                     method: "PUT",
                     data: {
-                        _token: "{{ csrf_token() }}", // This ensures the CSRF token is sent
-                        status: statusId // Send the status_id instead of the status name
+                        _token: "{{ csrf_token() }}", // CSRF token
+                        status: status
                     },
                     success: function(response) {
-                        alert('Referral status updated!');
+                        // Update the modal content with referral code
+                        $('#referralCode').text(referralCode);
+                        $('#statusUpdateModal').modal('show'); // Show the modal on success
                     },
                     error: function(xhr) {
                         alert('Something went wrong!');
@@ -370,4 +394,6 @@
             });
         });
     </script>
+
+
 @endsection
