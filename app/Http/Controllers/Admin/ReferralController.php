@@ -272,72 +272,23 @@ class ReferralController extends Controller
     }
 
 
-    // public function updateStatus(Request $request, Referral $referral)
-    // {
-    //     // Validate the incoming request
-    //     $request->validate([
-    //         'status' => 'required|integer', // status should now be an integer (status_id)
-    //     ]);
-
-    //     try {
-    //         // Update the status_id of the referral
-    //         $referral->status_id = $request->input('status');
-    //         $referral->save();
-
-    //         return response()->json(['message' => 'Referral status updated!']);
-    //     } catch (\Exception $e) {
-    //         // Log the exception if something goes wrong
-    //         \Log::error('Error updating referral status: ' . $e->getMessage());
-    //         return response()->json(['message' => 'Something went wrong!'], 500);
-    //     }
-    // }
-
-    // public function updateStatus(Request $request, Referral $referral)
-    // {
-    //     // Validate the incoming request
-    //     $request->validate([
-    //         'status' => 'required|integer', // status should now be an integer (status_id)
-    //         'reason' => 'nullable|string',  // Reason is optional initially
-    //     ]);
-
-    //     // Check if the status is 5 or 6, and if a reason is provided
-    //     if (in_array($request->input('status'), [5, 6]) && !$request->input('reason')) {
-    //         return response()->json(['message' => 'Please provide a reason for changing to this status.'], 400);
-    //     }
-
-    //     try {
-    //         // Update the status_id of the referral
-    //         $referral->status_id = $request->input('status');
-
-    //         // If a reason is provided, update the reason field as well
-    //         if ($request->filled('reason')) {
-    //             $referral->reason = $request->input('reason');
-    //         }
-
-    //         // Save the referral
-    //         $referral->save();
-
-    //         return response()->json(['message' => 'Referral status updated!']);
-    //     } catch (\Exception $e) {
-    //         // Log the exception if something goes wrong
-    //         \Log::error('Error updating referral status: ' . $e->getMessage());
-    //         return response()->json(['message' => 'Something went wrong!'], 500);
-    //     }
-    // }
-
-
     public function updateStatus(Request $request, Referral $referral)
     {
-        // Validate the incoming request
-        $request->validate([
+        // Determine if the status requires a reason
+        $rules = [
             'status' => 'required|integer', // status should now be an integer (status_id)
-            'status_reason' => 'nullable|string',  // status_reason is optional initially
-        ]);
+        ];
 
-        // Check if the status is 5 or 6, and if a reason is provided
-        if (in_array($request->input('status'), [5, 6]) && !$request->input('status_reason')) {
-            return response()->json(['message' => 'Please provide a reason for changing to this status.'], 400);
+        // If the status is 5 or 6, require the status_reason field
+        if (in_array($request->input('status'), [5, 6])) {
+            $rules['status_reason'] = 'required|string';  // Make status_reason required
+        } else {
+            // If it's not 5 or 6, status_reason is optional
+            $rules['status_reason'] = 'nullable|string';
         }
+
+        // Validate the incoming request with the dynamic rules
+        $request->validate($rules);
 
         try {
             // Update the status_id of the referral
@@ -358,6 +309,7 @@ class ReferralController extends Controller
             return response()->json(['message' => 'Something went wrong!'], 500);
         }
     }
+
 
 
 

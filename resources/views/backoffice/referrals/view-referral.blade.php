@@ -339,28 +339,6 @@
     </div>
 
     <!-- Confirmation Modal -->
-    {{-- <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="confirmationModalLabel">Confirm Status Update</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- This content will be dynamically updated with the referral code and confirmation message -->
-                    Are you sure you want to update the status?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-sm btn-primary" id="confirmUpdate">Confirm</button>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-
-
-    <!-- Confirmation Modal -->
     <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
@@ -398,12 +376,12 @@
             $('#status').change(function() {
                 var statusId = $(this).val();
 
-                // Show the status_reason field if the status is 5 or 6
+                // Show the reason field if the status is 5 or 6
                 if (statusId == 5 || statusId == 6) {
-                    $('#statusReasonDiv').show(); // Show status_reason input
+                    $('#statusReasonDiv').show(); // Show reason input
                 } else {
-                    $('#statusReasonDiv').hide(); // Hide status_reason input
-                    $('#status_reason').val(''); // Clear any previously entered status_reason
+                    $('#statusReasonDiv').hide(); // Hide reason input
+                    $('#status_reason').val(''); // Clear any previously entered reason
                 }
 
                 // Show the confirmation modal when status changes
@@ -411,10 +389,16 @@
 
                 // If the user confirms the change, proceed with the update
                 $('#confirmUpdate').click(function() {
+                    var reason = $('#status_reason').val(); // Get the reason value (if any)
+
+                    // Check if reason is required for status 5 or 6
+                    if ((statusId == 5 || statusId == 6) && !reason) {
+                        alert('Please provide a reason before confirming.');
+                        return; // Stop the form submission if reason is not provided
+                    }
+
                     // Show the loading spinner before sending the request
                     $('#loadingSpinner').show();
-                    var statusReason = $('#status_reason')
-                        .val(); // Get the status_reason value (if any)
 
                     // Send the AJAX request to update the status
                     $.ajax({
@@ -423,7 +407,7 @@
                         data: {
                             _token: "{{ csrf_token() }}",
                             status: statusId,
-                            status_reason: statusReason // Include the status_reason (if any)
+                            status_reason: reason // Include the status_reason (if any)
                         },
                         success: function(response) {
                             // Refresh the page after status is updated
@@ -441,10 +425,11 @@
 
                 // If the user cancels, do nothing (just close the modal)
                 $('#confirmationModal').on('hidden.bs.modal', function() {
-                    // Clear the status_reason input if modal is closed
+                    // Clear the reason input if modal is closed
                     $('#status_reason').val('');
                 });
             });
         });
     </script>
+
 @endsection
