@@ -255,23 +255,23 @@
                                                 </div>
                                             </div>
 
-                                            <!-- Insurance Number -->
+                                            <!-- Subscriber ID -->
                                             <div class="row form-group col-12">
-                                                <label class="col-sm-2" for="policyNumber">Policy
-                                                    Number</label>
+                                                <label class="col-sm-2" for="subscriberId">Subscriber ID</label>
                                                 <div class="col-10">
-                                                    <input type="text" class="form-control" id="policyNumber"
-                                                        name="policy_number"
-                                                        value="{{ old('policy_number', $patient->policy_number) }}">
+                                                    <input type="text" class="form-control" id="subscriberId"
+                                                        name="subscriber_id"
+                                                        value="{{ old('subscriber_id', $patient->subscriber_id) }}">
                                                 </div>
                                             </div>
 
-                                            <!-- SSN -->
+                                            <!-- Group Number -->
                                             <div class="row form-group col-12">
-                                                <label class="col-sm-2" for="ssn">SSN</label>
+                                                <label class="col-sm-2" for="groupNumber">Group Number</label>
                                                 <div class="col-10">
-                                                    <input type="text" name="ssn" id="ssn"
-                                                        class="form-control" value="{{ old('ssn', $patient->ssn) }}">
+                                                    <input type="text" name="group_number" id="groupNumber"
+                                                        class="form-control"
+                                                        value="{{ old('group_number', $patient->group_number) }}">
                                                 </div>
                                             </div>
                                         </div>

@@ -14,7 +14,7 @@ class Referral extends Model
         'referral_code',
         'referring_provider_id',
         'referred_provider_id',
-        'reason',
+        // 'reason',
         'urgency',
         'status_id',  // Use status_id instead of status
         'notes',  // Add notes to the fillable property

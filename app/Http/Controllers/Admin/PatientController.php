@@ -166,8 +166,8 @@ class PatientController extends Controller
             // 'pcp' => 'nullable|string|max:255', // Validate PCP
 
             'insurance_provider' => 'nullable|string|max:255',
-            'policy_number' => 'nullable|string|max:255',
-            'ssn' => 'nullable|string|max:20',  // Validate SSN
+            'subscriber_id' => 'nullable|string|max:255',
+            'group_number' => 'nullable|string|max:20',  // Validate SSN
             // 'password' => 'required|string|min:8', // Ensure the password field is validated
         ]);
 
@@ -265,8 +265,8 @@ class PatientController extends Controller
             // 'pcp' => 'nullable|string|max:255', // Validate PCP
 
             'insurance_provider' => 'nullable|string|max:255',
-            'policy_number' => 'nullable|string|max:255',
-            'ssn' => 'nullable|string|max:09',  // Validate SSN
+            'subscriber_id' => 'nullable|string|max:255',
+            'group_number' => 'nullable|string|max:09',  // Validate SSN
         ]);
 
         // Update patient data with validated input, including pcp and ssn

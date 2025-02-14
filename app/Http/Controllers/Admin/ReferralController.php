@@ -111,7 +111,7 @@ class ReferralController extends Controller
         $request->validate([
             'patient_id' => 'required|exists:patients,id',
             'referred_provider_id' => 'required|exists:providers,id', // Ensure referred_provider_id is valid
-            'reason' => 'required|string',
+            // 'reason' => 'required|string',
             'urgency' => 'required|in:routine,urgent',
             'notes' => 'nullable|string',  // Make sure notes is nullable and validated
             'order_type_id' => 'required|exists:order_types,id', // Validate that order_type_id exists in order_types table
@@ -127,7 +127,7 @@ class ReferralController extends Controller
             'patient_id' => $request->patient_id,
             'referring_provider_id' => Auth::id(),
             'referred_provider_id' => $request->referred_provider_id,
-            'reason' => $request->reason,
+            // 'reason' => $request->reason,
             'urgency' => $request->urgency,
             'status_id' => $pendingStatusId, // Use status_id instead of status
             'notes' => $request->notes,

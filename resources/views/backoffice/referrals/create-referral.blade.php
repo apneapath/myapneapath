@@ -120,7 +120,7 @@
 
                                 <!-- Referred Provider Selection -->
                                 <div class="form-group">
-                                    <label for="referred_provider_id"><strong>Referred Provider</strong></label>
+                                    <label for="referred_provider_id"><strong>Send Order To</strong></label>
                                     <select name="referred_provider_id" id="referred_provider_id" class="form-control"
                                         required>
                                         <option value="">Select Provider</option>
@@ -131,10 +131,10 @@
                                 </div>
 
                                 <!-- Reason for Referral -->
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label for="reason"><strong>Reason for Referral</strong></label>
                                     <textarea name="reason" id="reason" class="form-control" rows="4" required></textarea>
-                                </div>
+                                </div> --}}
 
                                 <!-- Urgency Selection -->
                                 <div class="form-group">
@@ -154,9 +154,12 @@
 
                                 <!-- Upload Attachments -->
                                 <div class="form-group">
-                                    <label for="attachments"><strong>Upload Attachments</strong></label>
+                                    <label for="attachments"><strong>Upload Attachments <small
+                                                class=" text-muted font-italic">(Recent Office Notes
+                                                Required)</small></label>*</strong>
                                     <input type="file" id="attachments" name="attachments[]" class="form-control"
                                         multiple>
+
                                 </div>
 
                                 <button type="submit"

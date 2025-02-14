@@ -175,20 +175,20 @@
                                                 name="insurance_provider" placeholder="ex. Blue Cross" required>
                                         </div>
 
-                                        <!-- Policy Number -->
+                                        <!-- Subscriber ID -->
                                         <div class="form-group col-3">
-                                            <label for="policyNumber">Policy Number</label>
-                                            <input type="text" class="form-control" id="policyNumber"
-                                                name="policy_number" placeholder="ex. 12345XYZ" required>
-                                            <small class="form-text text-muted font-italic">Enter valid policy
-                                                number.</small>
+                                            <label for="subscriberId">Subscriber ID</label>
+                                            <input type="text" class="form-control" id="subscriberId"
+                                                name="subscriber_id" placeholder="ex. 12345XYZ" required>
+                                            {{-- <small class="form-text text-muted font-italic">Enter valid policy
+                                                number.</small> --}}
                                         </div>
 
-                                        <!-- SSN -->
+                                        <!-- Group Number  -->
                                         <div class="form-group col-3">
-                                            <label for="ssn">Social Security Number (SSN)</label>
-                                            <input type="text" name="ssn" id="ssn" class="form-control">
-                                            <small class="form-text text-muted font-italic">Enter 9 digit number.</small>
+                                            <label for="groupNumber">Group Number</label>
+                                            <input type="text" name="group_number" id="groupNumber"
+                                                class="form-control">
                                         </div>
                                     </div>
 

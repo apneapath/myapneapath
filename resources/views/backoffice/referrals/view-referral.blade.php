@@ -22,7 +22,7 @@
                                 <br>
                                 <div class="row">
 
-                                    <div class="col">
+                                    <div class="col-3">
                                         <ul class="list-unstyled">
                                             <li><strong>Order Type</strong></li>
                                             <!-- Display the name or description of the order type -->
@@ -30,12 +30,12 @@
                                         </ul>
                                     </div>
 
-                                    <div class="col">
+                                    {{-- <div class="col">
                                         <ul class="list-unstyled">
                                             <li><strong>Reason</strong></li>
                                             <li>{{ $referral->reason }}</li>
                                         </ul>
-                                    </div>
+                                    </div> --}}
 
                                     <div class="col">
                                         <ul class="list-unstyled">
@@ -57,7 +57,24 @@
                                         </select>
                                     </div> --}}
 
-                                    <div class="col">
+                                    {{-- <div class="col">
+                                        <label for="status"><strong>Status</strong></label>
+                                        <select id="status" name="status" class="form-control text-light"
+                                            style="{{ $statusesWithColors[$referral->status->name] ?? 'background-color: gray;' }}"
+                                            required>
+                                            @foreach ($statuses as $status)
+                                                <option value="{{ $status->name }}"
+                                                    {{ $referral->status->name == $status->name ? 'selected' : '' }}
+                                                    style="{{ $statusesWithColors[$status->name] ?? 'background-color: gray;' }}"
+                                                    class="text-light">
+                                                    {{ $status->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div> --}}
+
+
+                                    <div class="col-2">
                                         <label for="status"><strong>Status</strong></label>
                                         <select id="status" name="status" class="form-control text-light"
                                             style="{{ $statusesWithColors[$referral->status->name] ?? 'background-color: gray;' }}"
@@ -177,15 +194,15 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>Policy Number:</td>
+                                            <td>Subscriber ID:</td>
                                             <td class="text-end">
-                                                <strong>{{ $referral->patient->policy_number ?? 'N/A' }}</strong>
+                                                <strong>{{ $referral->patient->subscriber_id ?? 'N/A' }}</strong>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>Social Security Number (SSN):</td>
+                                            <td>Group Number:</td>
                                             <td class="text-end">
-                                                <strong>{{ $referral->patient->ssn ?? 'N/A' }}</strong>
+                                                <strong>{{ $referral->patient->group_number ?? 'N/A' }}</strong>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -322,4 +339,32 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Correctly pass the PHP array into JavaScript
+        const statusColors = @json($statusesWithColors);
+
+        // Get the select element by ID
+        const statusSelect = document.getElementById('status');
+
+        // Function to update the background color of the select dropdown
+        function updateSelectColor() {
+            // Get the selected value from the dropdown
+            const selectedStatus = statusSelect.value;
+
+            // Get the color associated with the selected status
+            const color = statusColors[selectedStatus] || 'background-color: gray';
+
+            // Update the background color of the select element using 'style' attribute
+            statusSelect.style.backgroundColor = color;
+        }
+
+        // Call the function to set the initial color when the page loads
+        updateSelectColor();
+
+        // Listen for changes on the select element and update color when the selection changes
+        statusSelect.addEventListener('change', function() {
+            updateSelectColor();
+        });
+    </script>
 @endsection
