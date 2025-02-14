@@ -121,10 +121,10 @@
             </div>
 
             <!-- Reason for Referral -->
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="reason">Reason for Referral</label>
                 <textarea name="reason" id="reason" class="form-control" rows="4" required>{{ old('reason', $referral->reason) }}</textarea>
-            </div>
+            </div> --}}
 
             <!-- Urgency Dropdown -->
             <div class="form-group">

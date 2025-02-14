@@ -329,8 +329,6 @@
                                             class="btn btn-sm btn-secondary">Edit
                                             Referral</a>
                                     @endif
-                                    <button type="submit" id="submit" name="submit"
-                                        class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Save</button>
                                 </div>
                             </div>
                         </div>

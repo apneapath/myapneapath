@@ -226,7 +226,7 @@ class ReferralController extends Controller
         $request->validate([
             'patient_id' => 'required|exists:patients,id',
             'referred_provider_id' => 'required|exists:providers,id', // Ensure referred_provider_id is valid
-            'reason' => 'required|string',
+            // 'reason' => 'required|string',
             'urgency' => 'required|in:routine,urgent',
             // 'status' => 'required|string',  // Assuming 'status' is a string, adjust if it's an enum
             'notes' => 'nullable|string',
@@ -242,7 +242,7 @@ class ReferralController extends Controller
         $referral->update([
             'patient_id' => $request->patient_id,
             'referred_provider_id' => $request->referred_provider_id,
-            'reason' => $request->reason,
+            // 'reason' => $request->reason,
             'urgency' => $request->urgency,
             // 'status' => $request->status,
             'notes' => $request->notes,
