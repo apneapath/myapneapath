@@ -371,9 +371,9 @@
                 </div>
                 <div class="modal-body">
                     Are you sure you want to update the status?
-                    <div id="reasonDiv" class="mt-3" style="display: none;">
-                        <label for="reason"><strong>Reason (Required for certain statuses):</strong></label>
-                        <textarea id="reason" class="form-control" rows="4" placeholder="Enter reason..."></textarea>
+                    <div id="statusReasonDiv" class="mt-3" style="display: none;">
+                        <label for="status_reason"><strong>Reason (Required for certain statuses):</strong></label>
+                        <textarea id="status_reason" class="form-control" rows="4" placeholder="Enter reason..." required></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -398,12 +398,12 @@
             $('#status').change(function() {
                 var statusId = $(this).val();
 
-                // Show the reason field if the status is 5 or 6
+                // Show the status_reason field if the status is 5 or 6
                 if (statusId == 5 || statusId == 6) {
-                    $('#reasonDiv').show(); // Show reason input
+                    $('#statusReasonDiv').show(); // Show status_reason input
                 } else {
-                    $('#reasonDiv').hide(); // Hide reason input
-                    $('#reason').val(''); // Clear any previously entered reason
+                    $('#statusReasonDiv').hide(); // Hide status_reason input
+                    $('#status_reason').val(''); // Clear any previously entered status_reason
                 }
 
                 // Show the confirmation modal when status changes
@@ -413,7 +413,9 @@
                 $('#confirmUpdate').click(function() {
                     // Show the loading spinner before sending the request
                     $('#loadingSpinner').show();
-                    var reason = $('#reason').val(); // Get the reason value (if any)
+                    var statusReason = $('#status_reason')
+                        .val(); // Get the status_reason value (if any)
+
                     // Send the AJAX request to update the status
                     $.ajax({
                         url: "{{ route('referral.updateStatus', ['referral' => $referral->id]) }}",
@@ -421,7 +423,7 @@
                         data: {
                             _token: "{{ csrf_token() }}",
                             status: statusId,
-                            reason: reason // Include the reason (if any)
+                            status_reason: statusReason // Include the status_reason (if any)
                         },
                         success: function(response) {
                             // Refresh the page after status is updated
@@ -439,8 +441,8 @@
 
                 // If the user cancels, do nothing (just close the modal)
                 $('#confirmationModal').on('hidden.bs.modal', function() {
-                    // Clear the reason input if modal is closed
-                    $('#reason').val('');
+                    // Clear the status_reason input if modal is closed
+                    $('#status_reason').val('');
                 });
             });
         });
