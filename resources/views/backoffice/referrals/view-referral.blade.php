@@ -30,12 +30,12 @@
                                         </ul>
                                     </div>
 
-                                    {{-- <div class="col">
+                                    <div class="col">
                                         <ul class="list-unstyled">
-                                            <li><strong>Reason</strong></li>
-                                            <li>{{ $referral->reason }}</li>
+                                            <li><strong>Urgency</strong></li>
+                                            <li>{{ $referral->urgency }}</li>
                                         </ul>
-                                    </div> --}}
+                                    </div>
 
                                     <div class="col">
                                         <ul class="list-unstyled">
@@ -57,24 +57,7 @@
                                         </select>
                                     </div> --}}
 
-                                    {{-- <div class="col">
-                                        <label for="status"><strong>Status</strong></label>
-                                        <select id="status" name="status" class="form-control text-light"
-                                            style="{{ $statusesWithColors[$referral->status->name] ?? 'background-color: gray;' }}"
-                                            required>
-                                            @foreach ($statuses as $status)
-                                                <option value="{{ $status->name }}"
-                                                    {{ $referral->status->name == $status->name ? 'selected' : '' }}
-                                                    style="{{ $statusesWithColors[$status->name] ?? 'background-color: gray;' }}"
-                                                    class="text-light">
-                                                    {{ $status->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div> --}}
-
-
-                                    <div class="col-2">
+                                    <div class="col">
                                         <label for="status"><strong>Status</strong></label>
                                         <select id="status" name="status" class="form-control text-light"
                                             style="{{ $statusesWithColors[$referral->status->name] ?? 'background-color: gray;' }}"
