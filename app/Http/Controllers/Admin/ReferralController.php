@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;  // Ensure you're importing the correct Controller class
 use App\Models\Referral;
+use App\Models\Comment;
 use App\Models\Attachment;  // Import the Attachment model
 use App\Models\User;
 use App\Models\Role;
@@ -308,6 +309,31 @@ class ReferralController extends Controller
             \Log::error('Error updating referral status: ' . $e->getMessage());
             return response()->json(['message' => 'Something went wrong!'], 500);
         }
+    }
+
+
+    public function create(Referral $referral)
+    {
+        return view('comments.create', compact('referral'));
+    }
+
+    // Store the comment (POST request)
+    public function store(Request $request, Referral $referral)
+    {
+        // Validate the comment content
+        $request->validate([
+            'content' => 'required|string|max:255',
+        ]);
+
+        // Create the new comment and associate it with the referral
+        $comment = new Comment();
+        $comment->content = $request->input('content');
+        $comment->referral_id = $referral->id;
+        $comment->user_id = auth()->id(); // Assuming the user is logged in
+        $comment->save();
+
+        // Redirect back with a success message or wherever you need
+        return back()->with('success', 'Your comment has been added.');
     }
 
 

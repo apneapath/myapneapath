@@ -332,6 +332,36 @@
                             </div>
                         </div>
                         <hr>
+                        <!-- Referral Details -->
+                        <div class="col-12">
+                            <h3>Comments</h3>
+                            <div id="comments-section">
+                                <!-- Display existing comments -->
+                                @foreach ($referral->comments as $comment)
+                                    <div class="comment">
+                                        <strong>{{ $comment->user->name }}</strong> commented:
+                                        <p>{{ $comment->content }}</p>
+                                    </div>
+                                @endforeach
+                            </div>
+
+                            <!-- Form to add a new comment -->
+                            <!-- comments/create.blade.php -->
+
+                            <!-- Use the correct route name for the POST request -->
+                            <form action="{{ route('referral.addComment', $referral->id) }}" method="POST">
+                                @csrf
+                                <div class="form-group">
+                                    <label for="content">Comment:</label>
+                                    <textarea id="content" name="content" class="form-control" rows="4"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Add Comment</button>
+                            </form>
+
+
+                        </div>
+
+                        <hr>
 
                         <!-- Actions Section -->
                         <div class="row align-items-start justify-content-between">
@@ -448,6 +478,30 @@
                     // Clear the reason input and any error message if modal is closed
                     $('#status_reason').val('');
                     $('#errorMessage').text('');
+                });
+            });
+
+
+            $('#comment-form').submit(function(e) {
+                e.preventDefault();
+
+                var content = $('#content').val();
+
+                $.ajax({
+                    url: "{{ route('referral.addComment', $referral->id) }}",
+                    method: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        content: content,
+                    },
+                    success: function(response) {
+                        $('#comments-section').append('<div class="comment"><strong>' + response
+                            .user_name + '</strong> commented:<p>' + content + '</p></div>');
+                        $('#content').val(''); // Clear the textarea
+                    },
+                    error: function(xhr) {
+                        alert('Something went wrong!');
+                    }
                 });
             });
         });
