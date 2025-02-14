@@ -118,6 +118,19 @@
                                         </ul>
                                     </div>
 
+                                    <div class="col-3">
+                                        <ul class="list-unstyled">
+                                            @if ($referral->status_id == 5 || $referral->status_id == 6)
+                                                <li><strong>Reason</strong></li>
+                                                <!-- Check if status is 5 or 6, and display the reason if available -->
+                                                <li>{{ $referral->status_reason ?? 'N/A' }}</li>
+                                            @else
+                                                {{-- <li>N/A</li> --}}
+                                            @endif
+                                        </ul>
+                                    </div>
+
+
                                 </div>
 
                             </div>
