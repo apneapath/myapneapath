@@ -350,7 +350,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Are you sure you want to update the status? This action cannot be undone.
+                    <!-- This content will be dynamically updated with the referral code and confirmation message -->
+                    Are you sure you want to update the status?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -370,6 +371,11 @@
                 // Show the confirmation modal when status changes
                 $('#confirmationModal').modal('show');
 
+                // Update the modal message to include the referral code
+                $('#confirmationModal .modal-body').html(
+                    'Confirm status change for Order ID: <strong>' + referralCode +
+                    '</strong> ?');
+
                 // If the user confirms the change, proceed with the update
                 $('#confirmUpdate').click(function() {
                     // Send the AJAX request to update the status
@@ -381,8 +387,14 @@
                             status: status
                         },
                         success: function(response) {
-                            // Refresh the page after status is updated
-                            location.reload(); // Refresh the page
+                            // After the status update is successful, show a success message in the modal
+                            $('#confirmationModal .modal-body').html('Referral ' +
+                                referralCode + ' status is updated successfully!');
+
+                            // Refresh the page after a short delay (to allow the modal to show the message)
+                            setTimeout(function() {
+                                location.reload(); // Refresh the page
+                            }, 1000); // Wait 1 second before refreshing
                         },
                         error: function(xhr) {
                             alert('Something went wrong!');
