@@ -271,6 +271,32 @@ class ReferralController extends Controller
         return redirect()->route('referrals-list')->with('success', 'Referral updated successfully!');
     }
 
+
+    public function updateStatus(Request $request, Referral $referral)
+    {
+        // Validate the incoming request
+        $request->validate([
+            'status' => 'required|integer', // status should now be an integer (status_id)
+        ]);
+
+        try {
+            // Update the status_id of the referral
+            $referral->status_id = $request->input('status');
+            $referral->save();
+
+            return response()->json(['message' => 'Referral status updated!']);
+        } catch (\Exception $e) {
+            // Log the exception if something goes wrong
+            \Log::error('Error updating referral status: ' . $e->getMessage());
+            return response()->json(['message' => 'Something went wrong!'], 500);
+        }
+    }
+
+
+
+
+
+
 }
 
 

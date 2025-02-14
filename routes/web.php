@@ -198,7 +198,11 @@ Route::post('/update-referral/{referral_code}', [ReferralController::class, 'upd
 
 
 // Route for updating the referral status
-Route::put('/referrals/{referral_code}/update-status', [ReferralController::class, 'updateStatus'])->name('update-referral-status');
+// Route::put('/referrals/{referral_code}/update-status', [ReferralController::class, 'updateStatus'])->name('update-referral-status');
+
+
+Route::put('referrals/{referral}/update-status', [ReferralController::class, 'updateStatus'])->name('referral.updateStatus');
+
 
 
 

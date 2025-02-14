@@ -57,13 +57,30 @@
                                         </select>
                                     </div> --}}
 
-                                    <div class="col">
+                                    {{-- <div class="col">
                                         <label for="status"><strong>Status</strong></label>
                                         <select id="status" name="status" class="form-control text-light"
                                             style="{{ $statusesWithColors[$referral->status->name] ?? 'background-color: gray;' }}"
                                             required>
                                             @foreach ($statuses as $status)
                                                 <option value="{{ $status->name }}"
+                                                    {{ $referral->status->name == $status->name ? 'selected' : '' }}
+                                                    style="{{ $statusesWithColors[$status->name] ?? 'background-color: gray;' }}"
+                                                    class="text-light">
+                                                    {{ $status->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div> --}}
+
+
+                                    <div class="col">
+                                        <label for="status"><strong>Status</strong></label>
+                                        <select id="status" name="status" class="form-control text-light"
+                                            style="{{ $statusesWithColors[$referral->status->name] ?? 'background-color: gray;' }}"
+                                            required>
+                                            @foreach ($statuses as $status)
+                                                <option value="{{ $status->id }}"
                                                     {{ $referral->status->name == $status->name ? 'selected' : '' }}
                                                     style="{{ $statusesWithColors[$status->name] ?? 'background-color: gray;' }}"
                                                     class="text-light">
@@ -324,30 +341,33 @@
     </div>
 
     <script>
-        // Correctly pass the PHP array into JavaScript
-        const statusColors = @json($statusesWithColors);
+        $(document).ready(function() {
+            $('#status').change(function() {
+                var statusId = $(this).val(); // Get the status ID (not name)
+                var referralId = "{{ $referral->id }}"; // Make sure the referral ID is passed here
 
-        // Get the select element by ID
-        const statusSelect = document.getElementById('status');
+                // Construct the URL
+                var url = "{{ route('referral.updateStatus', ['referral' => $referral->id]) }}";
 
-        // Function to update the background color of the select dropdown
-        function updateSelectColor() {
-            // Get the selected value from the dropdown
-            const selectedStatus = statusSelect.value;
+                // Log the URL to the console
+                console.log("Request URL: " + url);
 
-            // Get the color associated with the selected status
-            const color = statusColors[selectedStatus] || 'background-color: gray';
-
-            // Update the background color of the select element using 'style' attribute
-            statusSelect.style.backgroundColor = color;
-        }
-
-        // Call the function to set the initial color when the page loads
-        updateSelectColor();
-
-        // Listen for changes on the select element and update color when the selection changes
-        statusSelect.addEventListener('change', function() {
-            updateSelectColor();
+                $.ajax({
+                    url: url,
+                    method: "PUT",
+                    data: {
+                        _token: "{{ csrf_token() }}", // This ensures the CSRF token is sent
+                        status: statusId // Send the status_id instead of the status name
+                    },
+                    success: function(response) {
+                        alert('Referral status updated!');
+                    },
+                    error: function(xhr) {
+                        alert('Something went wrong!');
+                        console.log(xhr.responseText); // Print the error response
+                    }
+                });
+            });
         });
     </script>
 @endsection
