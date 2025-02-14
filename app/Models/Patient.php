@@ -35,8 +35,8 @@ class Patient extends Model
         // 'pcp', // Add pcp to the fillable array
 
         'insurance_provider',
-        'policy_number',
-        'ssn', // Add ssn to the fillable array
+        'subscriber_id',
+        'group_number', // Add ssn to the fillable array
 
 
         // 'password',

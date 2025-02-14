@@ -21,10 +21,12 @@
                                 <h5>Order Information</h5>
                                 <br>
                                 <div class="row">
-                                    <div class="col-4">
+
+                                    <div class="col-3">
                                         <ul class="list-unstyled">
-                                            <li><strong>Reason</strong></li>
-                                            <li>{{ $referral->reason }}</li>
+                                            <li><strong>Order Type</strong></li>
+                                            <!-- Display the name or description of the order type -->
+                                            <li>{{ $referral->orderType->name ?? 'N/A' }}</li>
                                         </ul>
                                     </div>
 
@@ -42,40 +44,63 @@
                                         </ul>
                                     </div>
 
-                                    <div class="col">
-                                        <label for="role"><strong>Status</strong></label>
-                                        <select id="role" class="form-control" name="role" required>
-                                            <option width="20px" value="" disabled selected><span
-                                                    class="badge badge-warning">{{ $referral->status }}</span></option>
-                                            {{-- @foreach ($roles as $role)
-                                                    <option value="{{ $role->name }}">{{ $role->name }}</option>
-                                                @endforeach --}}
+                                    <!-- Status Section -->
+                                    {{-- <div class="col">
+                                        <label for="status"><strong>Status</strong></label>
+                                        <select id="status" name="status" class="form-control" required>
+                                            @foreach ($statuses as $status)
+                                                <option value="{{ $status->name }}"
+                                                    {{ $referral->status->name == $status->name ? 'selected' : '' }}>
+                                                    {{ $status->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div> --}}
 
-                                            <option>Scheduled</option>
-                                            <option>Reviewed</option>
-                                            <option>Accepted</option>
-                                            <option>Not Accepted</option>
-                                            <option>Patient Declined</option>
-                                            <option>Completed</option>
-                                            <option>Cancelled</option>
+                                    {{-- <div class="col">
+                                        <label for="status"><strong>Status</strong></label>
+                                        <select id="status" name="status" class="form-control text-light"
+                                            style="{{ $statusesWithColors[$referral->status->name] ?? 'background-color: gray;' }}"
+                                            required>
+                                            @foreach ($statuses as $status)
+                                                <option value="{{ $status->name }}"
+                                                    {{ $referral->status->name == $status->name ? 'selected' : '' }}
+                                                    style="{{ $statusesWithColors[$status->name] ?? 'background-color: gray;' }}"
+                                                    class="text-light">
+                                                    {{ $status->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div> --}}
+
+
+                                    <div class="col">
+                                        <label for="status"><strong>Status</strong></label>
+                                        <select id="status" name="status" class="form-control text-light"
+                                            style="{{ $statusesWithColors[$referral->status->name] ?? 'background-color: gray;' }}"
+                                            required>
+                                            @foreach ($statuses as $status)
+                                                <option value="{{ $status->id }}"
+                                                    {{ $referral->status->name == $status->name ? 'selected' : '' }}
+                                                    style="{{ $statusesWithColors[$status->name] ?? 'background-color: gray;' }}"
+                                                    class="text-light">
+                                                    {{ $status->name }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
+
+                                    <!-- Debugging: Display the current status -->
+                                    {{-- <p>Current Status: {{ $referral->status }}</p> --}}
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-4">
+                                    <div class="col-3">
                                         <ul class="list-unstyled">
                                             <li><strong>Referring Provider</strong></li>
                                             <li>{{ $referral->referringProvider->facility_name }}</li>
                                         </ul>
                                     </div>
-                                    {{-- <div class="col">
-                                        <ul class="list-unstyled">
-                                            <li><strong>Created By</strong></li>
-                                            <li>{{ $referral->referringProvider->role ?? 'N/A' }}</li>
-                                        </ul>
-                                    </div> --}}
-
 
                                     <div class="col-3">
                                         <ul class="list-unstyled">
@@ -85,17 +110,20 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="col-5">
+
+                                    <div class="col-3">
                                         <ul class="list-unstyled">
                                             <li><strong>Phone Number</strong></li>
                                             <li>{{ $referral->referringProvider->phone_number ?? 'N/A' }}</li>
                                         </ul>
                                     </div>
+
                                 </div>
 
                             </div>
                         </div>
                         <hr>
+
                         <!-- Second Row: Referring Provider Information + Referred Provider Information -->
                         {{-- <div class="row mt-4">
                             <!-- Referring Provider Information (Full Width Row) -->
@@ -159,18 +187,6 @@
                                                 <strong>{{ $referral->patient->address }}</strong>
                                             </td>
                                         </tr>
-                                        {{-- <tr>
-                                            <td>Medical History:</td>
-                                            <td class="text-end">
-                                                <strong>{{ $referral->patient->medical_history ?? 'N/A' }}</strong>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Allergies:</td>
-                                            <td class="text-end">
-                                                <strong>{{ $referral->patient->allergies ?? 'N/A' }}</strong>
-                                            </td>
-                                        </tr> --}}
                                         <tr>
                                             <td>Insurance Provider:</td>
                                             <td class="text-end">
@@ -178,36 +194,20 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>Policy Number:</td>
+                                            <td>Subscriber ID:</td>
                                             <td class="text-end">
-                                                <strong>{{ $referral->patient->policy_number ?? 'N/A' }}</strong>
+                                                <strong>{{ $referral->patient->subscriber_id ?? 'N/A' }}</strong>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>Social Security Number (SSN):</td>
+                                            <td>Group Number:</td>
                                             <td class="text-end">
-                                                <strong>{{ $referral->patient->ssn ?? 'N/A' }}</strong>
+                                                <strong>{{ $referral->patient->group_number ?? 'N/A' }}</strong>
                                             </td>
                                         </tr>
-
-                                        {{-- <tr>
-                                            <td>Emergency Contact Name:</td>
-                                            <td class="text-end">
-                                                <strong>{{ $referral->patient->emergency_contact_name ?? 'N/A' }}</strong>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Emergency Contact Number:</td>
-                                            <td class="text-end">
-                                                <strong>{{ $referral->patient->emergency_contact_phone ?? 'N/A' }}</strong>
-                                            </td>
-                                        </tr> --}}
                                     </tbody>
                                 </table>
                             </div>
-
-
-
 
                             <!-- Referred Provider Information -->
                             <div class="col-md-6">
@@ -226,12 +226,6 @@
                                             <td class="text-end"><strong>{{ $referral->referredProvider->name }}</strong>
                                             </td>
                                         </tr>
-                                        {{-- <tr>
-                                            <td>Role:</td>
-                                            <td class="text-end">
-                                                <strong>{{ $referral->referredProvider->role ?? 'N/A' }}</strong>
-                                            </td>
-                                        </tr> --}}
                                         <tr>
                                             <td>Fax Number:</td>
                                             <td class="text-end">
@@ -257,12 +251,6 @@
                                                 <strong>{{ $referral->referredProvider->specialization }}</strong>
                                             </td>
                                         </tr>
-                                        {{-- <tr>
-                                            <td>License Number:</td>
-                                            <td class="text-end">
-                                                <strong>{{ $referral->referredProvider->license_number ?? 'N/A' }}</strong>
-                                            </td>
-                                        </tr> --}}
                                         <tr>
                                             <td>Street Address:</td>
                                             <td class="text-end">
@@ -287,19 +275,12 @@
                                                 <strong>{{ $referral->referredProvider->postal_code }}</strong>
                                             </td>
                                         </tr>
-                                        {{-- <tr>
-                                            <td>Working Hours:</td>
-                                            <td class="text-end">
-                                                <strong>{{ $referral->referredProvider->work_hours }}</strong>
-                                            </td>
-                                        </tr> --}}
                                     </tbody>
                                 </table>
                             </div>
-
-
                         </div>
                         <hr>
+
                         <!-- Fourth Row: Referral Notes Section + Attachments Section -->
                         <div class="row mt-4">
                             <!-- Referral Notes Section -->
@@ -348,8 +329,6 @@
                                             class="btn btn-sm btn-secondary">Edit
                                             Referral</a>
                                     @endif
-                                    <button type="submit" id="submit" name="submit"
-                                        class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -358,4 +337,79 @@
             </div>
         </div>
     </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmationModalLabel">Confirm Status Update</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- This content will be dynamically updated with the referral code and confirmation message -->
+                    Are you sure you want to update the status?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-sm btn-primary" id="confirmUpdate">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner"
+        style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9999;">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+
+    <script>
+        $(document).ready(function() {
+            $('#status').change(function() {
+                var status = $(this).val();
+                var referralId = "{{ $referral->id }}"; // Referral ID
+                var referralCode = "{{ $referral->referral_code }}"; // Referral Code
+
+                // Show the confirmation modal when status changes
+                $('#confirmationModal').modal('show');
+
+                // If the user confirms the change, proceed with the update
+                $('#confirmUpdate').click(function() {
+                    // Show the loading spinner before sending the request
+                    $('#loadingSpinner').show();
+
+                    // Send the AJAX request to update the status
+                    $.ajax({
+                        url: "{{ route('referral.updateStatus', ['referral' => $referral->id]) }}",
+                        method: "PUT",
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            status: status
+                        },
+                        success: function(response) {
+                            // Refresh the page after status is updated
+                            location.reload(); // Refresh the page
+                        },
+                        error: function(xhr) {
+                            alert('Something went wrong!');
+                            console.log(xhr.responseText); // Print the error response
+                        }
+                    });
+
+                    // Close the confirmation modal after confirming
+                    $('#confirmationModal').modal('hide');
+                });
+
+                // If the user cancels, do nothing (just close the modal)
+                $('#confirmationModal').on('hidden.bs.modal', function() {
+                    // You can add any additional logic here if necessary
+                });
+            });
+        });
+    </script>
 @endsection

@@ -14,10 +14,11 @@ class Referral extends Model
         'referral_code',
         'referring_provider_id',
         'referred_provider_id',
-        'reason',
+        // 'reason',
         'urgency',
-        'status',
+        'status_id',  // Use status_id instead of status
         'notes',  // Add notes to the fillable property
+        'order_type_id', // Add order_type_id to the fillable property
     ];
 
     public function patient()
@@ -27,13 +28,11 @@ class Referral extends Model
 
     public function referringProvider()
     {
-        // This refers to the User model (creator of the referral)
         return $this->belongsTo(User::class, 'referring_provider_id');
     }
 
     public function referredProvider()
     {
-        // This refers to the Provider model (the referred provider)
         return $this->belongsTo(Provider::class, 'referred_provider_id');
     }
 
@@ -42,5 +41,14 @@ class Referral extends Model
         return $this->hasMany(Attachment::class);
     }
 
-}
+    public function orderType()
+    {
+        return $this->belongsTo(OrderType::class);  // Define the relationship
+    }
 
+    // Define the relationship with the Status model
+    public function status()
+    {
+        return $this->belongsTo(Status::class);
+    }
+}

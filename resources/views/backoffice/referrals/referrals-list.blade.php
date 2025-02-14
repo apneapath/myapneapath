@@ -31,11 +31,12 @@
             <thead>
                 <tr>
                     <th>Order ID</th>
+                    <th>Order Type</th>
                     <th>Patient Name</th>
                     {{-- <th>Referring Provider</th> --}}
                     <th>Referred Provider</th>
                     {{-- <th>Reason</th> --}}
-                    <th>Urgency</th>
+
                     <th>Status</th>
                     <th>Action</th>
                 </tr>
@@ -82,12 +83,6 @@
                 url: '{{ route('referrals.index') }}', // Adjust the route for referrals
                 method: 'GET',
                 success: function(response) {
-                    console.log(response); // Check the response structure
-                    console.log(response); // Check the response structure
-                    console.log('canEdit:', response.canEdit); // Check if canEdit is true or false
-                    console.log('canView:', response.canView); // Check if canView is true or false
-                    console.log('canDelete:', response.canDelete); // Check if canDelete is true or false
-
                     $('#referral-list').empty(); // Clear the current list
 
                     const {
@@ -104,33 +99,56 @@
                     }
 
                     referrals.forEach(function(referral) {
-                        console.log(referral
-                            .referring_provider); // Check if referring_provider is defined
-                        console.log(referral
-                            .referred_provider); // Check if referred_provider is defined
+                        let statusClass = '';
+                        let statusText = referral.status ? referral.status.name : 'No Status';
+
+                        // Apply color coding based on the status
+                        switch (statusText) {
+                            case 'Pending':
+                                statusClass = 'badge-warning'; // Yellow
+                                break;
+                            case 'Scheduled':
+                                statusClass = 'badge-info'; // Orange
+                                break;
+                            case 'Reviewed':
+                                statusClass = 'badge-primary'; // Light Blue
+                                break;
+                            case 'Accepted':
+                                statusClass = 'badge-success'; // Green
+                                break;
+                            case 'Not Accepted':
+                                statusClass = 'badge-danger'; // Red
+                                break;
+                            case 'Patient Declined':
+                                statusClass = 'badge-dark'; // Dark Red
+                                break;
+                            case 'Completed':
+                                statusClass = 'badge-dark'; // Dark Green
+                                break;
+                            case 'Cancelled':
+                                statusClass = 'badge-secondary'; // Gray
+                                break;
+                            default:
+                                statusClass = 'badge-secondary'; // Default to Gray if unknown
+                                break;
+                        }
 
                         $('#referral-list').append(`
-                            <tr>
-                                <td>${referral.referral_code}</td>
-                                <td>${referral.patient.first_name} ${referral.patient.last_name}</td>
-                                <!-- <td>${referral.referring_provider ? referral.referring_provider.name : 'N/A'}</td> -->
-                                <td>${referral.referred_provider ? referral.referred_provider.name : 'N/A'}</td>
-                                <!-- <td>${referral.reason}</td>-->
-                                <td>${referral.urgency}</td>
-                                <td><span class="badge badge-warning">${referral.status}</span></td>
-                                <td>
-                                    <!--${canEdit ? `<a title="Edit referral" href="/edit-referral/${referral.referral_code}" class="btn btn-sm"><span style="color: Dodgerblue;"><i class="fa-solid fa-file-pen"></i></span></a>` : ''}-->
-                                    ${canView ? `<a title="View referral details" href="/view-referral/${referral.referral_code}" class="btn btn-sm"><span style="color: Dodgerblue;"><i class="fa-solid fa-eye"></i></span></a>` : ''}
-                                    <!--${canDelete ? `<button type="button" class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="setDeleteReferralId(${referral.id});"><span style="color: Dodgerblue;"><i class="fa-solid fa-trash"></i></span></button>` : ''}-->
-                                </td>
-                            </tr>
-                        `);
+                    <tr>
+                        <td>${referral.referral_code}</td>
+                        <td>${referral.order_type ? referral.order_type.name : 'N/A'}</td>  <!-- Change to order type -->
+                        <td>${referral.patient.first_name} ${referral.patient.last_name}</td>
+                        <td>${referral.referred_provider ? referral.referred_provider.name : 'N/A'}</td>
+                        <td><span class="badge ${statusClass}">${statusText}</span></td>
+                        <td>
+                            ${canView ? `<a title="View referral details" href="/view-referral/${referral.referral_code}" class="btn btn-sm"><span style="color: Dodgerblue;"><i class="fa-solid fa-eye"></i></span></a>` : ''}
+                        </td>
+                    </tr>
+                `);
                     });
 
                     $('#referrals-table').DataTable();
                 },
-
-
 
                 error: function(xhr, status, error) {
                     console.error('AJAX error:', xhr.responseText);
