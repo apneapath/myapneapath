@@ -333,14 +333,31 @@
                         </div>
                         <hr>
                         <!-- Referral Details -->
-                        <div class="col-12">
-                            <h3>Comments</h3>
-                            <div id="comments-section">
+                        <div class="row mt-4">
+                            <h5>Comments</h5>
+                            <div id="comments-section" class="p-3 rounded"
+                                style="max-height: 300px; overflow-y: auto; background-color: white;">
                                 <!-- Display existing comments -->
-                                @foreach ($referral->comments as $comment)
-                                    <div class="comment">
-                                        <strong>{{ $comment->user->name }}</strong> commented:
-                                        <p>{{ $comment->content }}</p>
+                                @foreach ($referral->comments as $index => $comment)
+                                    <div class="comment mb-2"
+                                        style="background-color: {{ $index % 2 == 0 ? '#f8f9fa' : '#e9ecef' }}; padding: 10px; border-radius: 8px;">
+                                        <div class="row mb-2">
+                                            <div class="d-flex align-items-start">
+                                                <!-- User Photo -->
+                                                <div class="me-3">
+                                                    <img src="{{ $comment->user->photo ? asset('storage/' . $comment->user->photo) : asset('default-avatar.png') }}"
+                                                        alt="{{ $comment->user->name }}'s Photo" class="rounded-circle"
+                                                        style="width: 35px; height: 35px; object-fit: cover;">
+                                                </div>
+                                                <!-- Comment Text -->
+                                                <div>
+                                                    <strong>{{ $comment->user->name }}</strong> commented:
+                                                    <p>{{ $comment->content }}</p>
+                                                    <small class="text-muted">Posted on:
+                                                        {{ $comment->created_at->format('M d, Y h:i A') }}</small>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 @endforeach
                             </div>
@@ -352,10 +369,10 @@
                             <form action="{{ route('referral.addComment', $referral->id) }}" method="POST">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="content">Comment:</label>
-                                    <textarea id="content" name="content" class="form-control" rows="4"></textarea>
+                                    {{-- <label for="content">Comment:</label> --}}
+                                    <textarea id="content" name="content" class="form-control mt-4" rows="2" placeholder="Write a comment..."></textarea>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Add Comment</button>
+                                <button type="submit" class="btn btn-sm btn-primary">Comment</button>
                             </form>
 
 
