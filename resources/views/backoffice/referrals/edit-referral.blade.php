@@ -87,22 +87,24 @@
             </div>
         </form>
     </div>
-
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const form = document.getElementById("editReferralForm");
             const saveButton = document.getElementById("saveButton");
 
-            let formData = new FormData(form); // Get the initial form data
+            // Store the initial form data as an object
+            let originalData = {};
+            form.querySelectorAll("input, select, textarea").forEach(function(input) {
+                originalData[input.name] = input.value;
+            });
 
             // Monitor any form input for changes
             form.addEventListener("input", function() {
                 let hasChanges = false;
 
-                // Check if any field has changed
+                // Check if any field has changed from the original value
                 form.querySelectorAll("input, select, textarea").forEach(function(input) {
-                    // Exclude the submit button
-                    if (input.type !== "submit" && input.value !== formData.get(input.name)) {
+                    if (input.value !== originalData[input.name]) {
                         hasChanges = true;
                     }
                 });
