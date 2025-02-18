@@ -155,8 +155,16 @@
                 <input type="file" id="attachments" name="attachments[]" class="form-control" multiple>
             </div>
 
-            <!-- Submit Button -->
-            <button type="submit" class="btn btn-sm btn-primary">Save Changes</button>
+
+            <div class="form-group">
+                <!-- Cancel Button -->
+                <a href="{{ route('view-referral', $referral->referral_code) }}"
+                    class="btn btn-sm btn-secondary">Cancel</a>
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-sm btn-primary">Save Changes</button>
+            </div>
+
+
         </form>
     </div>
 @endsection
