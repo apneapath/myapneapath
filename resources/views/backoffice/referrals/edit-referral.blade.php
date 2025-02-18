@@ -4,7 +4,8 @@
     <div class="container">
         <h2>Edit Referral</h2>
 
-        <form action="{{ route('update-referral', $referral->referral_code) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('update-referral', $referral->referral_code) }}" method="POST" enctype="multipart/form-data"
+            id="editReferralForm">
             @csrf
             @method('POST') <!-- Using POST method for form submission -->
 
@@ -64,13 +65,6 @@
                 </select>
             </div>
 
-            {{-- <!-- Status Input -->
-            <div class="form-group">
-                <label for="status">Status</label>
-                <input type="text" id="status" name="status" class="form-control"
-                    value="{{ old('status', $referral->status) }}" required>
-            </div> --}}
-
             <!-- Referral Notes -->
             <div class="form-group">
                 <label for="notes">Referral Notes</label>
@@ -84,16 +78,38 @@
                 <input type="file" id="attachments" name="attachments[]" class="form-control" multiple>
             </div>
 
-
             <div class="form-group">
                 <!-- Cancel Button -->
                 <a href="{{ route('view-referral', $referral->referral_code) }}"
                     class="btn btn-sm btn-secondary">Cancel</a>
-                <!-- Submit Button -->
-                <button type="submit" class="btn btn-sm btn-primary">Save Changes</button>
+                <!-- Save Changes Button -->
+                <button type="submit" class="btn btn-sm btn-primary" id="saveButton" disabled>Save Changes</button>
             </div>
-
-
         </form>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const form = document.getElementById("editReferralForm");
+            const saveButton = document.getElementById("saveButton");
+
+            let formData = new FormData(form); // Get the initial form data
+
+            // Monitor any form input for changes
+            form.addEventListener("input", function() {
+                let hasChanges = false;
+
+                // Check if any field has changed
+                form.querySelectorAll("input, select, textarea").forEach(function(input) {
+                    // Exclude the submit button
+                    if (input.type !== "submit" && input.value !== formData.get(input.name)) {
+                        hasChanges = true;
+                    }
+                });
+
+                // Enable or disable the Save button based on whether there are changes
+                saveButton.disabled = !hasChanges;
+            });
+        });
+    </script>
 @endsection
