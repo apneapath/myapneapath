@@ -269,7 +269,11 @@ class ReferralController extends Controller
         }
 
         // Redirect to the referrals list with a success message
-        return redirect()->route('referrals-list')->with('success', 'Referral updated successfully!');
+        // return redirect()->route('referrals-list')->with('success', 'Referral updated successfully!');
+
+        // Redirect to the view referral page for the updated referral with a success message
+        return redirect()->route('view-referral', ['referral_code' => $referral->referral_code])
+            ->with('success', 'Referral updated successfully!');
     }
 
 
