@@ -141,135 +141,6 @@ class UserController extends Controller
         return view('backoffice.admin.edit-user', compact('user', 'roles'));
     }
 
-    // public function update(Request $request, $id)
-    // {
-    //     // Validate the request
-    //     $request->validate([
-    //         'firstName' => 'required|string|max:255',
-    //         'lastName' => 'required|string|max:255',
-    //         'email' => 'required|email|unique:users,email,' . $id,
-    //         'phoneNumber' => 'nullable|string|max:15',
-    //         'gender' => 'required|string',
-    //         'status' => 'required|string',
-    //         'role' => 'required|array', // Role should be an array (multiple roles can be selected)
-    //         'address' => 'nullable|string',
-    //         'username' => 'nullable|string|max:255',
-    //         'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-    //         'current_password' => 'nullable|string',
-    //         'new_password' => 'nullable|string|min:8|confirmed',
-    //         'facility_name' => 'nullable|string|max:255', // Added validation for facility_name
-    //     ]);
-
-    //     // Retrieve the user
-    //     $user = User::findOrFail($id);
-
-    //     // Store old values for comparison
-    //     $oldValues = [
-    //         'email' => $user->email,
-    //         'name' => $user->name,
-    //         'phone_number' => $user->phone_number,
-    //         'gender' => $user->gender,
-    //         'status' => $user->status,
-    //         'role' => $user->roles->pluck('name')->toArray(), // Fetch current roles
-    //         'address' => $user->address,
-    //         'username' => $user->username,
-    //         'facility_name' => $user->facility_name, // Store old facility_name for comparison
-    //     ];
-
-    //     // Check if current password is provided and valid
-    //     if ($request->filled('current_password') && Hash::check($request->current_password, $user->password)) {
-    //         if ($request->filled('new_password')) {
-    //             $user->password = Hash::make($request->new_password); // Hash the new password
-    //         }
-    //     } elseif ($request->filled('current_password')) {
-    //         return back()->withErrors(['current_password' => 'Current password is incorrect.']);
-    //     }
-
-    //     // Store the old photo path for comparison
-    //     $oldPhoto = $user->photo;
-
-    //     // Update user properties
-    //     $user->first_name = $request->firstName;
-    //     $user->last_name = $request->lastName;
-    //     $user->gender = $request->gender;
-    //     $user->status = $request->status;
-    //     $user->email = $request->email;
-    //     $user->phone_number = $request->phoneNumber;
-    //     $user->address = $request->address;
-    //     $user->username = $request->username;
-
-    //     // Handle the facility_name field (new logic)
-    //     if ($request->filled('facility_name')) {
-    //         $facilityName = $request->facility_name;
-
-    //         // Check if the facility already exists in the `facilities` table
-    //         $facility = Facility::where('facility_name', $facilityName)->first();
-
-    //         // If the facility doesn't exist, create a new one
-    //         if (!$facility) {
-    //             $facility = new Facility();
-    //             $facility->facility_name = $facilityName;
-    //             $facility->save(); // Save the new facility
-    //         }
-
-    //         // Update the user's facility_name field
-    //         $user->facility_name = $facilityName;
-    //     }
-
-    //     // Update the name by combining first and last names
-    //     $user->name = trim($user->first_name . ' ' . $user->last_name);
-
-    //     // Prepare action details
-    //     $actionDetails = [];
-
-    //     // Handle the photo upload
-    //     if ($request->hasFile('photo')) {
-    //         // Delete the old photo if it exists
-    //         if ($oldPhoto && Storage::disk('public')->exists($oldPhoto)) {
-    //             Storage::disk('public')->delete($oldPhoto);
-    //         }
-
-    //         // Store the new photo
-    //         $timestamp = time();
-    //         $filename = strtolower($user->first_name . '_' . $user->last_name . '_' . $timestamp . '.' . $request->file('photo')->getClientOriginalExtension());
-    //         $photoPath = $request->file('photo')->storeAs('photos', $filename, 'public');
-    //         $user->photo = $photoPath; // Store the path in the database
-
-    //         // Log photo update
-    //         $actionDetails[] = "Updated profile photo.";
-    //     }
-
-    //     // Save the user
-    //     $user->save();
-
-    //     // Sync roles (syncs the role_user pivot table)
-    //     $user->roles()->sync($request->role); // Pass the role IDs as an array to sync the roles
-
-    //     // Sync the permissions for the user based on their new roles
-    //     // Ensure the user inherits all permissions of the assigned roles
-    //     $permissions = $user->roles->pluck('permissions')->flatten();
-    //     $user->permissions()->sync($permissions->pluck('id'));
-
-    //     // Check for changes and log them
-    //     foreach ($oldValues as $key => $oldValue) {
-    //         $newValue = $user->$key; // Dynamic property access
-    //         if ($oldValue != $newValue) {
-    //             // Add each change as a list item
-    //             $actionDetails[] = "<li>Changed {$key} from " . implode(', ', (array) $oldValue) . " to " . implode(', ', (array) $newValue) . ".</li>";
-    //         }
-    //     }
-
-    //     // Log activity with detailed action
-    //     ActivityLog::create([
-    //         'user_id' => $user->id,
-    //         'user_name' => $user->name,
-    //         'action' => 'Profile Update',
-    //         'action_detail' => '<ul>' . implode('', $actionDetails) . '</ul>', // Combine changes into a list
-    //     ]);
-
-    //     return redirect()->route('users-list')->with('success', 'User updated successfully!');
-    // }
-
     public function update(Request $request, $id)
     {
         // Validate the request
@@ -400,7 +271,7 @@ class UserController extends Controller
             'action_detail' => '<ul>' . implode('', $actionDetails) . '</ul>', // Combine changes into a list
         ]);
 
-        return redirect()->route('users-list')->with('success', 'User updated successfully!');
+        return redirect()->route('view-user', $user->id)->with('success', 'User updated successfully!');
     }
 
 
