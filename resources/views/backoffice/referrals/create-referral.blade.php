@@ -161,9 +161,13 @@
                                         multiple>
 
                                 </div>
-
-                                <button type="submit"
-                                    class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Create Order</button>
+                                <div class="form-group">
+                                    <a href="{{ route('referrals-list') }}"
+                                        class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">Cancel</a>
+                                    <button type="submit"
+                                        class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Create
+                                        Order</button>
+                                </div>
                             </form>
                         </div>
                     </div>

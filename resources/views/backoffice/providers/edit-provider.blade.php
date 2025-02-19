@@ -17,7 +17,8 @@
                     <div class="card shadow-2-strong card-registration" style="border-radius: 5px;">
                         <div class="card-body p-4 p-md-5">
                             <!-- Form to edit an existing provider -->
-                            <form method="POST" action="{{ route('providers.update', $provider->provider_code) }}">
+                            <form method="POST" action="{{ route('providers.update', $provider->provider_code) }}"
+                                id="editProviderForm">
                                 @csrf
                                 <div class="row">
                                     <div class="row col-12 mb-5 align-items-start justify-content-start">
@@ -266,7 +267,7 @@
                                             <div class="form-group">
                                                 <a href="{{ route('providers-list') }}"
                                                     class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">Cancel</a>
-                                                <button type="submit" id="submit" name="submit"
+                                                <button type="submit" id="saveButton" name="submit"
                                                     class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Update</button>
                                             </div>
                                         </div>
@@ -278,4 +279,45 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const form = document.getElementById("editProviderForm");
+            const saveButton = document.getElementById("saveButton");
+
+            // Store the initial form data as an object
+            let originalData = {};
+            form.querySelectorAll("input, select, textarea").forEach(function(input) {
+                if (input.type === "checkbox" || input.type === "radio") {
+                    originalData[input.name] = input.checked;
+                } else {
+                    originalData[input.name] = input.value;
+                }
+            });
+
+            // Initialize the save button as disabled
+            saveButton.disabled = true;
+
+            // Monitor any form input for changes
+            form.addEventListener("input", function() {
+                let hasChanges = false;
+
+                // Check if any field has changed from the original value
+                form.querySelectorAll("input, select, textarea").forEach(function(input) {
+                    if (input.type === "checkbox" || input.type === "radio") {
+                        if (input.checked !== originalData[input.name]) {
+                            hasChanges = true;
+                        }
+                    } else {
+                        if (input.value !== originalData[input.name]) {
+                            hasChanges = true;
+                        }
+                    }
+                });
+
+                // Enable or disable the Save button based on whether there are changes
+                saveButton.disabled = !hasChanges;
+            });
+        });
+    </script>
 @endsection

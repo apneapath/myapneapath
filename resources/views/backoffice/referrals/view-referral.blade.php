@@ -118,6 +118,19 @@
                                         </ul>
                                     </div>
 
+                                    <div class="col-3">
+                                        <ul class="list-unstyled">
+                                            @if ($referral->status_id == 5 || $referral->status_id == 6)
+                                                <li><strong>Reason</strong></li>
+                                                <!-- Check if status is 5 or 6, and display the reason if available -->
+                                                <li>{{ $referral->status_reason ?? 'N/A' }}</li>
+                                            @else
+                                                {{-- <li>N/A</li> --}}
+                                            @endif
+                                        </ul>
+                                    </div>
+
+
                                 </div>
 
                             </div>
@@ -319,6 +332,53 @@
                             </div>
                         </div>
                         <hr>
+                        <!-- Referral Details -->
+                        <div class="row mt-4">
+                            <h5>Comments</h5>
+                            <div id="comments-section" class="p-3 rounded"
+                                style="max-height: 300px; overflow-y: auto; background-color: white;">
+                                <!-- Display existing comments -->
+                                @foreach ($referral->comments as $index => $comment)
+                                    <div class="comment mb-2"
+                                        style="background-color: {{ $index % 2 == 0 ? '#f8f9fa' : '#e9ecef' }}; padding: 10px; border-radius: 8px;">
+                                        <div class="row mb-2">
+                                            <div class="d-flex align-items-start">
+                                                <!-- User Photo -->
+                                                <div class="me-3">
+                                                    <img src="{{ $comment->user->photo ? asset('storage/' . $comment->user->photo) : asset('default-avatar.png') }}"
+                                                        alt="{{ $comment->user->name }}'s Photo" class="rounded-circle"
+                                                        style="width: 35px; height: 35px; object-fit: cover;">
+                                                </div>
+                                                <!-- Comment Text -->
+                                                <div>
+                                                    <strong>{{ $comment->user->name }}</strong> commented:
+                                                    <p>{{ $comment->content }}</p>
+                                                    <small class="text-muted">Posted on:
+                                                        {{ $comment->created_at->format('M d, Y h:i A') }}</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+
+                            <!-- Form to add a new comment -->
+                            <!-- comments/create.blade.php -->
+
+                            <!-- Use the correct route name for the POST request -->
+                            <form action="{{ route('referral.addComment', $referral->id) }}" method="POST">
+                                @csrf
+                                <div class="form-group">
+                                    {{-- <label for="content">Comment:</label> --}}
+                                    <textarea id="content" name="content" class="form-control mt-4" rows="2" placeholder="Write a comment..."></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-sm btn-primary">Comment</button>
+                            </form>
+
+
+                        </div>
+
+                        <hr>
 
                         <!-- Actions Section -->
                         <div class="row align-items-start justify-content-between">
@@ -348,8 +408,13 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- This content will be dynamically updated with the referral code and confirmation message -->
                     Are you sure you want to update the status?
+                    <div id="statusReasonDiv" class="mt-3" style="display: none;">
+                        <label for="status_reason"><strong>Reason:</strong></label>
+                        <!-- Insert Error message here -->
+                        <div id="errorMessage" style="color: red; font-size: 14px;"></div>
+                        <textarea id="status_reason" class="form-control" rows="4" placeholder="Enter reason..." required></textarea>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -371,15 +436,34 @@
     <script>
         $(document).ready(function() {
             $('#status').change(function() {
-                var status = $(this).val();
-                var referralId = "{{ $referral->id }}"; // Referral ID
-                var referralCode = "{{ $referral->referral_code }}"; // Referral Code
+                var statusId = $(this).val();
+
+                // Show the reason field if the status is 5 or 6
+                if (statusId == 5 || statusId == 6) {
+                    $('#statusReasonDiv').show(); // Show reason input
+                } else {
+                    $('#statusReasonDiv').hide(); // Hide reason input
+                    $('#status_reason').val(''); // Clear any previously entered reason
+                }
 
                 // Show the confirmation modal when status changes
                 $('#confirmationModal').modal('show');
 
+                // Clear any previous error message
+                $('#errorMessage').text('');
+
                 // If the user confirms the change, proceed with the update
                 $('#confirmUpdate').click(function() {
+                    var reason = $('#status_reason').val(); // Get the reason value (if any)
+
+                    // Check if reason is required for status 5 or 6
+                    if ((statusId == 5 || statusId == 6) && !reason) {
+                        // Display error message in red inside the modal
+                        $('#errorMessage').text('Please provide a reason before confirming.').css(
+                            'color', 'red');
+                        return; // Stop the form submission if reason is not provided
+                    }
+
                     // Show the loading spinner before sending the request
                     $('#loadingSpinner').show();
 
@@ -389,7 +473,8 @@
                         method: "PUT",
                         data: {
                             _token: "{{ csrf_token() }}",
-                            status: status
+                            status: statusId,
+                            status_reason: reason // Include the status_reason (if any)
                         },
                         success: function(response) {
                             // Refresh the page after status is updated
@@ -407,9 +492,37 @@
 
                 // If the user cancels, do nothing (just close the modal)
                 $('#confirmationModal').on('hidden.bs.modal', function() {
-                    // You can add any additional logic here if necessary
+                    // Clear the reason input and any error message if modal is closed
+                    $('#status_reason').val('');
+                    $('#errorMessage').text('');
+                });
+            });
+
+
+            $('#comment-form').submit(function(e) {
+                e.preventDefault();
+
+                var content = $('#content').val();
+
+                $.ajax({
+                    url: "{{ route('referral.addComment', $referral->id) }}",
+                    method: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        content: content,
+                    },
+                    success: function(response) {
+                        $('#comments-section').append('<div class="comment"><strong>' + response
+                            .user_name + '</strong> commented:<p>' + content + '</p></div>');
+                        $('#content').val(''); // Clear the textarea
+                    },
+                    error: function(xhr) {
+                        alert('Something went wrong!');
+                    }
                 });
             });
         });
     </script>
+
+
 @endsection

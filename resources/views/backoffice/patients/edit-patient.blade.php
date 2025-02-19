@@ -26,7 +26,8 @@
                                 </div>
                             @endif
 
-                            <form method="POST" action="{{ route('patients.update', $patient->patient_code) }}">
+                            <form method="POST" action="{{ route('patients.update', $patient->patient_code) }}"
+                                id="editPatientForm">
                                 @csrf
                                 <div class="row">
                                     {{-- <div class="col-2">
@@ -281,7 +282,7 @@
                                         <div class="form-group text-right col-12">
                                             <a href="/patients-list"
                                                 class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">Cancel</a>
-                                            <button type="submit"
+                                            <button type="submit" id="saveButton"
                                                 class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Update</button>
                                         </div>
                                     </div>
@@ -294,4 +295,45 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const form = document.getElementById("editPatientForm");
+            const saveButton = document.getElementById("saveButton");
+
+            // Store the initial form data as an object
+            let originalData = {};
+            form.querySelectorAll("input, select, textarea").forEach(function(input) {
+                if (input.type === "checkbox" || input.type === "radio") {
+                    originalData[input.name] = input.checked;
+                } else {
+                    originalData[input.name] = input.value;
+                }
+            });
+
+            // Initialize the save button as disabled
+            saveButton.disabled = true;
+
+            // Monitor any form input for changes
+            form.addEventListener("input", function() {
+                let hasChanges = false;
+
+                // Check if any field has changed from the original value
+                form.querySelectorAll("input, select, textarea").forEach(function(input) {
+                    if (input.type === "checkbox" || input.type === "radio") {
+                        if (input.checked !== originalData[input.name]) {
+                            hasChanges = true;
+                        }
+                    } else {
+                        if (input.value !== originalData[input.name]) {
+                            hasChanges = true;
+                        }
+                    }
+                });
+
+                // Enable or disable the Save button based on whether there are changes
+                saveButton.disabled = !hasChanges;
+            });
+        });
+    </script>
 @endsection

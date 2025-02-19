@@ -14,7 +14,7 @@ class Referral extends Model
         'referral_code',
         'referring_provider_id',
         'referred_provider_id',
-        // 'reason',
+        'status_reason',
         'urgency',
         'status_id',  // Use status_id instead of status
         'notes',  // Add notes to the fillable property
@@ -51,4 +51,10 @@ class Referral extends Model
     {
         return $this->belongsTo(Status::class);
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
 }

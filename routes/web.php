@@ -196,12 +196,16 @@ Route::get('/edit-referral/{referral_code}', [ReferralController::class, 'edit']
 // Update referral 
 Route::post('/update-referral/{referral_code}', [ReferralController::class, 'update'])->name('update-referral');
 
-
 // Route for updating the referral status
-// Route::put('/referrals/{referral_code}/update-status', [ReferralController::class, 'updateStatus'])->name('update-referral-status');
-
-
 Route::put('referrals/{referral}/update-status', [ReferralController::class, 'updateStatus'])->name('referral.updateStatus');
+
+// Show the comment form (GET)
+Route::get('referrals/{referral}/comments/create', [ReferralController::class, 'create'])->name('comments.create');
+
+// Store the comment to a specific referral (POST request)
+Route::post('referrals/{referral}/comments', [ReferralController::class, 'store'])->name('referral.addComment');
+
+
 
 
 

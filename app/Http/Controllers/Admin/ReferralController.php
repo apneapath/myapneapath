@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;  // Ensure you're importing the correct Controller class
 use App\Models\Referral;
+use App\Models\Comment;
 use App\Models\Attachment;  // Import the Attachment model
 use App\Models\User;
 use App\Models\Role;
@@ -268,20 +269,42 @@ class ReferralController extends Controller
         }
 
         // Redirect to the referrals list with a success message
-        return redirect()->route('referrals-list')->with('success', 'Referral updated successfully!');
+        // return redirect()->route('referrals-list')->with('success', 'Referral updated successfully!');
+
+        // Redirect to the view referral page for the updated referral with a success message
+        return redirect()->route('view-referral', ['referral_code' => $referral->referral_code])
+            ->with('success', 'Referral updated successfully!');
     }
 
 
     public function updateStatus(Request $request, Referral $referral)
     {
-        // Validate the incoming request
-        $request->validate([
+        // Determine if the status requires a reason
+        $rules = [
             'status' => 'required|integer', // status should now be an integer (status_id)
-        ]);
+        ];
+
+        // If the status is 5 or 6, require the status_reason field
+        if (in_array($request->input('status'), [5, 6])) {
+            $rules['status_reason'] = 'required|string';  // Make status_reason required
+        } else {
+            // If it's not 5 or 6, status_reason is optional
+            $rules['status_reason'] = 'nullable|string';
+        }
+
+        // Validate the incoming request with the dynamic rules
+        $request->validate($rules);
 
         try {
             // Update the status_id of the referral
             $referral->status_id = $request->input('status');
+
+            // If a status_reason is provided, update the status_reason field as well
+            if ($request->filled('status_reason')) {
+                $referral->status_reason = $request->input('status_reason');
+            }
+
+            // Save the referral
             $referral->save();
 
             return response()->json(['message' => 'Referral status updated!']);
@@ -291,6 +314,34 @@ class ReferralController extends Controller
             return response()->json(['message' => 'Something went wrong!'], 500);
         }
     }
+
+
+    public function create(Referral $referral)
+    {
+        return view('comments.create', compact('referral'));
+    }
+
+    // Store the comment (POST request)
+    public function store(Request $request, Referral $referral)
+    {
+        // Validate the comment content
+        $request->validate([
+            'content' => 'required|string|max:255',
+        ]);
+
+        // Create the new comment and associate it with the referral
+        $comment = new Comment();
+        $comment->content = $request->input('content');
+        $comment->referral_id = $referral->id;
+        $comment->user_id = auth()->id(); // Assuming the user is logged in
+        $comment->save();
+
+        // Redirect back with a success message or wherever you need
+        return back()->with('success', 'Your comment has been added.');
+    }
+
+
+
 
 
 

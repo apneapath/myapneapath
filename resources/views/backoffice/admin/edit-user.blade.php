@@ -231,11 +231,9 @@
 
                                         <!-- User Setting -->
                                         <div class="form-group text-center col-12">
-                                            <a href="/users-list"
+                                            <a href="{{ route('view-user', $user->id) }}"
                                                 class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">Cancel</a>
-                                            {{-- <button type="submit"
-                                                class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Update
-                                                User</button> --}}
+
                                             <button type="submit" id="updateButton"
                                                 class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
                                                 disabled>Update</button>
